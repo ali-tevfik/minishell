@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   test_unity.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/12 23:48:24 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/12 23:48:39 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/12 23:51:08 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-/* System headers */
-# include <stdio.h>
-
-#endif
+int	add(int a, int b)
+{
+	return (a + b + 1);
+}
