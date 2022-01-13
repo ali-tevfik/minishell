@@ -19,5 +19,5 @@ TEST(AddNumbers, Simple)
 
 TEST(AddNumbers, ABC)
 {
-	TEST_ASSERT_EQUAL_INT(11, add(5, 5));
+	TEST_ASSERT_EQUAL_INT(11, add(5, 6));
 }

@@ -6,11 +6,11 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:48:39 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/12 23:51:08 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/13 14:36:34 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	add(int a, int b)
 {
-	return (a + b + 1);
+	return (a + b);
 }

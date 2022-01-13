@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/13 14:17:52 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/13 14:29:16 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* System headers */
 # include <stdio.h>
+# include <stdlib.h>
 # include <readline/readline.h>
 
 #endif
