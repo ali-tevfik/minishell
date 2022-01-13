@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/12 23:49:31 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/13 14:25:08 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,9 +53,6 @@ TEST_OBJ_FILES= $(TEST_FILES:%.c=$(TEST_OBJ_DIR)/%.o)
 
 # Set VPATH to search in all source directories
 VPATH = $(SRC_DIR)
-
-# test: $(TEST_OBJ_DIR) $(TEST_NAME)
-# 	$(GCC) $(UNITY_HEADERS) $(UNITY_OPTIONS) $(TEST_FILES) -O test
 				
 # Program name
 NAME = minishell
@@ -65,11 +62,14 @@ TEST_NAME = test_minishell
 # Build release
 all: $(OBJ_DIR) $(NAME)
 
+run: all
+	./$(NAME)
+
 $(OBJ_DIR):
 	@mkdir -p $@
 
 $(NAME): $(OBJ)
-	@$(GCC) $(FLAGS) $^ -o $@
+	@$(GCC) $(FLAGS) $^ -o $@ -lreadline
 	@echo "$(GREEN) Created minishell executable.$(NORMAL)"
 
 $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
