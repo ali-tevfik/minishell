@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/13 14:25:08 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/13 14:27:35 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ $(DBG_OBJ_DIR):
 
 $(DBG_NAME): $(DBG_OBJ)
 	@echo "$(GREEN) Created minishell debug executable.$(NORMAL)"
-	@$(GCC) $(FLAGS) $(DBG_FLAGS) $^ -o $@
+	@$(GCC) $(FLAGS) $(DBG_FLAGS) $^ -o $@ -lreadline
 
 $(DBG_OBJ): $(DBG_OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@$(GCC) $(FLAGS) $(DBG_FLAGS) -c $< -o $@
