@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/14 11:51:23 by tevfik        ########   odam.nl          #
+#    Updated: 2022/01/14 11:55:29 by tevfik        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,13 +59,8 @@ NAME = minishell
 DBG_NAME = debug_minishell
 TEST_NAME = test_minishell
 
-# #Libft
-LIBFT = libft.a
-LIBFT_DIR = src/libft
-
-
 # Build release
-all: $(OBJ_DIR) $(NAME) 
+all: $(OBJ_DIR) $(NAME)
 
 run: all
 	./$(NAME)
@@ -74,15 +69,12 @@ $(OBJ_DIR):
 	@mkdir -p $@
 
 $(NAME): $(OBJ)
-	@$(MAKE) bonus -C $(LIBFT_DIR)
-	@$(GCC) $(FLAGS) $^ -o $@ -lreadline $(LIBFT_DIR)/$(LIBFT)
+	@$(GCC) $(FLAGS) $^ -o $@ -lreadline
 	@echo "$(GREEN) Created minishell executable.$(NORMAL)"
 
 $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@$(GCC) $(FLAGS) -c $< -o $@
-	
-$(LIBFT): $(LIBFT_DIR)
-	@$(GCC) $(FLAGS) -c $< -o $@
+
 # Build debug
 debug: $(DBG_OBJ_DIR) $(DBG_NAME)
 
@@ -115,12 +107,10 @@ $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
 
 clean:
 	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR) 
-	@make -C $(LIBFT_DIR) clean
 	@echo "$(RED) Deleted all object files.$(NORMAL)"
 
 fclean: clean
-	@rm -f $(NAME) $(DBG_NAME) $(TEST_NAME) 
-	@make -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME) $(DBG_NAME) $(TEST_NAME)
 	@echo "$(RED) Deleted all executables.$(NORMAL)"
 
 re: fclean all

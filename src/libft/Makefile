@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/16 15:28:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/01/14 11:51:37 by tevfik        ########   odam.nl          #
+#    Updated: 2022/01/14 11:55:44 by tevfik        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,12 +58,10 @@ bonus:
 
 clean:
 	@rm -f $(REG_OBJ_FILES) $(BONUS_OBJ_FILES)
-	@echo "$(GREEN)Succesfully removed all object files!"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(GREEN)Successfully removed libft.a!"
-
+	
 re: fclean all
 
 .PHONY: all clean fclean re
