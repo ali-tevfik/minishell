@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/16 15:28:02 by adoner        #+#    #+#                  #
-#    Updated: 2021/12/16 12:26:00 by adoner        ########   odam.nl          #
+#    Updated: 2022/01/14 11:51:37 by tevfik        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,23 +48,20 @@ BLUE = \033[38;5;4m
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	ar rc $@ $^
+	@ar rc $@ $^
 
 %.o: %.c $(HEADER_FILES)
-	@echo "$(GREEN)Compiling:$(NORMAL)"
-	$(CC) -c $(CFLAGS) -o $@ $<
+	@$(CC) -c $(CFLAGS) -o $@ $<
 
 bonus:
-	$(MAKE) WITH_BONUS=1 all
+	@$(MAKE) WITH_BONUS=1 all
 
 clean:
-	@echo "$(RED)Removing all object files...$(NORMAL)"
-	rm -f $(REG_OBJ_FILES) $(BONUS_OBJ_FILES)
+	@rm -f $(REG_OBJ_FILES) $(BONUS_OBJ_FILES)
 	@echo "$(GREEN)Succesfully removed all object files!"
 
 fclean: clean
-	@echo "$(RED)Removing libft.a...$(NORMAL)"
-	rm -f $(NAME)
+	@rm -f $(NAME)
 	@echo "$(GREEN)Successfully removed libft.a!"
 
 re: fclean all
