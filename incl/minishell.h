@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/17 17:29:32 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/17 17:30:13 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 # include <stdlib.h>
 # include "signal.h"
 # include <readline/readline.h>
+# include "../src/libft/libft.h"
 
 #endif
