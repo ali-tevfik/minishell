@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   all_tests_runner.c                                 :+:    :+:            */
+/*   tokenizer.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/17 16:17:01 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/17 18:05:06 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unity_fixture.h>
+#include "tokenizer.h"
 
-TEST_GROUP_RUNNER(AddNumbers)
+static t_token	*create_token(char *content, t_token_type type)
 {
-	RUN_TEST_CASE(AddNumbers, Simple);
-	RUN_TEST_CASE(AddNumbers, ABC);
+	t_token	*token;
+
+	token = ft_calloc(1, sizeof(*token));
+	token->content = content;
+	token->type = type;
+	return (token);
 }
 
-TEST_GROUP_RUNNER(Tokenizer)
+t_list	*tokenize_input(char *input_string)
 {
-	RUN_TEST_CASE(Tokenizer, SimpleInput);
-	RUN_TEST_CASE(Tokenizer, CommandPlusArgument);
+	t_list	*token_list;
+	t_token	*token;
+
+	token = create_token(input_string, WORD);
+	token_list = ft_lstnew(token);
+	return (token_list);
 }

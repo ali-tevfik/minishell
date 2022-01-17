@@ -1,27 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   tokenizer.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/17 15:24:39 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/17 13:41:03 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/17 18:05:00 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
 
 /* System headers */
 # include <stdio.h>
 # include <stdlib.h>
-# include <readline/readline.h>
 
 /* User defined header */
-# include "../src/libft/libft.h"
-# include "../src/parser/tokenizer.h"
+# include "../libft/libft.h"
+
+/* Data structures */
+typedef enum e_token_type
+{
+	WORD,
+	PIPE,
+	REDIR_LEFT_ONCE,
+	REDIR_LEFT_TWICE,
+	REDIR_RIGHT_ONCE,
+	REDIR_RIGHT_TWICE,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	ERROR,
+}				t_token_type;
+
+typedef struct s_token
+{
+	char			*content;
+	t_token_type	type;
+}				t_token;
 
 /* Function prototypes */
+t_list	*tokenize_input(char *input_string);
 
 #endif
