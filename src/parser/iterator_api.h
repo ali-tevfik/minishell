@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 12:52:46 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 13:46:53 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/18 14:37:51 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ typedef char*	t_char_iter;
 /* Function prototypes */
 bool	has_next(t_char_iter itr);
 char	next(t_char_iter *itr);
+char	peek(t_char_iter itr);
 
 #endif

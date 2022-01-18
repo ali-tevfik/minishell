@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 12:58:01 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 13:46:37 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/18 14:38:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,24 @@ TEST(IteratorAPI, Next)
 	next(&itr);
 	result = next(&itr);
 	TEST_ASSERT_EQUAL_CHAR('\0', result);
+}
+
+TEST(IteratorAPI, Peek)
+{
+	char		*input = "ls -n";
+	t_char_iter	itr;
+	char		result;
+
+	itr = input;
+
+	result = peek(itr);
+	TEST_ASSERT_EQUAL_CHAR('l', result);
+
+	result = peek(itr);
+	TEST_ASSERT_EQUAL_CHAR('l', result);
+
+	next(&itr);
+
+	result = peek(itr);
+	TEST_ASSERT_EQUAL_CHAR('s', result);
 }
