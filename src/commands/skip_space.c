@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_atoi.c                                          :+:    :+:            */
+/*   skip_space.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/21 14:32:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/18 14:54:58 by adoner        ########   odam.nl         */
+/*   Created: 2022/01/18 14:55:55 by adoner        #+#    #+#                 */
+/*   Updated: 2022/01/18 15:20:57 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include "libft.h"
+#include "../../incl/commands.h"
+#include "../../incl/minishell.h"
 
-static	int	checkspace(const char *s)
+char *skip_space(char *s)
 {
 	int	i;
 
@@ -26,34 +26,5 @@ static	int	checkspace(const char *s)
 		else
 			break ;
 	}
-	return (i);
-}
-
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	total;
-	int	control;
-
-	i = checkspace(str);
-	control = 1;
-	total = 0;
-	if (str[0] == '0')
-		return (0);
-	if (*(str + i) == '-')
-	{
-		control = -1;
-		i++;
-	}
-	else if (*(str + i) == '+')
-		i++;
-	while (*(str + i) != '\0')
-	{
-		if (*(str + i) >= '0' && *(str + i) <= '9')
-			total = (*(str + i) - '0') + (total * 10);
-		else
-			break ;
-		i++;
-	}
-	return (total * control);
+	return ((s+i));
 }

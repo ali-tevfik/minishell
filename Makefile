@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/14 12:04:42 by tevfik        ########   odam.nl          #
+#    Updated: 2022/01/18 15:18:42 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,10 @@ UNITY_OPTIONS = -D UNITY_FIXTURE_NO_EXTRAS \
 
 # Source, tests, header and object files
 SRC_DIR = src
-SRC_FILES = minishell.c
+SRC_FILES = minishell.c \
+			commands/cd.c \
+			commands/pwd.c \
+			commands/skip_space.c
 
 TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
@@ -53,7 +56,7 @@ TEST_OBJ_FILES= $(TEST_FILES:%.c=$(TEST_OBJ_DIR)/%.o)
 
 # Set VPATH to search in all source directories
 VPATH = $(SRC_DIR)
-				
+
 # Program name
 NAME = minishell
 DBG_NAME = debug_minishell
@@ -65,7 +68,7 @@ LIBFT_DIR = src/libft
 
 
 # Build release
-all: $(OBJ_DIR) $(NAME) 
+all: $(OBJ_DIR) $(NAME)
 
 run: all
 	./$(NAME)
@@ -79,8 +82,9 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN) Created minishell executable.$(NORMAL)"
 
 $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
+	@mkdir -p $(@D)
 	@$(GCC) $(FLAGS) -c $< -o $@
-	
+
 $(LIBFT): $(LIBFT_DIR)
 	@$(GCC) $(FLAGS) -c $< -o $@
 # Build debug
@@ -114,15 +118,15 @@ $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
 	@$(GCC) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
 
 clean:
-	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR) 
+	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
 	@echo "$(RED) Deleted all object files.$(NORMAL)"
 
 fclean: clean
-	@rm -f $(NAME) $(DBG_NAME) $(TEST_NAME) 
+	@rm -f $(NAME) $(DBG_NAME) $(TEST_NAME)
 	@make -C $(LIBFT_DIR) fclean
 	@echo "$(RED) Deleted all executables.$(NORMAL)"
 
 re: fclean all
-	
+
 .PHONY: clean fclean re
