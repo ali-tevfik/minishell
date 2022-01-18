@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/17 15:57:51 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/18 13:07:00 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_unity.c \
 				src/test_unity.c \
 				test/test_tokenizer.c \
-				src/parser/tokenizer.c
+				src/parser/tokenizer.c \
+				test/test_iterator_api.c \
+				src/parser/iterator_api.c
 
 HEADER_FILES = 	incl/minishell.h \
 				parser/tokenizer.h

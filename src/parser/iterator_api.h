@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   all_tests_runner.c                                 :+:    :+:            */
+/*   iterator_api.h                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 13:32:23 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/18 12:52:46 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/18 13:46:53 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unity_fixture.h>
+#ifndef ITERATOR_API_H
+# define ITERATOR_API_H
 
-TEST_GROUP_RUNNER(AddNumbers)
-{
-	RUN_TEST_CASE(AddNumbers, Simple);
-	RUN_TEST_CASE(AddNumbers, ABC);
-}
+/* System headers */
+# include <stdbool.h>
 
-TEST_GROUP_RUNNER(Tokenizer)
-{
-	RUN_TEST_CASE(Tokenizer, SimpleInput);
-	RUN_TEST_CASE(Tokenizer, CommandPlusArgument);
-}
+/* User defined header */
 
-TEST_GROUP_RUNNER(IteratorAPI)
-{
-	RUN_TEST_CASE(IteratorAPI, HasNext);
-	RUN_TEST_CASE(IteratorAPI, Next);
-}
+/* Definitions */
+typedef char*	t_char_iter;
+
+/* Data structures */
+
+/* Function prototypes */
+bool	has_next(t_char_iter itr);
+char	next(t_char_iter *itr);
+
+#endif
