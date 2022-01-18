@@ -6,14 +6,14 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:55:55 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/18 15:20:57 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/18 15:58:35 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
 
-char *skip_space(char *s)
+char	*skip_space(char *s)
 {
 	int	i;
 
@@ -26,5 +26,5 @@ char *skip_space(char *s)
 		else
 			break ;
 	}
-	return ((s+i));
+	return (s + i);
 }
