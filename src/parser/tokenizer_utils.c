@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 17:20:51 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/18 18:06:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,37 @@ t_token	*take_word(t_char_iter *itr)
 		next(itr);
 	}
 	token = create_token(start_token, len, WORD);
+	return (token);
+}
+
+t_token	*take_pipe(t_char_iter *itr)
+{
+	t_token	*token;
+
+	token = create_token(*itr, 1, PIPE);
+	next(itr);
+	return (token);
+}
+
+t_token	*take_redir_right(t_char_iter *itr)
+{
+	int		len;
+	size_t	type;
+	char	*start_token;
+	t_token	*token;
+
+	len = 1;
+	type = REDIR_RIGHT_ONCE;
+	start_token = *itr;
+	next(itr);
+	if (peek(*itr) == '>')
+	{
+		len++;
+		type = REDIR_RIGHT_TWICE;
+		next(itr);
+	}
+	if (peek(*itr) == '>')
+		type = ERROR;
+	token = create_token(start_token, len, type);
 	return (token);
 }
