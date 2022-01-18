@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/01/13 14:38:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/18 13:46:20 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(void)
 		line = readline("> ");
 		if ('-' == line[0] && '1' == line[1])
 			break ;
+		add_history(line);
 		free(line);
 	}
 	free(line);
