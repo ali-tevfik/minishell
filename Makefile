@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/18 13:07:00 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/18 16:03:34 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,7 @@ UNITY_OPTIONS = -D UNITY_FIXTURE_NO_EXTRAS \
 
 # Source, tests, header and object files
 SRC_DIR = src
-SRC_FILES = minishell.c \
-			parser/tokenizer.c
+SRC_FILES = minishell.c
 
 TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
@@ -43,10 +42,11 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_tokenizer.c \
 				src/parser/tokenizer.c \
 				test/test_iterator_api.c \
-				src/parser/iterator_api.c
+				src/parser/iterator_api.c \
+				test/test_tokenizer_utils.c \
+				src/parser/tokenizer_utils.c
 
-HEADER_FILES = 	incl/minishell.h \
-				parser/tokenizer.h
+HEADER_FILES = 	incl/minishell.h
 
 OBJ_DIR = obj
 OBJ = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)

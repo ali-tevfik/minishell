@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 14:37:28 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/18 16:38:51 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,11 @@ TEST_GROUP_RUNNER(IteratorAPI)
 	RUN_TEST_CASE(IteratorAPI, HasNext);
 	RUN_TEST_CASE(IteratorAPI, Next);
 	RUN_TEST_CASE(IteratorAPI, Peek);
+}
+
+TEST_GROUP_RUNNER(TokenizerUtils)
+{
+	RUN_TEST_CASE(TokenizerUtils, TakeWordSimple0);
+	RUN_TEST_CASE(TokenizerUtils, TakeWordSimple1);
+	RUN_TEST_CASE(TokenizerUtils, TakeWordSimple2);
 }

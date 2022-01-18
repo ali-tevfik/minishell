@@ -5,3 +5,4 @@ debug_minishell
 a.out*
 test_minishell
 test_obj/
+.vscode/
