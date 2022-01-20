@@ -6,14 +6,14 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 15:34:28 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/20 17:31:05 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity_fixture.h"
 #include "../src/libft/libft.h"
-#include "../src/parser/tokenizer.h"
-#include "../src/parser/tokenizer_data_structs.h"
+#include "../src/tokenizer/tokenizer.h"
+#include "../src/tokenizer/tokenizer_data_structs.h"
 
 #include <stdio.h>
 

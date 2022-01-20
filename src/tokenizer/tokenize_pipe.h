@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   tokenize_pipe.h                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:33:26 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/20 15:18:19 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/20 15:32:53 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TOKENIZE_PIPE_H
+# define TOKENIZE_PIPE_H
 
 /* System headers */
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
 
 /* User defined header */
-# include "../src/libft/libft.h"
-# include "../src/tokenizer/tokenizer.h"
+# include "tokenizer_data_structs.h"
+# include "iterator_api.h"
+# include "tokenizer_utils.h"
+
+/* Macros */
+
+/* Data structures */
 
 /* Function prototypes */
+t_token	*take_pipe(t_char_iter *itr);
 
 #endif

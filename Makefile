@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/18 16:03:34 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/20 17:31:52 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,19 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_unity.c \
 				src/test_unity.c \
 				test/test_tokenizer.c \
-				src/parser/tokenizer.c \
+				src/tokenizer/tokenizer.c \
 				test/test_iterator_api.c \
-				src/parser/iterator_api.c \
+				src/tokenizer/iterator_api.c \
 				test/test_tokenizer_utils.c \
-				src/parser/tokenizer_utils.c
+				src/tokenizer/tokenizer_utils.c \
+				test/test_tokenize_pipe.c \
+				src/tokenizer/tokenize_pipe.c \
+				test/test_tokenize_word.c \
+				src/tokenizer/tokenize_word.c \
+				test/test_tokenize_redirection.c \
+				src/tokenizer/tokenize_redirection.c \
+				test/test_tokenize_dquotes.c \
+				src/tokenizer/tokenize_dquotes.c
 
 HEADER_FILES = 	incl/minishell.h
 
@@ -77,7 +85,7 @@ run: all
 
 # Build libft
 $(LIBFT):
-	@make -C $(LIBFT_DIR) bonus
+	@make -C $(LIBFT_DIR) bonus > /dev/null
 
 # Build normal
 $(OBJ_DIR):
@@ -124,12 +132,12 @@ $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
 
 clean:
 	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR)
-	@make -C $(LIBFT_DIR) clean
+	@make -C $(LIBFT_DIR) clean > /dev/null
 	@echo "$(RED) Deleted all object files.$(NORMAL)"
 
-fclean: clean
-	@rm -f $(NAME) $(DBG_NAME) $(TEST_NAME)
-	@make -C $(LIBFT_DIR) fclean
+fclean:
+	@rm -f $(NAME) $(DBG_NAME) $(TEdevST_NAME)
+	@make -C $(LIBFT_DIR) fclean > /dev/null
 	@echo "$(RED) Deleted all executables.$(NORMAL)"
 
 re: fclean all

@@ -6,25 +6,26 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:26:35 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 15:29:20 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/20 15:31:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_DATA_STRUCTS_H
 # define TOKENIZER_DATA_STRUCTS_H
 
+/* System headers */
+# include <stddef.h>
+
 /* Data structures for the tokenizer */
 typedef enum e_token_type
 {
+	ERROR = -1,
 	WORD,
 	PIPE,
-	REDIR_LEFT_ONCE,
-	REDIR_LEFT_TWICE,
-	REDIR_RIGHT_ONCE,
-	REDIR_RIGHT_TWICE,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-	ERROR,
+	REDIRECTION,
+	QUOTE,
+	DQUOTE,
+	SPACE
 }				t_token_type;
 
 typedef struct s_token

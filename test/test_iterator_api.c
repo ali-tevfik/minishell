@@ -6,12 +6,12 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 12:58:01 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 14:38:10 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/20 17:30:38 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity_fixture.h"
-#include "../src/parser/iterator_api.h"
+#include "../src/tokenizer/iterator_api.h"
 
 TEST_GROUP(IteratorAPI);
 

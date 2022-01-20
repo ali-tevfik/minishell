@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   tokenizer.c                                        :+:    :+:            */
+/*   tokenize_word.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 17:24:33 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/20 17:16:49 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "tokenize_word.h"
 
-t_list	*tokenize_input(char *input_string)
+t_token	*take_word(t_char_iter *itr)
 {
-	t_list		*token_list;
-	t_token		*token;
-	t_char_iter	itr;
+	int		len;
+	char	*start_token;
+	t_token	*token;
 
-	token_list = NULL;
-	itr = input_string;
-	while (has_next(itr))
+	len = 0;
+	start_token = *itr;
+	token = NULL;
+	while (has_next(*itr))
 	{
-		if (*itr == '|')
-			;
-		else if (*itr == '>')
-			;
-		else if (*itr == '<')
-			;
-		else if (*itr == '\'')
-			;
-		else if (*itr == '\"')
-			;
-		else
-		{
-			token = take_word(&itr);
-		}
+		if (is_char_a_delimiter(peek(*itr)) == true)
+			break ;
+		len++;
+		next(itr);
 	}
-	return (token_list);
+	token = create_token(start_token, len, WORD);
+	return (token);
 }

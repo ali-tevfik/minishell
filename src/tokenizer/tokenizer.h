@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/18 15:29:49 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/20 17:32:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "tokenizer_data_structs.h"
 # include "tokenizer_utils.h"
 # include "iterator_api.h"
+# include "tokenize_word.h"
 
 /* Data structures */
 

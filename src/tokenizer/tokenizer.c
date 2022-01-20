@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   all_tests.c                                        :+:    :+:            */
+/*   tokenizer.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:57:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:12:55 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/19 23:16:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "unity_fixture.h"
+#include "tokenizer.h"
 
-static void	run_all_tests(void)
+t_list	*tokenize_input(char *input_string)
 {
-	RUN_TEST_GROUP(AddNumbers);
-	RUN_TEST_GROUP(IteratorAPI);
-	RUN_TEST_GROUP(TokenizePipe);
-	RUN_TEST_GROUP(TokenizeWord);
-	RUN_TEST_GROUP(TokenizeRedirection);
-	RUN_TEST_GROUP(TokenizeDquotes);
-	//RUN_TEST_GROUP(TokenizerUtils);
-	RUN_TEST_GROUP(Tokenizer);
-}
+	t_list		*token_list;
+	t_token		*token;
+	t_char_iter	itr;
+	int			i;
 
-int	main(int argc, const char *argv[])
-{
-	return (UnityMain(argc, argv, run_all_tests));
+	i = 0;
+	token_list = NULL;
+	itr = input_string;
+	while (has_next(itr))
+	{
+		if (*itr == '|')
+			;
+		else
+		{
+			token = take_word(&itr);
+		}
+		if (i == 0)
+			token_list = ft_lstnew(token);
+		else
+			ft_lstadd_back(&token_list, ft_lstnew(token));
+	}
+	return (token_list);
 }
