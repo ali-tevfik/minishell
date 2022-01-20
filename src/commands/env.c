@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   commands.h                                         :+:    :+:            */
+/*   env.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 15:56:45 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/20 15:11:35 by adoner        ########   odam.nl         */
+/*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
+/*   Updated: 2022/01/20 15:12:50 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMANDS_H
-# define COMMANDS_H
+#include "../../incl/commands.h"
+#include "../../incl/minishell.h"
 
-# include "minishell.h"
-# include <errno.h>
-# define PATH_MAX 1024
+void	env_commands(char *envp[])
+{
+	int	i;
 
-void	cd_command(char *where);
-void	pwd_command(void);
-char	*skip_space(char *s);
-void	echo_command(char *text);
-int		skip_space_start(char *s);
-void	env_commands(char *envp[]);
-# endif
+	i = 0;
+	while(envp[i])
+	{
+		printf("%s\n",envp[i]);
+		i++;
+	}
+}
