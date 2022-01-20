@@ -6,14 +6,15 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:55:55 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/18 15:20:57 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/20 13:31:08 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
 
-char *skip_space(char *s)
+
+int		skip_space_start(char *s)
 {
 	int	i;
 
@@ -26,5 +27,36 @@ char *skip_space(char *s)
 		else
 			break ;
 	}
-	return ((s+i));
+	return (i);
 }
+
+int		skip_space_end(char *s)
+{
+	int	i;
+
+	i = ft_strlen(s) - 1;
+	while (*(s + i) != '\0')
+	{
+		if (*(s + i) == '\t' || *(s + i) == '\n' || *(s + i) == '\f'
+			|| *(s + i) == '\r' || *(s + i) == '\v' || *(s + i) == ' ')
+			i--;
+		else
+			break ;
+	}
+	return (i);
+}
+
+char	*skip_space(char *s)
+{
+	char	*new;
+	int		start;
+	int		end;
+
+	start = skip_space_start(s);
+	end = skip_space_end(s);
+	new = ft_substr(s, start, end - start + 1);
+	if (!new)
+		exit(0);
+	return (new);
+}
+
