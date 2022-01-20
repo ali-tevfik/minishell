@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/01/18 15:56:37 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/20 12:29:47 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(void)
 		}
 		else if (ft_strncmp(line, "pwd", 3) == 0)
 			pwd_command();
+		else if (ft_strncmp(line, "exit", 4) == 0)
+			exit (0);
 		free(line);
 	}
 	free(line);
