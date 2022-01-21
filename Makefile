@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/20 17:31:52 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/21 11:41:20 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,9 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_tokenize_redirection.c \
 				src/tokenizer/tokenize_redirection.c \
 				test/test_tokenize_dquotes.c \
-				src/tokenizer/tokenize_dquotes.c
+				src/tokenizer/tokenize_dquotes.c \
+				test/test_tokenize_quotes.c \
+				src/tokenizer/tokenize_quotes.c
 
 HEADER_FILES = 	incl/minishell.h
 

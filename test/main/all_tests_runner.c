@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:26:15 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/21 16:33:20 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ TEST_GROUP_RUNNER(AddNumbers)
 
 TEST_GROUP_RUNNER(Tokenizer)
 {
-	RUN_TEST_CASE(Tokenizer, SimpleInput);
+	RUN_TEST_CASE(Tokenizer, Command);
 	RUN_TEST_CASE(Tokenizer, CommandPlusArgument);
+	RUN_TEST_CASE(Tokenizer, MultipleCommandsPlusArgumentsWithPipes);
+	RUN_TEST_CASE(Tokenizer, CommandPlusRedirection);
+	RUN_TEST_CASE(Tokenizer, CommandPlusRedirectionPlusPipes);
 }
 
 TEST_GROUP_RUNNER(IteratorAPI)
@@ -51,6 +54,7 @@ TEST_GROUP_RUNNER(TokenizeRedirection)
 	RUN_TEST_CASE(TokenizeRedirection, TakeRedirRightTriple);
 	RUN_TEST_CASE(TokenizeRedirection, TakeRedirLeftOnce);
 	RUN_TEST_CASE(TokenizeRedirection, TakeRedirLeftTwice);
+	RUN_TEST_CASE(TokenizeRedirection, TakeRedirLeftRight);
 }
 
 TEST_GROUP_RUNNER(TokenizeDquotes)
@@ -59,15 +63,10 @@ TEST_GROUP_RUNNER(TokenizeDquotes)
 	RUN_TEST_CASE(TokenizeDquotes, TakeDoubleQuotesSimple1);
 	RUN_TEST_CASE(TokenizeDquotes, TakeDoubleQuotesNoClosingQuote);
 	RUN_TEST_CASE(TokenizeDquotes, TakeDoubleQuotesBackToBack);
-	// RUN_TEST_CASE(TokenizeDquotes, TakeDoubleQuotesNestedHard0);
-	// RUN_TEST_CASE(TokenizeDquotes, TakeDoubleQuotesNestedHard1);
 }
 
-TEST_GROUP_RUNNER(TokenizerUtils)
+TEST_GROUP_RUNNER(TokenizeQuotes)
 {
-	// RUN_TEST_CASE(TokenizerUtils, TakeDoubleQuotesSimple0);
-	// RUN_TEST_CASE(TokenizerUtils, TakeDoubleQuotesSimple1);
-	// RUN_TEST_CASE(TokenizerUtils, TakeDoubleQuotesNoClosingQuote);
-	// RUN_TEST_CASE(TokenizerUtils, TakeDoubleQuotesNestedHard0);
-	// RUN_TEST_CASE(TokenizerUtils, TakeDoubleQuotesNestedHard1);
+	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesSimple0);
+	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesSimple1);
 }

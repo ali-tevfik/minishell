@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   tokenizer.h                                        :+:    :+:            */
+/*   tokenize_quotes.h                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/17 13:41:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/21 12:03:11 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/21 11:34:21 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/21 18:16:30 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
+#ifndef TOKENIZE_QUOTES_H
+# define TOKENIZE_QUOTES_H
 
 /* System headers */
-# include <stdio.h>
-# include <stdlib.h>
 
 /* User defined header */
 # include "../libft/libft.h"
 # include "tokenizer_data_structs.h"
-# include "tokenizer_utils.h"
 # include "iterator_api.h"
-# include "tokenize_word.h"
-# include "tokenize_pipe.h"
-# include "tokenize_quotes.h"
-# include "tokenize_dquotes.h"
-# include "tokenize_redirection.h"
+# include "tokenizer_utils.h"
 
 /* Data structures */
 
 /* Function prototypes */
-t_list	*tokenize_input(char *input_string);
+t_token	*take_single_quotes(t_char_iter *itr);
 
 #endif

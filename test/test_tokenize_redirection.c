@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:48:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:30:49 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/21 11:33:43 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,36 @@ TEST(TokenizeRedirection, TakeRedirLeftTwice)
 	actual_token = take_redirection(&itr);
 	expected_token->content = input;
 	expected_token->len_content = 2;
+	expected_token->type = REDIRECTION;
+
+	/* Compare structs */
+	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('o', *itr);
+}
+
+TEST(TokenizeRedirection, TakeRedirLeftRight)
+{
+	t_char_iter	itr;
+	char		*input = "<>out_file";
+
+	itr = input;
+	actual_token = take_redirection(&itr);
+	expected_token->content = input;
+	expected_token->len_content = 1;
+	expected_token->type = REDIRECTION;
+
+	/* Compare structs */
+	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('>', *itr);
+
+	free(actual_token);
+	actual_token = take_redirection(&itr);
+	expected_token->content = input + 1;
+	expected_token->len_content = 1;
 	expected_token->type = REDIRECTION;
 
 	/* Compare structs */
