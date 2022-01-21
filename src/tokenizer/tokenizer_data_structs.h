@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:26:35 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 15:31:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/20 17:56:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum e_token_type
 	REDIRECTION,
 	QUOTE,
 	DQUOTE,
-	SPACE
+	BLANK
 }				t_token_type;
 
 typedef struct s_token
