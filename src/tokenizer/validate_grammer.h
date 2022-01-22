@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   tokenizer_data_structs.h                           :+:    :+:            */
+/*   validate_grammer.h                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 15:26:35 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/22 18:00:12 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/22 18:18:46 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/22 22:00:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_DATA_STRUCTS_H
-# define TOKENIZER_DATA_STRUCTS_H
+#ifndef VALIDATE_GRAMMER_H
+# define VALIDATE_GRAMMER_H
 
 /* System headers */
-# include <stddef.h>
+# include <stdbool.h>
+# include <stdio.h>
 
-/* Data structures for the tokenizer */
-typedef enum e_token_type
-{
-	ERROR = -1,
-	WORD,
-	PIPE,
-	REDIRECTION,
-	QUOTE,
-	DQUOTE
-}				t_token_type;
+/* User defined header */
+# include "../libft/libft.h"
+# include "tokenizer_data_structs.h"
+# include "iterator_api.h"
 
-typedef struct s_token
-{
-	char			*content;
-	size_t			len_content;
-	t_token_type	type;
-}				t_token;
+/* Macros */
+
+/* Data structures */
+
+/* Function prototypes */
+bool	validate_grammer(t_list *token_list);
 
 #endif

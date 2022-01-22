@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/21 16:33:20 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/22 22:17:06 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ TEST_GROUP_RUNNER(Tokenizer)
 {
 	RUN_TEST_CASE(Tokenizer, Command);
 	RUN_TEST_CASE(Tokenizer, CommandPlusArgument);
+	RUN_TEST_CASE(Tokenizer, CommandPlusArgumentStartingWithSomeSpaces);
 	RUN_TEST_CASE(Tokenizer, MultipleCommandsPlusArgumentsWithPipes);
 	RUN_TEST_CASE(Tokenizer, CommandPlusRedirection);
 	RUN_TEST_CASE(Tokenizer, CommandPlusRedirectionPlusPipes);
+	RUN_TEST_CASE(Tokenizer, CommandPlusDquotes);
+	RUN_TEST_CASE(Tokenizer, CommandPlusDquotesPlusPipes);
+	RUN_TEST_CASE(Tokenizer, CommandPlusQuotes);
+	RUN_TEST_CASE(Tokenizer, CommandPlusUnclosedQuotes);
+	RUN_TEST_CASE(Tokenizer, MultiplePipesBackToBack);
 }
 
 TEST_GROUP_RUNNER(IteratorAPI)
@@ -69,4 +75,12 @@ TEST_GROUP_RUNNER(TokenizeQuotes)
 {
 	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesSimple0);
 	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesSimple1);
+}
+
+TEST_GROUP_RUNNER(CheckGrammer)
+{
+	RUN_TEST_CASE(CheckGrammer, PipesBackToBack);
+	RUN_TEST_CASE(CheckGrammer, RedirectionBeforePipe);
+	RUN_TEST_CASE(CheckGrammer, RedirectionAfterPipe);
+	RUN_TEST_CASE(CheckGrammer, CorrectGrammer);
 }
