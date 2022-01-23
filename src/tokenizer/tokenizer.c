@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/22 22:22:58 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/23 21:45:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ static bool	take_correct_token(t_token **single_token, t_char_iter *itr)
 	{
 		next(itr);
 		return (true);
+	}
+	else if (**itr == '&' || **itr == ';')
+	{
+		*single_token = create_token(*itr, 1, ERROR);
+		next(itr);
 	}
 	else
 		*single_token = take_word(itr);

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:04:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/23 12:31:40 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/23 21:44:56 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,24 @@ TEST(CheckGrammer, RedirectionAfterPipe)
 TEST(CheckGrammer, RedirectionAfterRedirection)
 {
 	char	*input = "grep codam | > >> file_out ls -l";
+	t_list	*actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, ErrorTokenAmpersandInList)
+{
+	char	*input = "grep codam & ls -l > file_out";
+	t_list	*actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, ErrorTokenSemiColonInList)
+{
+	char	*input = "grep codam ; ls -l > file_out";
 	t_list	*actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
