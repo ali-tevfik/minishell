@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cd.c                                               :+:    :+:            */
+/*   env.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/20 14:44:49 by adoner        ########   odam.nl         */
+/*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
+/*   Updated: 2022/01/20 15:12:50 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
 
-void	cd_command(char *where)
+void	env_commands(char *envp[])
 {
-	int	result = 0;
+	int	i;
 
-	// printf("[%s]\n",skip_space(where + 2));
-	result = chdir(skip_space(where + 2));
-	if (result == -1)
-		perror("Error: ");
+	i = 0;
+	while(envp[i])
+	{
+		printf("%s\n",envp[i]);
+		i++;
+	}
 }
