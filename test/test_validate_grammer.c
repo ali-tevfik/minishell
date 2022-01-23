@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:04:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/22 21:58:34 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/23 12:31:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ TEST(CheckGrammer, RedirectionAfterPipe)
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_TRUE(result);
+}
+
+TEST(CheckGrammer, RedirectionAfterRedirection)
+{
+	char	*input = "grep codam | > >> file_out ls -l";
+	t_list	*actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
 }
 
 TEST(CheckGrammer, CorrectGrammer)
