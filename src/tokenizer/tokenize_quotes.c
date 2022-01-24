@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/21 11:35:19 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/21 18:16:13 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/24 11:42:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_token	*take_single_quotes(t_char_iter *itr)
 		if (peek(*itr) == '\'')
 		{
 			len++;
-			token = create_token(start_input, len, QUOTE);
 			next(itr);
+			token = create_token(start_input, len, QUOTE);
 			return (token);
 		}
 		len++;
