@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/22 22:22:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/24 11:02:11 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <stdio.h>
 
 /* Variables */
+t_list		*actual_list;
 t_list		*expected_list;
 
 TEST_GROUP(Tokenizer);
@@ -35,13 +36,15 @@ TEST_SETUP(Tokenizer)
 
 TEST_TEAR_DOWN(Tokenizer)
 {
+	ft_lstclear(&actual_list, free_token);
+	ft_lstclear(&expected_list, free_token);
 }
 
 TEST(Tokenizer, Command)
 {
 	char	*input = "ls";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	token = create_token(input, 2, WORD);
 	expected_list = ft_lstnew(token);
@@ -58,7 +61,7 @@ TEST(Tokenizer, CommandPlusArgument)
 {
 	char	*input = "ls -l";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	token = create_token(input, 2, WORD);
 	expected_list = ft_lstnew(token);
@@ -68,7 +71,7 @@ TEST(Tokenizer, CommandPlusArgument)
 
 	/* Compare the length of the linked lists. */
 	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: \"ls\"");
+	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: \"ls -l\"");
 
 	/* Compare elements of the linked lists */
 	TEST_ASSERT_EQUAL_MEMORY(expected_list->content, actual_list->content, sizeof(t_token));
@@ -79,7 +82,7 @@ TEST(Tokenizer, CommandPlusArgumentStartingWithSomeSpaces)
 {
 	char	*input = "   ls -l";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	token = create_token(input + 3, 2, WORD);
 	expected_list = ft_lstnew(token);
@@ -100,7 +103,7 @@ TEST(Tokenizer, MultipleCommandsPlusArgumentsWithPipes)
 {
 	char	*input = "ls -l | grep codam | wc -l";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 2, WORD);					/* ls */
@@ -148,7 +151,7 @@ TEST(Tokenizer, CommandPlusRedirection)
 {
 	char	*input = "< input_file hahah";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 1, REDIRECTION);
@@ -181,7 +184,7 @@ TEST(Tokenizer, CommandPlusRedirectionPlusPipes)
 {
 	char	*input = "< ls -l -a ~/Desktop | wc -l > outfile";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 1, REDIRECTION);		/* < */
@@ -235,7 +238,7 @@ TEST(Tokenizer, CommandPlusDquotes)
 {
 	char	*input = "echo \"$HOME\"";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 4, WORD);
@@ -265,7 +268,7 @@ TEST(Tokenizer, CommandPlusDquotesPlusPipes)
 {
 	char	*input = "echo \"$HOME\" | grep \"codam amsterdam\"";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 4, WORD);
@@ -304,7 +307,7 @@ TEST(Tokenizer, CommandPlusQuotes)
 {
 	char	*input = "echo \'$HOME\'";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 4, WORD);
@@ -334,7 +337,7 @@ TEST(Tokenizer, CommandPlusUnclosedQuotes)
 {
 	char	*input = "echo \'hilmi | wc -l";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 4, WORD);
@@ -364,7 +367,7 @@ TEST(Tokenizer, MultiplePipesBackToBack)
 {
 	char	*input = "|| |||";
 	t_token	*token;
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
 	token = create_token(input, 1, PIPE);

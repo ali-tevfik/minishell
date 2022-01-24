@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:04:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/23 21:44:56 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/24 10:50:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 #include <stdio.h>
 
 /* Variables */
-t_list		*expected_list;
+t_list	*actual_list;
 
 TEST_GROUP(CheckGrammer);
 
@@ -43,12 +43,13 @@ TEST_SETUP(CheckGrammer)
 
 TEST_TEAR_DOWN(CheckGrammer)
 {
+	ft_lstclear(&actual_list, free_token);
 }
 
 TEST(CheckGrammer, PipesBackToBack)
 {
 	char	*input = "ls || grep codam";
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -57,7 +58,7 @@ TEST(CheckGrammer, PipesBackToBack)
 TEST(CheckGrammer, RedirectionBeforePipe)
 {
 	char	*input = "grep codam > | ls -l";
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -66,7 +67,7 @@ TEST(CheckGrammer, RedirectionBeforePipe)
 TEST(CheckGrammer, RedirectionAfterPipe)
 {
 	char	*input = "grep codam | > file_out ls -l";	/* Same as ls -l > file_out */
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_TRUE(result);
@@ -75,7 +76,7 @@ TEST(CheckGrammer, RedirectionAfterPipe)
 TEST(CheckGrammer, RedirectionAfterRedirection)
 {
 	char	*input = "grep codam | > >> file_out ls -l";
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -84,7 +85,7 @@ TEST(CheckGrammer, RedirectionAfterRedirection)
 TEST(CheckGrammer, ErrorTokenAmpersandInList)
 {
 	char	*input = "grep codam & ls -l > file_out";
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -93,16 +94,34 @@ TEST(CheckGrammer, ErrorTokenAmpersandInList)
 TEST(CheckGrammer, ErrorTokenSemiColonInList)
 {
 	char	*input = "grep codam ; ls -l > file_out";
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
 }
 
-TEST(CheckGrammer, CorrectGrammer)
+TEST(CheckGrammer, CorrectGrammer0)
 {
 	char	*input = "< infile ls -l > files | grep codam | wc -l > outfile";
-	t_list	*actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_TRUE(result);
+}
+
+TEST(CheckGrammer, CorrectGrammer1)
+{
+	char	*input = "ls > ls.out -la";
+	actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_TRUE(result);
+}
+
+TEST(CheckGrammer, CorrectGrammer2)
+{
+	char	*input = "> ls.out ls -la";
+	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_TRUE(result);

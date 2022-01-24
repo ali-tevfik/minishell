@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:39 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/21 16:17:56 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/24 11:02:22 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /* System headers */
 # include <stdio.h>
 # include <stdbool.h>
+# include <stdlib.h>
 
 /* User defined header */
 # include "../libft/libft.h"
@@ -27,8 +28,8 @@
 /* Function prototypes */
 bool	is_char_a_delimiter(char c);
 t_token	*create_token(char *content, size_t len_content, t_token_type type);
+void	free_token(void *token);
 int		ft_isspace(int c);
-void	print_token(t_token *token);
 void	print_token_list(t_list *token_list);
 
 #endif 

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/21 18:16:45 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/24 11:02:16 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,17 @@ t_token	*create_token(char *content, size_t len_content, t_token_type type)
 	return (token);
 }
 
+void	free_token(void *token)
+{
+	free((t_token *)token);
+}
+
 int	ft_isspace(int c)
 {
 	if (c == '\f' || c == '\n' || c == '\r' || c == '\t' || \
 		c == '\v' || c == ' ')
 		return (1);
 	return (0);
-}
-
-void	print_token(t_token *token)
-{
-	printf("content     = %s\n", token->content);
-	printf("len_content = %zu\n", token->len_content);
-	printf("type        = %d\n", token->type);
 }
 
 void	print_token_list(t_list *token_list)
@@ -62,7 +60,9 @@ void	print_token_list(t_list *token_list)
 	head = token_list;
 	while (1)
 	{
-		print_token(head->content);
+		printf("content     = %s\n", ((t_token *)(head->content))->content);
+		printf("len_content = %zu\n", ((t_token *)(head->content))->len_content);
+		printf("type        = %d\n", ((t_token *)(head->content))->type);
 		printf("\n");
 		if (head->next == NULL)
 			return ;
