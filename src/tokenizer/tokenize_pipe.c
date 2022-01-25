@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   tokenize_pipe.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 15:29:14 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/20 15:18:03 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/20 17:16:21 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "tokenize_pipe.h"
 
-/* System headers */
-# include <stdio.h>
-# include<unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include "../src/libft/libft.h"
-# include "commands.h"
+t_token	*take_pipe(t_char_iter *itr)
+{
+	t_token	*token;
 
-#endif
+	token = create_token(*itr, 1, PIPE);
+	next(itr);
+	return (token);
+}

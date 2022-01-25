@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   tokenize_dquotes.h                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 15:29:14 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/20 17:06:37 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/20 17:08:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TOKENIZE_DQUOTES_H
+# define TOKENIZE_DQUOTES_H
 
 /* System headers */
-# include <stdio.h>
-# include<unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include "../src/libft/libft.h"
-# include "commands.h"
+
+/* User defined header */
+# include "tokenizer_data_structs.h"
+# include "iterator_api.h"
+# include "tokenizer_utils.h"
+
+/* Macros */
+
+/* Data structures */
+
+/* Function prototypes */
+t_token	*take_double_quotes(t_char_iter *itr);
 
 #endif

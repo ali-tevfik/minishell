@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   validate_grammer.h                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 15:29:14 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/22 18:18:46 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/22 22:00:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef VALIDATE_GRAMMER_H
+# define VALIDATE_GRAMMER_H
 
 /* System headers */
+# include <stdbool.h>
 # include <stdio.h>
-# include<unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include "../src/libft/libft.h"
-# include "commands.h"
+
+/* User defined header */
+# include "../libft/libft.h"
+# include "tokenizer_data_structs.h"
+# include "iterator_api.h"
+
+/* Macros */
+
+/* Data structures */
+
+/* Function prototypes */
+bool	validate_grammer(t_list *token_list);
 
 #endif

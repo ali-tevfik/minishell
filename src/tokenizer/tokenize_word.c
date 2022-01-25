@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   tokenize_word.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 15:29:14 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/20 17:16:49 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "tokenize_word.h"
 
-/* System headers */
-# include <stdio.h>
-# include<unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include "../src/libft/libft.h"
-# include "commands.h"
+t_token	*take_word(t_char_iter *itr)
+{
+	int		len;
+	char	*start_token;
+	t_token	*token;
 
-#endif
+	len = 0;
+	start_token = *itr;
+	token = NULL;
+	while (has_next(*itr))
+	{
+		if (is_char_a_delimiter(peek(*itr)) == true)
+			break ;
+		len++;
+		next(itr);
+	}
+	token = create_token(start_token, len, WORD);
+	return (token);
+}
