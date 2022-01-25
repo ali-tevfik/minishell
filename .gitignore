@@ -1,0 +1,7 @@
+obj/
+dbg_obj/
+minishell
+debug_minishell
+a.out
+test_minishell
+test_obj/

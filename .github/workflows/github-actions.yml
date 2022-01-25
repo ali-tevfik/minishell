@@ -1,0 +1,23 @@
+name: minishell
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v2 # Checkout the repository content to github runner.
+      with:
+        submodules: recursive
+
+    - name: Welcome message
+      run: echo Welcome to minishell!
+
+    - name: build release
+      run: make all
+
+    - name: run unit-tests
+      run: make test_run
