@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/24 21:42:47 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/25 12:00:24 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFile)
 	size_t	location_token = 0;
 	actual_command = create_simple_command_up_until_pipe_token(token_list, &location_token);
 
-	/* Check token location, should be at grep , so 6th token (5th if starting from 0)*/
+	/* Check token location, should be at grep , so 6th token (5th if starting from 0) */
 	TEST_ASSERT_EQUAL_size_t(5, location_token);
 
 	/* Check length of both command arrays */
@@ -124,8 +124,35 @@ TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFile)
 
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListNoPipe)
+TEST(ParserUtils, CreateCommandFromTokenListNoPipeNoRedirection)
 {
-	TEST_IGNORE();
-	//char	*input = "ls -l";
+	char	*input = "ls -l";
+
+	/* Tokenize input */
+	token_list = tokenize_input(input);
+
+	/* Expected command from tokens */
+	expected_command = ft_calloc(1, sizeof(t_command));
+	expected_command->command = ft_calloc(3, sizeof(char *));
+	expected_command->filename = NULL;
+	expected_command->redirection_operator = NONE;
+
+	/* Actual command from tokens */
+	size_t	location_token = 0;
+	actual_command = create_simple_command_up_until_pipe_token(token_list, &location_token);
+
+	/* End of tokenlist will be reached, so location should be 2 */
+	TEST_ASSERT_EQUAL_size_t(2, location_token);
+
+	/* Check length of both command arrays */
+	size_t	actual_len = len_string_array(actual_command->command);
+	size_t	expected_len = len_string_array(expected_command->command);
+	TEST_ASSERT_EQUAL_size_t(expected_len, actual_len);
+
+	/* Check 2D command array */
+	TEST_ASSERT_EQUAL_STRING_ARRAY(expected_command->command, actual_command->command, expected_len);
+
+	/* Check filename and redirection operator */
+	TEST_ASSERT_EQUAL_INT(expected_command->redirection_operator, actual_command->redirection_operator);
+	TEST_ASSERT_EQUAL_STRING(expected_command->filename, actual_command->filename);
 }

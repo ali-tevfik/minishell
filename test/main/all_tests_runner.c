@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/24 21:43:02 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/25 12:02:21 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,5 @@ TEST_GROUP_RUNNER(ParserUtils)
 {
 	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenList);
 	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFile);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListNoPipe);
+	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListNoPipeNoRedirection);
 }

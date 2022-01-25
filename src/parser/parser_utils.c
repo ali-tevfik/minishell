@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 11:40:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/25 12:25:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static size_t	number_command_tokens(t_list *token_list)
 	size_t	i;
 
 	i = 0;
-	while (((t_token *)(token_list->content))->type != PIPE)
+	while (token_list != NULL && ((t_token *)(token_list->content))->type != PIPE)
 	{
 		if (((t_token *)(token_list->content))->type == REDIRECTION)
 		{
@@ -36,35 +36,6 @@ static size_t	number_command_tokens(t_list *token_list)
 	}
 	return (i);
 }
-
-/*
-**if (((t_token *)(element->content))->type == REDIRECTION)
-**{
-**	if (*(((t_token *)(element->content))->content) == '>' && \
-**		((t_token *)(element->content))->len_content == 1)				
-**
-**		command->redirection_operator = OUT;
-**	else if (*(((t_token *)(element->content))->content) == '>' && \
-**		((t_token *)(element->content))->len_content == 2)				
-**
-**		command->redirection_operator = APPEND;
-**	else if (*(((t_token *)(element->content))->content) == '<' && \
-**		((t_token *)(element->content))->len_content == 1)				
-**
-**		command->redirection_operator = READ;
-**	else																
-**
-**		command->redirection_operator = HERE_DOC;
-**	element = element->next;
-**	Now I am at filename
-**	command->filename = ft_substr(((t_token *)(element->content))->content, 0, \
-**								((t_token *)(element->content))->len_content);
-**	*location += 2;
-**	element = element->next;
-**	Now at pipe
-**	continue ;
-**  }
-*/
 
 t_command	*create_simple_command_up_until_pipe_token(t_list *token_list, \
 														size_t *location)
@@ -81,8 +52,29 @@ t_command	*create_simple_command_up_until_pipe_token(t_list *token_list, \
 	command->redirection_operator = NONE;
 	element = token_list;
 	i = 0;
-	while (((t_token *)(element->content))->type != PIPE)
+	while (element != NULL && ((t_token *)(element->content))->type != PIPE)
 	{
+		if (((t_token *)(element->content))->type == REDIRECTION)
+		{
+			if (*(((t_token *)(element->content))->content) == '>' && \
+				((t_token *)(element->content))->len_content == 1)
+				command->redirection_operator = OUT;
+			else if (*(((t_token *)(element->content))->content) == '>' && \
+				((t_token *)(element->content))->len_content == 2)
+				command->redirection_operator = APPEND;
+			else if (*(((t_token *)(element->content))->content) == '<' && \
+				((t_token *)(element->content))->len_content == 1)
+				command->redirection_operator = READ;
+			else
+				command->redirection_operator = HERE_DOC;
+			element = element->next;
+			/* Now at filename */
+			command->filename = ft_substr(((t_token *)(element->content))->content, 0, \
+										((t_token *)(element->content))->len_content);
+			*location += 2;
+			element = element->next;
+			continue ;
+		}
 		command->command[i] = ft_substr(
 				((t_token *)(element->content))->content, 0, \
 				((t_token *)(element->content))->len_content);
@@ -91,6 +83,7 @@ t_command	*create_simple_command_up_until_pipe_token(t_list *token_list, \
 		i++;
 	}
 	command->command[i] = NULL;
-	*location += 1;
+	if (element != NULL && ((t_token *)(element->content))->type == PIPE)
+		*location += 1;
 	return (command);
 }
