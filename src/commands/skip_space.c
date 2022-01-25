@@ -6,15 +6,14 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:55:55 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/20 13:31:08 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/21 19:09:03 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
 
-
-int		skip_space_start(char *s)
+int	skip_space_start(char *s)
 {
 	int	i;
 
@@ -30,7 +29,7 @@ int		skip_space_start(char *s)
 	return (i);
 }
 
-int		skip_space_end(char *s)
+int	skip_space_end(char *s)
 {
 	int	i;
 
@@ -59,4 +58,3 @@ char	*skip_space(char *s)
 		exit(0);
 	return (new);
 }
-
