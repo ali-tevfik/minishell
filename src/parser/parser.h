@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
+/*   parser.h                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
+/*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/01/24 12:34:30 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/24 16:50:14 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/24 16:51:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-int	main(void)
-{
-	char	*line;
+/* System headers */
 
-	while (1)
-	{
-		line = readline("> ");
-		if ('-' == line[0] && '1' == line[1])
-			break ;
-		free(line);
-	}
-	free(line);
-	return (0);
-}
+/* User defined header */
+# include "../libft/libft.h"
+# include "parser_data_structs.h"
+
+/* Macros */
+
+/* Data structures */
+
+/* Function prototypes */
+
+#endif

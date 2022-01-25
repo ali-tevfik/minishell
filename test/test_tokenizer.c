@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/24 11:02:11 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/24 17:52:51 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,6 +388,45 @@ TEST(Tokenizer, MultiplePipesBackToBack)
 	/* Compare the length of the linked lists. */
 	int actual_len = ft_lstsize(actual_list);
 	TEST_ASSERT_EQUAL_INT_MESSAGE(5, actual_len, "Input: || |||");
+
+	/* Compare elements of the linked lists */
+	t_list	*expected_head = expected_list;
+	t_list	*actual_head = actual_list;
+	while (1)
+	{
+		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
+		if (expected_head->next == NULL)
+			break ;
+		expected_head = expected_head->next;
+		actual_head = actual_head->next;
+	}
+}
+
+TEST(Tokenizer, WeirdSpacing)
+{
+	char	*input = "\techo   hilmi|grep   \t codam";
+	t_token	*token;
+	actual_list = tokenize_input(input);
+
+	/* Create the expected token */
+	token = create_token(input + 1, 4, WORD);			/* echo */
+	expected_list = ft_lstnew(token);
+
+	token = create_token(input + 8, 5, WORD);			/* hilmi */
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(input + 13, 1, PIPE);			/* | */
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(input + 14, 4, WORD);			/* grep */
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(input + 23, 5, WORD);			/* codam */
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare the length of the linked lists. */
+	int actual_len = ft_lstsize(actual_list);
+	TEST_ASSERT_EQUAL_INT_MESSAGE(5, actual_len, "Input: \\techo   hilmi|grep   \\t codam");
 
 	/* Compare elements of the linked lists */
 	t_list	*expected_head = expected_list;

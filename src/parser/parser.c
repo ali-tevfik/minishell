@@ -1,28 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
+/*   parser.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
+/*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/01/24 12:34:30 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/24 17:34:15 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/25 11:29:36 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
-
-int	main(void)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = readline("> ");
-		if ('-' == line[0] && '1' == line[1])
-			break ;
-		free(line);
-	}
-	free(line);
-	return (0);
-}
+#include "parser.h"

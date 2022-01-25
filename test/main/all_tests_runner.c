@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/23 22:47:10 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/24 21:43:02 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ TEST_GROUP_RUNNER(AddNumbers)
 	RUN_TEST_CASE(AddNumbers, Simple);
 	RUN_TEST_CASE(AddNumbers, ABC);
 }
+
+/* Tokenizer */
 
 TEST_GROUP_RUNNER(Tokenizer)
 {
@@ -31,6 +33,7 @@ TEST_GROUP_RUNNER(Tokenizer)
 	RUN_TEST_CASE(Tokenizer, CommandPlusQuotes);
 	RUN_TEST_CASE(Tokenizer, CommandPlusUnclosedQuotes);
 	RUN_TEST_CASE(Tokenizer, MultiplePipesBackToBack);
+	RUN_TEST_CASE(Tokenizer, WeirdSpacing);
 }
 
 TEST_GROUP_RUNNER(IteratorAPI)
@@ -88,4 +91,12 @@ TEST_GROUP_RUNNER(CheckGrammer)
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer0);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer1);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer2);
+}
+
+/* Parser */
+TEST_GROUP_RUNNER(ParserUtils)
+{
+	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenList);
+	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFile);
+	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListNoPipe);
 }
