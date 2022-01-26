@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 16:44:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 11:30:15 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/26 13:09:00 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ typedef enum e_redir_type
 typedef struct s_command
 {
 	char			**command;
-	char			*filename;
-	t_redir_type	redirection_operator;
+	char			*in_file;
+	char			*out_file;
+	t_redir_type	redirection_operator_in;
+	t_redir_type	redirection_operator_out;
 }				t_command;
 
 typedef struct s_pipeline
