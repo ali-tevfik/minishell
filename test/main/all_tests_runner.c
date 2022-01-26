@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/26 13:04:32 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/26 18:58:36 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ TEST_GROUP_RUNNER(CheckGrammer)
 	RUN_TEST_CASE(CheckGrammer, RedirectionAfterRedirection);
 	RUN_TEST_CASE(CheckGrammer, ErrorTokenAmpersandInList);
 	RUN_TEST_CASE(CheckGrammer, ErrorTokenSemiColonInList);
+	RUN_TEST_CASE(CheckGrammer, OnlyPipeToken);
+	RUN_TEST_CASE(CheckGrammer, OnlyRedirectionToken);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer0);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer1);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer2);
@@ -103,4 +105,9 @@ TEST_GROUP_RUNNER(ParserUtils)
 	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand);
 	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand);
 	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand);
+}
+
+TEST_GROUP_RUNNER(CreateParseList)
+{
+	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipes);
 }

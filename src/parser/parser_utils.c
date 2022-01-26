@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/26 14:00:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/26 19:02:42 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,26 @@ t_command	*init_command(t_list *token_list)
 static int	handle_redirection_tokens(t_command *command, t_list **element, \
 										size_t *location)
 {
-	t_token	*current_token;
-	
-	current_token = (t_token *)((*element)->content);
-	if (*(current_token->content) == '>' && current_token->len_content == 1)
+	t_token	*current_tkn;
+
+	current_tkn = (t_token *)((*element)->content);
+	if (*(current_tkn->content) == '>' && current_tkn->len_content == 1)
 		command->redirection_operator_out = OUT;
-	else if (*(current_token->content) == '>' && current_token->len_content == 2)
+	else if (*(current_tkn->content) == '>' && current_tkn->len_content == 2)
 		command->redirection_operator_out = APPEND;
-	else if (*(current_token->content) == '<' && current_token->len_content == 1)
+	else if (*(current_tkn->content) == '<' && current_tkn->len_content == 1)
 		command->redirection_operator_in = READ;
 	else
 		command->redirection_operator_in = HERE_DOC;
 	*element = (*element)->next;
-	if (*(current_token->content) == '<')
-		command->in_file = ft_substr(((t_token *)((*element)->content))->content, \
-								0, ((t_token *)((*element)->content))->len_content);
-	else if (*(current_token->content) == '>')
-		command->out_file = ft_substr(((t_token *)((*element)->content))->content, \
-								0, ((t_token *)((*element)->content))->len_content);
+	if (*(current_tkn->content) == '<')
+		command->in_file = ft_substr(
+				((t_token *)((*element)->content))->content, \
+				0, ((t_token *)((*element)->content))->len_content);
+	else if (*(current_tkn->content) == '>')
+		command->out_file = ft_substr(
+				((t_token *)((*element)->content))->content, \
+				0, ((t_token *)((*element)->content))->len_content);
 	*location += 2;
 	*element = (*element)->next;
 	return (1);

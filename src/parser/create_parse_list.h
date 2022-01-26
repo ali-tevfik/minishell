@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   create_parse_tree.h                                :+:    :+:            */
+/*   create_parse_list.h                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 13:00:30 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/26 13:01:36 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/26 19:03:00 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CREATE_PARSE_TREE
-# define CREATE_PARSE_TREE
+#ifndef CREATE_PARSE_LIST_H
+# define CREATE_PARSE_LIST_H
 
 /* System headers */
 # include <stdio.h>
@@ -25,5 +25,6 @@
 /* Data structures */
 
 /* Function prototypes */
+t_list	*create_parse_list(t_list *token_list);
 
 #endif
