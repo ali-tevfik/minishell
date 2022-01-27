@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/26 18:45:01 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/27 12:12:12 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,7 +137,7 @@ $(TEST_OBJ_DIR):
 	@mkdir -p $@
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
-	@$(GCC) $(FLAGS) -g -fsanitize=address $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
+	@$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
 	@echo "$(GREEN) Created unit-test executable.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
