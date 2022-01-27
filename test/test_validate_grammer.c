@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:04:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/26 18:58:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/27 12:56:07 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,15 @@ TEST(CheckGrammer, OnlyPipeToken)
 TEST(CheckGrammer, OnlyRedirectionToken)
 {
 	char	*input = "   <   ";
+	actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, OnlyRedirectionToken1)
+{
+	char	*input = "   <<";
 	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);
