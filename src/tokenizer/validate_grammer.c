@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:17:55 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/23 21:46:10 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/27 12:53:11 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ bool	validate_grammer(t_list *token_list)
 
 	head = token_list;
 	previous_type = ((t_token *)(head->content))->type;
+	if (ft_lstsize(head) == 1 && (((t_token *)(head->content))->type == PIPE || \
+		((t_token *)(head->content))->type == REDIRECTION))
+		return (print_unexpected_token_message((t_token *)(head->content)));
 	head = head->next;
 	while (head)
 	{

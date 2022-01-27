@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 11:54:53 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/27 12:43:29 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "../src/libft/libft.h"
 #include "../src/parser/parser_data_structs.h"
 #include "../src/tokenizer/tokenizer.h"
+#include "../src/tokenizer/tokenizer_utils.h"
 #include "utils.h"
 
 /* System headers */
@@ -39,6 +40,9 @@ TEST_SETUP(ParserUtils)
 
 TEST_TEAR_DOWN(ParserUtils)
 {
+	ft_lstclear(&token_list, free_token);
+	free_command(actual_command);
+	free_command(expected_command);
 }
 
 TEST(ParserUtils, CreateCommandFromTokenList)
