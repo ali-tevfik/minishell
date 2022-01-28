@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/27 12:33:51 by adoner        ########   odam.nl          #
+#    Updated: 2022/01/28 20:20:10 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,11 @@ TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
 				test/main/all_tests.c \
 				test/main/all_tests_runner.c \
-				test/test_unity.c \
-				src/test_unity.c
+				test/test_unset.c\
+				src/commands/unset.c\
+				src/commands/export.c\
+				src/commands/skip_space.c\
+				test/test_export.c
 
 HEADER_FILES = incl/minishell.h
 
@@ -89,8 +92,8 @@ $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@mkdir -p $(@D)
 	@$(GCC) $(FLAGS) -c $< -o $@
 
-$(LIBFT): $(LIBFT_DIR)
-	@$(GCC) $(FLAGS) -c $< -o $@
+$(LIBFT):
+	@make -C $(LIBFT_DIR) bonus > /dev/null
 # Build debug
 debug: $(DBG_OBJ_DIR) $(DBG_NAME)
 
@@ -105,7 +108,7 @@ $(DBG_OBJ): $(DBG_OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@$(GCC) $(FLAGS) $(DBG_FLAGS) -c $< -o $@
 
 # Build test
-test: $(TEST_OBJ_DIR) $(TEST_NAME)
+test: $(LIBFT) $(TEST_OBJ_DIR) $(TEST_NAME)
 
 test_run: test
 	@./$(TEST_NAME) -v
@@ -114,7 +117,7 @@ $(TEST_OBJ_DIR):
 	@mkdir -p $@
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
-	@$(GCC) $(FLAGS) $^ -o $@
+	@$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
 	@echo "$(GREEN) Created debug file.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
