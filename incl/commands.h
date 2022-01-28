@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:56:45 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/25 12:16:52 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/28 15:28:21 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@ char	*skip_space(char *s);
 void	echo_command(char *text);
 int		skip_space_start(char *s);
 void	env_commands(t_list *envp);
+void	export_command(t_list *envp, char *line);
+void	unset_command(t_list *envp, char *argument);
+int		match_key_env(t_list *envp, char *argument, int where);
+t_list	*delete_env(t_list *old_lst, t_list *envp);
 
 #endif

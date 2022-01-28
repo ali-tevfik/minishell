@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/25 12:16:33 by adoner        ########   odam.nl          #
+#    Updated: 2022/01/27 12:33:51 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRC_FILES = minishell.c \
 			commands/pwd.c \
 			commands/skip_space.c \
 			commands/echo.c \
-			commands/env.c
+			commands/env.c \
+			commands/unset.c \
+			commands/export.c
 
 TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
