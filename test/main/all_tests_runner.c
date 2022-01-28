@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 13:06:28 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/28 13:38:04 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,11 @@ TEST_GROUP_RUNNER(CreateParseList)
 	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipes);
 	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection);
 	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder);
+}
+
+TEST_GROUP_RUNNER(DeleteElementFromLinkedList)
+{
+	RUN_TEST_CASE(DeleteElementFromLinkedList, DeleteElementInTheMiddle);
+	RUN_TEST_CASE(DeleteElementFromLinkedList, DeleteFirstElement);
+	RUN_TEST_CASE(DeleteElementFromLinkedList, DeleteLastElement);
 }

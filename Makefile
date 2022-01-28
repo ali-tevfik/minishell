@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/27 12:12:12 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/27 16:05:26 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,8 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_parser_utils.c \
 				src/parser/parser_utils.c \
 				test/test_create_parse_list.c \
-				src/parser/create_parse_list.c
+				src/parser/create_parse_list.c \
+				test/test_delete_element_linked_list.c
 
 HEADER_FILES = 	incl/minishell.h
 
