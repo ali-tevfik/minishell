@@ -6,13 +6,13 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/01/27 12:35:11 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/28 18:22:37 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-void	line_(char *line, t_list *env)
+void	line_(char *line, t_list **env)
 {
 	if (ft_strncmp(line, "cd ", 3) == 0)
 		cd_command(line);
@@ -23,7 +23,7 @@ void	line_(char *line, t_list *env)
 	else if (ft_strncmp(line, "echo ", 5) == 0)
 		echo_command(line);
 	else if (ft_strncmp(line, "env", 3) == 0)
-		env_commands(env);
+		env_commands(*env);
 	else if (ft_strncmp(line, "export ", 7) == 0)
 		export_command(env, line);
 	else if (ft_strncmp(line, "unset ", 6) == 0)
@@ -47,7 +47,7 @@ int	main(int argc, char *argv[], char *envp[])
 			add_history(line);
 		if ('-' == line[0] && '1' == line[1])
 			break ;
-		line_(line, env);
+		line_(line, &env);
 		free(line);
 	}
 	free(line);
