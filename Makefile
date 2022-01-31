@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/25 15:34:04 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/27 12:12:12 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ TEST_FILES = 	unity/src/unity.c \
 				test/main/all_tests_runner.c \
 				test/test_unity.c \
 				src/test_unity.c \
+				test/utils.c \
 				test/test_tokenizer.c \
 				src/tokenizer/tokenizer.c \
 				test/test_iterator_api.c \
@@ -63,7 +64,9 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_validate_grammer.c \
 				src/tokenizer/validate_grammer.c \
 				test/test_parser_utils.c \
-				src/parser/parser_utils.c
+				src/parser/parser_utils.c \
+				test/test_create_parse_list.c \
+				src/parser/create_parse_list.c
 
 HEADER_FILES = 	incl/minishell.h
 
@@ -134,7 +137,7 @@ $(TEST_OBJ_DIR):
 	@mkdir -p $@
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
-	@$(GCC) $(FLAGS) -g -fsanitize=address $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
+	@$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
 	@echo "$(GREEN) Created unit-test executable.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c

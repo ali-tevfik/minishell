@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser_data_structs.h                              :+:    :+:            */
+/*   create_parse_list.h                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/24 16:44:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 14:24:25 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/01/26 13:00:30 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/27 10:50:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_DATA_STRUCTS_H
-# define PARSER_DATA_STRUCTS_H
+#ifndef CREATE_PARSE_LIST_H
+# define CREATE_PARSE_LIST_H
 
 /* System headers */
+# include <stdio.h>
 
-/* Data structures for the parser */
-/* NONE means no redirection operator */
-typedef enum e_redir_type
-{
-	OUT,
-	APPEND,
-	READ,
-	HERE_DOC,
-	NONE
-}	t_redir_type;
+/* User defined header */
+# include "../libft/libft.h"
+# include "parser_data_structs.h"
+# include "parser_utils.h"
 
-typedef struct s_command
-{
-	char			**command;
-	char			*in_file;
-	char			*out_file;
-	t_redir_type	redirection_operator_in;
-	t_redir_type	redirection_operator_out;
-}				t_command;
+/* Macros */
+
+/* Data structures */
+
+/* Function prototypes */
+t_list	*create_parse_list(t_list *token_list);
 
 #endif
