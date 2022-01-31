@@ -6,31 +6,12 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/01/28 18:22:37 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/31 15:27:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-void	line_(char *line, t_list **env)
-{
-	if (ft_strncmp(line, "cd ", 3) == 0)
-		cd_command(line);
-	else if (ft_strncmp(line, "pwd", 3) == 0)
-		pwd_command();
-	else if (ft_strncmp(line, "exit", 4) == 0)
-		exit (0);
-	else if (ft_strncmp(line, "echo ", 5) == 0)
-		echo_command(line);
-	else if (ft_strncmp(line, "env", 3) == 0)
-		env_commands(*env);
-	else if (ft_strncmp(line, "export ", 7) == 0)
-		export_command(env, line);
-	else if (ft_strncmp(line, "unset ", 6) == 0)
-		unset_command(env, line);
-	else if (ft_strncmp(line, "", 1) != 0)
-		printf("bash: %s: command not found\n", line);
-}
 
 int	main(int argc, char *argv[], char *envp[])
 {

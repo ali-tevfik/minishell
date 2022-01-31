@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 12:18:42 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/31 15:03:02 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@
 # include <readline/readline.h>
 # include "../src/libft/libft.h"
 # include "commands.h"
+
+void	line_(char *line, t_list **env);
 
 #endif
