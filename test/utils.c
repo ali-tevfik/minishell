@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 12:30:33 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/31 15:31:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_command	*create_command(t_redir_type redir_in, t_redir_type redir_out,
 	va_start(ap, len_command);
 	while (i < len_command)
 	{
-		command->command[i] = ft_strdup(va_arg(ap, char *));
+		command->command[i] = strdup(va_arg(ap, char *));
 		i++;
 	}
 	command->command[i] = NULL;

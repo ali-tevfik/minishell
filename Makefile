@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/27 12:12:12 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/01/31 15:28:06 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,9 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_parser_utils.c \
 				src/parser/parser_utils.c \
 				test/test_create_parse_list.c \
-				src/parser/create_parse_list.c
+				src/parser/create_parse_list.c \
+				test/test_find_command.c \
+				src/executor/find_command.c
 
 HEADER_FILES = 	incl/minishell.h
 
@@ -137,12 +139,12 @@ $(TEST_OBJ_DIR):
 	@mkdir -p $@
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
-	@$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
+	@$(GCC) $(FLAGS) -fsanitize=address -g $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
 	@echo "$(GREEN) Created unit-test executable.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
 	@mkdir -p $(@D)
-	@$(GCC) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
+	@$(GCC) $(FLAGS) -g $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
 
 clean:
 	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR)
