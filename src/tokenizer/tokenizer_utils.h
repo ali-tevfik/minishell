@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   tokenizer_utils.h                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/01/31 15:03:02 by adoner        ########   odam.nl         */
-=======
-/*   Updated: 2022/01/27 12:38:25 by hyilmaz       ########   odam.nl         */
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
+/*   Created: 2022/01/18 14:50:39 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/24 11:02:22 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TOKENIZER_UTILS_H
+# define TOKENIZER_UTILS_H
 
 /* System headers */
 # include <stdio.h>
-# include <unistd.h>
+# include <stdbool.h>
 # include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../src/libft/libft.h"
-# include "commands.h"
 
-void	line_(char *line, t_list **env);
+/* User defined header */
+# include "../libft/libft.h"
+# include "tokenizer_data_structs.h"
+# include "iterator_api.h"
 
-#endif
+/* Data structures */
+
+/* Function prototypes */
+bool	is_char_a_delimiter(char c);
+t_token	*create_token(char *content, size_t len_content, t_token_type type);
+void	free_token(void *token);
+int		ft_isspace(int c);
+void	print_token_list(t_list *token_list);
+
+#endif 

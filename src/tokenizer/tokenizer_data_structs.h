@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   tokenizer_data_structs.h                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/01/31 15:03:02 by adoner        ########   odam.nl         */
-=======
-/*   Updated: 2022/01/27 12:38:25 by hyilmaz       ########   odam.nl         */
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
+/*   Created: 2022/01/18 15:26:35 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/01/22 18:00:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TOKENIZER_DATA_STRUCTS_H
+# define TOKENIZER_DATA_STRUCTS_H
 
 /* System headers */
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../src/libft/libft.h"
-# include "commands.h"
+# include <stddef.h>
 
-void	line_(char *line, t_list **env);
+/* Data structures for the tokenizer */
+typedef enum e_token_type
+{
+	ERROR = -1,
+	WORD,
+	PIPE,
+	REDIRECTION,
+	QUOTE,
+	DQUOTE
+}				t_token_type;
+
+typedef struct s_token
+{
+	char			*content;
+	size_t			len_content;
+	t_token_type	type;
+}				t_token;
 
 #endif

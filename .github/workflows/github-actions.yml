@@ -2,7 +2,7 @@ name: minishell
 
 on:
   push:
-    branches: [ master , export ]
+    branches: [ master , export, parser ]
 
 jobs:
   test:
