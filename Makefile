@@ -6,7 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/01/31 15:06:54 by adoner        ########   odam.nl          #
+#    Updated: 2022/01/31 17:41:06 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,11 +46,13 @@ TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
 				test/main/all_tests.c \
 				test/main/all_tests_runner.c \
-				test/test_unset.c\
-				src/commands/unset.c\
-				src/commands/export.c\
-				src/commands/skip_space.c\
-				test/test_export.c
+				test/test_unset.c \
+				src/commands/unset.c \
+				src/commands/export.c \
+				src/commands/skip_space.c \
+				test/test_export.c \
+				test/test_expander.c \
+				src/expander.c
 
 HEADER_FILES = incl/minishell.h
 

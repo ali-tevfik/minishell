@@ -6,26 +6,32 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:07:24 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/31 15:34:39 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/31 17:54:53 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
  #include "../incl/commands.h"
 
-int	expander(char *txt, t_list *env)
+char	*expander(char *txt, t_list *env)
 {
-	 char *new_text;
-	printf("%d\n", find_space(txt));
+	char	*envp_;
+	char	*new_text;
+	int		result;
+
+	result = 0;
 	new_text = ft_substr(txt, 0, find_space(txt));
-	printf("new text [%s]\n", new_text);
-	env = env->next;
 	while(env)
 	{
-		if (ft_strncmp(new_text, env->content, ft_strlen(new_text)) == 0)
+		envp_ = ft_split(env->content, '=')[0];
+		if (!envp_)
+			exit(0);
+		if (ft_strncmp(new_text, envp_, ft_strlen(envp_)) == 0)
 		{
-			printf("bulundu [%s]\n", getenv(new_text));
+			free(envp_);
+			return (getenv(new_text));
 		}
+		free(envp_);
 		env = env->next;
 	}
-	return (find_space(txt));
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/31 15:19:23 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/31 17:42:14 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	line_(char *line, t_list **env)
 	else if (ft_strncmp(line, "exit", 4) == 0)
 		exit (0);
 	else if (ft_strncmp(line, "echo ", 5) == 0)
-		echo_command(line, *env);
+		echo_command(line);
 	else if (ft_strncmp(line, "env", 3) == 0)
 		env_commands(*env);
 	else if (ft_strncmp(line, "export ", 7) == 0)

@@ -6,14 +6,14 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/31 15:21:27 by adoner        ########   odam.nl         */
+/*   Updated: 2022/01/31 17:42:24 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
 
-void	echo_command(char *text, t_list *env)
+void	echo_command(char *text)
 {
 	int	i;
 	int	new_line;
@@ -30,12 +30,7 @@ void	echo_command(char *text, t_list *env)
 	while (text[i])
 	{
 		if (text[i] != '"')
-		{
-			if (text[i] == '$')
-				i = expander(text + i, env) - 1;
-			else
-				ft_putchar_fd(text[i], 1);
-		}
+			ft_putchar_fd(text[i], 1);
 		i++;
 	}
 	if (new_line == 0)
