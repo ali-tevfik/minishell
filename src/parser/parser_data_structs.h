@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 16:44:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 14:24:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/31 16:33:08 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef enum e_redir_type
 
 typedef struct s_command
 {
-	char			**command;
+	char			**command; // {"ls", "-l", NULL}
 	char			*in_file;
 	char			*out_file;
 	t_redir_type	redirection_operator_in;

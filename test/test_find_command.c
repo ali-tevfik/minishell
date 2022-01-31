@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:27:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/31 15:44:51 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/31 17:44:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,7 @@ TEST_TEAR_DOWN(FindCommand)
 TEST(FindCommand, CommandExistsWithoutPath)
 {
 	/* Actual command and return */
-	command_data = create_command(NONE, NONE, NULL, NULL, 2, "lshi", "-l");
-	printf("\n%s\n", command_data->command[0]);
-	printf("\n%s\n", command_data->command[1]);
-	printf("\n%s\n", command_data->command[2]);
-	free(command_data->command[0]);	/* <<<<<<< ---------------- ERROR HERE */
-
+	command_data = create_command(NONE, NONE, NULL, NULL, 2, "ls", "-l");
 	
 	actual_return = find_command(command_data);
 	actual_command = command_data->command[0];
@@ -76,7 +71,47 @@ TEST(FindCommand, CommandExistsWithoutPath)
 
 TEST(FindCommand, CommandExistsWithRelativePath)
 {
-	TEST_IGNORE();
+	/* Actual command and return */
+	command_data = create_command(NONE, NONE, NULL, NULL, 2, "../../../../usr/bin/ls", "-la");
+	
+	actual_return = find_command(command_data);
+	actual_command = command_data->command[0];
+
+	/* Expected command and return */
+	expected_return = true;
+	if (!ft_strncmp("Linux", uname_data.sysname, 5))
+		expected_command = ft_strdup("../../../../usr/bin/ls");
+	else
+		expected_command = ft_strdup("../../../../usr/bin/ls");
+	
+	/* Compare return values */
+	TEST_ASSERT(expected_return == actual_return);
+
+	/* Compare commands */
+	TEST_ASSERT_EQUAL_STRING(expected_command, actual_command);
+}
+
+TEST(FindCommand, CommandDoesntExistsWithRelativePath)
+{
+	/* Actual command and return */
+	command_data = create_command(NONE, NONE, NULL, NULL, 2, "../../usr/bin/ls", "-la");
+	
+	actual_return = find_command(command_data);
+	printf("actual_return %d\n", actual_return);
+	actual_command = command_data->command[0];
+
+	/* Expected command and return */
+	expected_return = true;
+	if (!ft_strncmp("Linux", uname_data.sysname, 5))
+		expected_command = ft_strdup("../../usr/bin/ls");
+	else
+		expected_command = ft_strdup("../../usr/bin/ls");
+	
+	/* Compare return values */
+	TEST_ASSERT(expected_return == actual_return);
+
+	/* Compare commands */
+	TEST_ASSERT_EQUAL_STRING(expected_command, actual_command);
 }
 
 TEST(FindCommand, CommandExistsWithAbsolutePath)

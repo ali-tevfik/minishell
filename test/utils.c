@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/31 15:31:01 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/31 16:55:43 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_command	*create_command(t_redir_type redir_in, t_redir_type redir_out,
 	size_t		i;
 
 	command = ft_calloc(1, sizeof(t_command));
-	command->command = ft_calloc(len_command, sizeof(char *));
+	command->command = ft_calloc(len_command + 1, sizeof(char *));
 	command->in_file = in_file;
 	command->out_file = out_file;
 	command->redirection_operator_in = redir_in;
@@ -31,7 +31,7 @@ t_command	*create_command(t_redir_type redir_in, t_redir_type redir_out,
 	va_start(ap, len_command);
 	while (i < len_command)
 	{
-		command->command[i] = strdup(va_arg(ap, char *));
+		command->command[i] = ft_strdup(va_arg(ap, char *));
 		i++;
 	}
 	command->command[i] = NULL;
