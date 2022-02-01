@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/31 15:43:53 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/01 14:14:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,27 @@ static bool	check_given_executable_on_slashes(char *command)
 }
 
 /*
-** Append slash in front of the command.
+** Append slashes to end of PATH's.
 */
 
-static bool	append_slash_in_front_of_command(char **command)
+static bool	append_slash_suffix_to_path(char **path)
 {
 	char	*tmp;
+	size_t	i;
 
-	tmp = *command;
-	*command = ft_strjoin("/", *command);
-	if (*command == NULL)
+	i = 0;
+	while (path[i] != NULL)
 	{
-		perror("Error with malloc");
-		return (false);
+		tmp = path[i];
+		path[i] = ft_strjoin(path[i], "/");
+		if (path[i] == NULL)
+		{
+			perror("Error with malloc");
+			return (false);
+		}
+		free(tmp);
+		i++;
 	}
-	free(tmp);
 	return (true);
 }
 
@@ -67,6 +73,7 @@ static bool	found_command(char *command_with_path, char **cmd, char *tmp)
 /*
 ** Loop over path, append executable to it, check whether that exists.
 ** If not, continue looking, else save path + executable in *cmd.
+** Returns false when malloc fails, true otherwise.
 */
 
 static bool	get_executable_with_full_path(char **path_array, char **command)
@@ -103,8 +110,13 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 ** 2. If no slashes, get PATH from environment.
 ** 3. Append a "/" in front of the command.
 ** 4. Loop over PATH and try to find executable.
+** 
+** Returns:
+** 		false if malloc failed. Minishell should stop.
+**		true otherwise
 */
 
+/* USE OWN GETENV */
 bool	find_command(t_command *command)
 {
 	char	*path;
@@ -112,21 +124,16 @@ bool	find_command(t_command *command)
 
 	path = getenv("PATH");
 	if (path == NULL)
-	{
-		printf("Error: no PATH in environment\n");
-		return (false);
-	}
+		return (true);
 	path_array = ft_split(path, ':');
 	if (path_array == NULL)
 	{
-		printf("Error: no PATH in environment\n");
+		perror("Error with malloc");
 		return (false);
 	}
 	if (check_given_executable_on_slashes(command->command[0]))
 		return (true);
-	if (!append_slash_in_front_of_command(&command->command[0]))
+	if (!append_slash_suffix_to_path(path_array))
 		return (false);
-	if (!get_executable_with_full_path(path_array, &command->command[0]))
-		return (false);
-	return (true);
+	 return (get_executable_with_full_path(path_array, &command->command[0]));
 }

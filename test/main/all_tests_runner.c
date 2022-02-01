@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/31 17:43:07 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/01 12:43:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,12 @@ TEST_GROUP_RUNNER(CreateParseList)
 
 TEST_GROUP_RUNNER(FindCommand)
 {
-	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPath);
+	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathLs);
+	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathGrep);
 	RUN_TEST_CASE(FindCommand, CommandExistsWithRelativePath);
 	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithRelativePath);
+	RUN_TEST_CASE(FindCommand, CommandExistsWithAbsolutePath);
+	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithAbsolutePath);
+	RUN_TEST_CASE(FindCommand, CommandDoesntExist);
+	RUN_TEST_CASE(FindCommand, NoPathAvailable);
 }
