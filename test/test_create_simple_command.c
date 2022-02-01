@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test_parser_utils.c                                :+:    :+:            */
+/*   test_create_simple_command.c                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 12:43:29 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/01 16:21:17 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "unity_fixture.h"
 
 /* File to test */
-#include "../src/parser/parser_utils.h"
+#include "../src/parser/create_simple_command.h"
 
 /* User defined headers */
 #include "../src/libft/libft.h"
@@ -32,20 +32,20 @@ t_list		*token_list;
 t_command	*actual_command;
 t_command	*expected_command;
 
-TEST_GROUP(ParserUtils);
+TEST_GROUP(CreateSimpleCommand);
 
-TEST_SETUP(ParserUtils)
+TEST_SETUP(CreateSimpleCommand)
 {
 }
 
-TEST_TEAR_DOWN(ParserUtils)
+TEST_TEAR_DOWN(CreateSimpleCommand)
 {
 	ft_lstclear(&token_list, free_token);
 	free_command(actual_command);
 	free_command(expected_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenList)
+TEST(CreateSimpleCommand, CreateCommandFromTokenList)
 {
 	char	*input = "ls -l | grep codam";
 
@@ -74,7 +74,7 @@ TEST(ParserUtils, CreateCommandFromTokenList)
 	compare_command_structs(expected_command, actual_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListTakeCommandAfterPipe)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe)
 {
 	char	*input = "ls -l | grep codam";
 
@@ -104,7 +104,7 @@ TEST(ParserUtils, CreateCommandFromTokenListTakeCommandAfterPipe)
 	compare_command_structs(expected_command, actual_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFile)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile)
 {
 	char	*input = "ls -l > out_file | grep codam";
 
@@ -133,7 +133,7 @@ TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFile)
 	compare_command_structs(expected_command, actual_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListWithMultipleRedirectionOutFile)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFile)
 {
 	char	*input = "< in_file ls -l > out_file | grep codam";
 
@@ -162,7 +162,7 @@ TEST(ParserUtils, CreateCommandFromTokenListWithMultipleRedirectionOutFile)
 	compare_command_structs(expected_command, actual_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand)
 {
 	char	*input = "> out_file ls -l | grep codam";
 
@@ -191,7 +191,7 @@ TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand)
 	compare_command_structs(expected_command, actual_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand)
 {
 	char	*input = "ls > out_file -l -a | grep codam";
 
@@ -221,7 +221,7 @@ TEST(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfC
 	compare_command_structs(expected_command, actual_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand)
 {
 	char	*input = "ls >> out_file -l -a";
 
@@ -251,7 +251,7 @@ TEST(ParserUtils, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfComman
 	compare_command_structs(expected_command, actual_command);
 }
 
-TEST(ParserUtils, CreateCommandFromTokenListNoPipeNoRedirection)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection)
 {
 	char	*input = "ls -l";
 

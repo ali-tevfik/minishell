@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:45 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/24 20:34:43 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/01 16:18:26 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 /* Data structures */
 
 /* Function prototypes */
-t_command	*create_simple_command_up_until_pipe_token(t_list *token_list, \
-														size_t *location);
+t_command	*init_command(t_list *token_list);
+size_t		number_command_tokens(t_list *token_list);
 
 #endif

@@ -6,11 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/01/31 17:55:30 by adoner        ########   odam.nl         */
-=======
-/*   Updated: 2022/01/27 13:06:28 by hyilmaz       ########   odam.nl         */
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
+/*   Updated: 2022/02/01 16:23:54 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +14,6 @@
 
 TEST_GROUP_RUNNER(unset)
 {
-<<<<<<< HEAD
 	RUN_TEST_CASE(unset, delete_first);
 	RUN_TEST_CASE(unset, delete_third);
 	RUN_TEST_CASE(unset, delete_all);
@@ -28,7 +23,6 @@ TEST_GROUP_RUNNER(unset)
 	RUN_TEST_CASE(unset, export_and_delete);
 
 }
-
 
 TEST_GROUP_RUNNER(export)
 {
@@ -45,10 +39,6 @@ TEST_GROUP_RUNNER(expander)
 	RUN_TEST_CASE(expander, expander_find_middle);
 	RUN_TEST_CASE(expander, expander_find_last);
 	RUN_TEST_CASE(expander, expander_dont_find);
-}
-=======
-	RUN_TEST_CASE(AddNumbers, Simple);
-	RUN_TEST_CASE(AddNumbers, ABC);
 }
 
 /* Tokenizer */
@@ -129,16 +119,16 @@ TEST_GROUP_RUNNER(CheckGrammer)
 }
 
 /* Parser */
-TEST_GROUP_RUNNER(ParserUtils)
+TEST_GROUP_RUNNER(CreateSimpleCommand)
 {
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenList);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListTakeCommandAfterPipe);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFile);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithMultipleRedirectionOutFile);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListNoPipeNoRedirection);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand);
-	RUN_TEST_CASE(ParserUtils, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenList);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFile);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand);
 }
 
 TEST_GROUP_RUNNER(CreateParseList)
@@ -149,4 +139,3 @@ TEST_GROUP_RUNNER(CreateParseList)
 	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection);
 	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder);
 }
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f

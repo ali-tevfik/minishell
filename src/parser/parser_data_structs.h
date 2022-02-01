@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 16:44:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 14:24:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/01 18:18:15 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ typedef struct s_command
 	t_redir_type	redirection_operator_in;
 	t_redir_type	redirection_operator_out;
 }				t_command;
+
+typedef struct s_list_location
+{
+	size_t	list_idx;
+	t_list	*head;
+}				t_list_location;
 
 #endif

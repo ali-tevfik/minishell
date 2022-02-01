@@ -6,11 +6,7 @@
 #    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-<<<<<<< HEAD
-#    Updated: 2022/01/31 17:41:06 by adoner        ########   odam.nl          #
-=======
-#    Updated: 2022/01/27 12:12:12 by hyilmaz       ########   odam.nl          #
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
+#    Updated: 2022/02/01 18:22:35 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +19,7 @@ YELLOW = \033[1;33m
 
 # Compiler settings
 GCC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 DBG_FLAGS = -g -fsanitize=address
 
 # Unity tester requirements
@@ -50,19 +46,13 @@ TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
 				test/main/all_tests.c \
 				test/main/all_tests_runner.c \
-<<<<<<< HEAD
 				test/test_unset.c \
 				src/commands/unset.c \
 				src/commands/export.c \
 				src/commands/skip_space.c \
 				test/test_export.c \
 				test/test_expander.c \
-				src/expander.c
-
-HEADER_FILES = incl/minishell.h
-=======
-				test/test_unity.c \
-				src/test_unity.c \
+				src/expander.c \
 				test/utils.c \
 				test/test_tokenizer.c \
 				src/tokenizer/tokenizer.c \
@@ -82,13 +72,13 @@ HEADER_FILES = incl/minishell.h
 				src/tokenizer/tokenize_quotes.c \
 				test/test_validate_grammer.c \
 				src/tokenizer/validate_grammer.c \
-				test/test_parser_utils.c \
+				test/test_create_simple_command.c \
+				src/parser/create_simple_command.c \
 				src/parser/parser_utils.c \
 				test/test_create_parse_list.c \
 				src/parser/create_parse_list.c
 
 HEADER_FILES = 	incl/minishell.h
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
 
 OBJ_DIR = obj
 OBJ = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
@@ -132,12 +122,7 @@ $(NAME): $(OBJ)
 $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@mkdir -p $(@D)
 	@$(GCC) $(FLAGS) -c $< -o $@
-
-<<<<<<< HEAD
-$(LIBFT):
-	@make -C $(LIBFT_DIR) bonus > /dev/null
-=======
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
+	
 # Build debug
 debug: $(DBG_OBJ_DIR) $(LIBFT) $(DBG_NAME)
 
@@ -153,11 +138,7 @@ $(DBG_OBJ): $(DBG_OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@$(GCC) $(FLAGS) $(DBG_FLAGS) -c $< -o $@
 
 # Build test
-<<<<<<< HEAD
-test: $(LIBFT) $(TEST_OBJ_DIR) $(TEST_NAME)
-=======
 test: $(TEST_OBJ_DIR) $(LIBFT) $(TEST_NAME)
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
 
 test_run: test
 	@./$(TEST_NAME) -v
@@ -167,11 +148,7 @@ $(TEST_OBJ_DIR):
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
 	@$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
-<<<<<<< HEAD
-	@echo "$(GREEN) Created debug file.$(NORMAL)"
-=======
 	@echo "$(GREEN) Created unit-test executable.$(NORMAL)"
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
 	@mkdir -p $(@D)

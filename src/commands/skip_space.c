@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:55:55 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/31 16:57:02 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/01 18:09:26 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ char	*skip_space(char *s)
 	return (new);
 }
 
-
-int		find_space(char *txt)
+int	find_space(char *txt)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (txt[i])

@@ -6,11 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/01/31 15:03:02 by adoner        ########   odam.nl         */
-=======
-/*   Updated: 2022/01/27 12:38:25 by hyilmaz       ########   odam.nl         */
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
+/*   Updated: 2022/02/01 14:26:34 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
