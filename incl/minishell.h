@@ -6,11 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/01/31 15:03:02 by adoner        ########   odam.nl         */
-=======
-/*   Updated: 2022/01/27 12:38:25 by hyilmaz       ########   odam.nl         */
->>>>>>> 277b7cf308323f6d60a828ebfd84a34ee4de1e7f
+/*   Updated: 2022/02/01 13:32:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +21,10 @@
 # include <readline/history.h>
 # include "../src/libft/libft.h"
 # include "commands.h"
+#include <sys/types.h>
+# include <fcntl.h>
 
 void	line_(char *line, t_list **env);
+void fork_func(t_list *command_lst);
 
 #endif
