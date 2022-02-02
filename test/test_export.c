@@ -26,22 +26,40 @@ TEST(export, add_normal)
 {
 	t_list	*input_list = NULL;
 
-	export_command(&input_list,"export hello=");
-	export_command(&input_list,"export codam=");
-	export_command(&input_list,"export college=");
-	export_command(&input_list,"export amsterdam=");
+	export_command(&input_list,"export hello=codam");
+	export_command(&input_list,"export codam=42");
+	export_command(&input_list,"export coding=15");
+	export_command(&input_list,"export college=as");
 
 	/* Expected list (Removing 3rd element) */
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("hello=")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("codam=")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("college=")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("amsterdam=")));
-	TEST_ASSERT_EQUAL_INT(ft_lstsize(expected_list), ft_lstsize(input_list));
+	t_env *env;
+
+	/* Input list */
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->key, ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->value, ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
@@ -68,17 +86,23 @@ TEST(export, wrong)
 TEST(export, check_tab)
 {
 	t_list	*input_list = NULL;
+	t_env *env;
 
-	export_command(&input_list,"export 			hello=");
+	export_command(&input_list,"export 			hello=codam");
 
 	/* Expected list (Removing 3rd element) */
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("hello=")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
 	TEST_ASSERT_EQUAL_INT(ft_lstsize(expected_list), ft_lstsize(input_list));
 
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->key, ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->value, ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}

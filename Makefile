@@ -3,10 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: hyilmaz <hyilmaz@student.codam.nl>           +#+                      #
+#    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2022/01/12 22:21:32 by hyilmaz       #+#    #+#                  #
-#    Updated: 2022/02/01 18:22:35 by hyilmaz       ########   odam.nl          #
+#    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
+#    Updated: 2022/02/02 14:33:23 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,19 @@ SRC_FILES = minishell.c \
 			commands/unset.c \
 			commands/export.c \
 			read_line.c \
-			expander.c
+			expander.c \
+			tokenizer/iterator_api.c \
+			tokenizer/tokenize_dquotes.c \
+			tokenizer/tokenize_pipe.c \
+			tokenizer/tokenize_quotes.c \
+			tokenizer/tokenize_redirection.c \
+			tokenizer/tokenize_word.c \
+			tokenizer/tokenizer_utils.c \
+			tokenizer/tokenizer.c \
+			tokenizer/validate_grammer.c \
+			parser/create_parse_list.c \
+			parser/create_simple_command.c \
+			parser/parser_utils.c
 
 TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
@@ -148,7 +160,7 @@ $(TEST_OBJ_DIR):
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
 	@$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
-	@echo "$(GREEN) Created unit-test executable.$(NORMAL)"
+	@echo "$(GREEN) Created debug file.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
 	@mkdir -p $(@D)
@@ -165,5 +177,5 @@ fclean: clean
 	@echo "$(RED) Deleted all executables.$(NORMAL)"
 
 re: clean fclean all
-	
+
 .PHONY: clean fclean re

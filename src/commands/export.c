@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/28 20:03:35 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/02 13:12:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,16 @@ t_list	*delete_env(t_list *old_lst, t_list **envp)
 
 int	match_key_env(t_list **envp, char *argument, int where)
 {
-	char	*text;
-	char	*env_;
 	t_list	*old_lst;
 	t_list	*head;
+	t_env	*env;
 
 	old_lst = NULL;
 	head = *envp;
-	text = ft_split(skip_space(argument), '=')[0];
-	if (!text)
-		exit(0);
 	while (head != NULL)
 	{
-		env_ = ft_split(head->content, '=')[0];
-		if (!env_)
-			exit(0);
-		if (ft_strncmp(env_, text, ft_strlen(env_)) == 0)
+		env = head->content;
+		if (ft_strncmp(env->key, argument, ft_strlen(env->key)) == 0)
 		{
 			if (where == 1)
 				delete_env(old_lst, envp);
@@ -63,15 +57,24 @@ int	match_key_env(t_list **envp, char *argument, int where)
 
 void	export_command(t_list **envp, char *line)
 {
-	char	*argument;
+	char	**argument;
+	t_env	*env;
 
-	argument = ft_strdup(skip_space(line + 6));
+	if (ft_strrchr(line, '=') == 0)
+		return ;
+	argument = ft_split(skip_space(line + 6), '=');
 	if (!argument)
 		exit(0);
-	if (ft_strrchr(argument, '=') == 0)
+	if (!ft_isalpha(argument[0][0]) && argument[0][0] != 95)
 		return ;
-	if (!ft_isalpha(argument[0]))
-		return ;
-	if (match_key_env(envp, argument, 0) == 0)
-		ft_lstadd_back(envp, ft_lstnew(argument));
+	if (match_key_env(envp, argument[0], 0) == 0)
+	{
+		env = ft_calloc(2, sizeof(env));
+		env->key = argument[0];
+		if (argument[1])
+			env->value = argument[1];
+		else
+			env->value = "";
+		ft_lstadd_back(envp, ft_lstnew(env));
+	}
 }

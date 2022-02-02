@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:57:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 16:23:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/02 14:26:36 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	run_all_tests(void)
 	RUN_TEST_GROUP(unset);
 	RUN_TEST_GROUP(export);
 	RUN_TEST_GROUP(expander);
-
 }
 
 int	main(int argc, const char *argv[])

@@ -5,33 +5,23 @@
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/31 15:07:24 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/01 18:08:37 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/02 14:30:25 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/commands.h"
 
-char	*expander(char *txt, t_list *env)
+char	*expander(char *txt, t_list *lst)
 {
-	char	*envp_;
-	char	*new_text;
-	int		result;
+	t_env	*env;
 
-	result = 0;
-	new_text = ft_substr(txt, 0, find_space(txt));
-	while (env)
+	while (lst)
 	{
-		envp_ = ft_split(env->content, '=')[0];
-		if (!envp_)
-			exit(0);
-		if (ft_strncmp(new_text, envp_, ft_strlen(envp_)) == 0)
-		{
-			free(envp_);
-			return (getenv(new_text));
-		}
-		free(envp_);
-		env = env->next;
+		env = lst->content;
+		if (ft_strncmp(env->key, txt, ft_strlen(env->key)) == 0)
+			return (env->value);
+		lst = lst->next;
 	}
 	return (NULL);
 }

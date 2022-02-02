@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:56:45 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/31 17:42:04 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/01 16:07:24 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@ int		match_key_env(t_list **envp, char *argument, int where);
 t_list	*delete_env(t_list *old_lst, t_list **envp);
 char	*expander(char *txt, t_list *env);
 int		find_space(char *txt);
+char	*get_env(t_list *lst, char *argument);
 
+typedef struct s_env
+{
+	char		*key;
+	char		*value;
+}				t_env;
 #endif

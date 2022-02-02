@@ -5,18 +5,37 @@
 
 
 t_list	*input_list;
-
+t_env *env;
 TEST_GROUP(expander);
 
 TEST_SETUP(expander)
 {
 
 	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("COLORFGBG=7;0")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("TERM_PROGRAM=vscode")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("PWD=/Users/adoner/Desktop/minishell/orginal")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("_=/usr/bin/env")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "COLORFGBG";
+	env->value = "7;0";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "TERM_PROGRAM";
+	env->value = "vscode";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "PWD";
+	env->value = "/Users/adoner/Desktop/minishell/orginal";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "_";
+	env->value = "/usr/bin/env";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "PATH";
+	env->value = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 }
 
 TEST_TEAR_DOWN(expander)

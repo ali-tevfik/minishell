@@ -22,21 +22,55 @@ TEST_TEAR_DOWN(unset)
 
 TEST(unset,delete_third)
 {
-		t_list	*input_list = NULL;
+	t_list	*input_list = NULL;
+	t_env *env;
 
 	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
 	/* Expected list (Removing 3rd element) */
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
 	//codam
 
@@ -49,29 +83,69 @@ TEST(unset,delete_third)
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->key), ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->value), ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
 
 }
 
+
+
+
 TEST(unset,delete_first)
 {
 		t_list	*input_list = NULL;
+		t_env *env;
 
 	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
 	/* Expected list (Removing 3rd element) */
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
 	/* My list */
 	unset_command(&input_list,"unset hello");
@@ -82,7 +156,9 @@ TEST(unset,delete_first)
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->key), ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->value), ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
@@ -91,22 +167,61 @@ TEST(unset,delete_first)
 
 
 
+
+
 TEST(unset,delete_last)
 {
 		t_list	*input_list = NULL;
+		t_env *env;
 
 	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
 	/* Expected list (Removing 3rd element) */
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("college")));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
 
 
 	//codam
@@ -120,7 +235,8 @@ TEST(unset,delete_last)
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->key), ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->value), ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
@@ -129,24 +245,63 @@ TEST(unset,delete_last)
 
 
 
+
+
 TEST(unset,delete_nooit)
 {
 		t_list	*input_list = NULL;
+	t_env *env;
+		/* Input list */
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
-	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
 	/* Expected list (Removing 3rd element) */
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&expected_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
 	//codam
 
@@ -159,7 +314,9 @@ TEST(unset,delete_nooit)
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->key), ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->value), ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
@@ -168,18 +325,37 @@ TEST(unset,delete_nooit)
 
 
 
+
 TEST(unset,delete_all)
 {
 		t_list	*input_list = NULL;
+		t_env *env;
 
 	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("amsterdam")));
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
-	/* Expected list (NULL) */
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
 	/* My list */
 	unset_command(&input_list,"unset hello");
@@ -194,7 +370,9 @@ TEST(unset,delete_all)
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->key), ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->value), ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
@@ -203,16 +381,38 @@ TEST(unset,delete_all)
 
 
 
+
 TEST(unset,delete_all_and_extra)
 {
 		t_list	*input_list = NULL;
+	t_env *env;
 
 	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("amsterdam")));
+		/* Input list */
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&input_list, ft_lstnew(env));;
 
 	/* Expected list (NULL) */
 
@@ -230,7 +430,9 @@ TEST(unset,delete_all_and_extra)
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->key), ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->value), ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
@@ -242,14 +444,35 @@ TEST(unset,delete_all_and_extra)
 
 TEST(unset,export_and_delete)
 {
+	t_env *env;
 		t_list	*input_list = NULL;
 
 	/* Input list */
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("hello")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("codam")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("coding")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("college")));
-	ft_lstadd_back(&input_list, ft_lstnew(ft_strdup("amsterdam")));
+		/* Input list */
+	env = ft_calloc(2,sizeof(env));
+	env->key = "hello";
+	env->value = "codam";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "codam";
+	env->value = "42";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "coding";
+	env->value = "15";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "college";
+	env->value = "as";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
+
+	env = ft_calloc(2,sizeof(env));
+	env->key = "amsterdam";
+	env->value = "asfsfasfas";
+	ft_lstadd_back(&input_list, ft_lstnew(env));
 
 	/* Expected list (NULL) */
 
@@ -269,7 +492,8 @@ TEST(unset,export_and_delete)
 	/* Compare contents */
 	while (expected_list)
 	{
-		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->key), ((t_env *)input_list->content)->key);
+		TEST_ASSERT_EQUAL_STRING((( (t_env*)expected_list->content)->value), ((t_env *)input_list->content)->value);
 		expected_list = expected_list->next;
 		input_list = input_list->next;
 	}
