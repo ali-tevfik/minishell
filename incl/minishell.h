@@ -25,6 +25,5 @@
 # include <fcntl.h>
 
 void	line_(char *line, t_list **env);
-void fork_func(t_list *command_lst);
 
 #endif
