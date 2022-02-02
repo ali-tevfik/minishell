@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/24 11:49:27 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/02 11:30:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 /* Macros */
 # define SUCCESS 0
-# define FAILURE 1
+# define SPACE 1
 # define MALLOC_FAILURE 2
 
 /* Data structures */

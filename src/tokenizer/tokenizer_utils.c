@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/24 11:44:04 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/02 11:29:27 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*create_token(char *content, size_t len_content, t_token_type type)
 	token = ft_calloc(1, sizeof(*token));
 	if (token == NULL)
 	{
-		printf("Allocating memory for token failed.\n");
+		perror("Error with malloc");
 		return (NULL);
 	}
 	token->content = content;

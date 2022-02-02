@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/25 13:40:18 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/02 11:37:03 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Otherwise return SUCCES, or MALLOC_ERROR when an allocation failed.
 */
 
-static unsigned int	take_correct_token(t_token **single_token, t_char_iter *itr)
+static size_t	take_correct_token(t_token **single_token, t_char_iter *itr)
 {
 	if (**itr == '|')
 		*single_token = take_pipe(itr);
@@ -30,11 +30,13 @@ static unsigned int	take_correct_token(t_token **single_token, t_char_iter *itr)
 	else if (ft_isspace(**itr) == 1)
 	{
 		next(itr);
-		return (FAILURE);
+		return (SPACE);
 	}
 	else if (**itr == '&' || **itr == ';')
 	{
 		*single_token = create_token(*itr, 1, ERROR);
+		if (*single_token == NULL)
+			return (MALLOC_FAILURE);
 		next(itr);
 	}
 	else
@@ -55,17 +57,21 @@ t_list	*tokenize_input(char *input_string)
 	t_list		*element;
 	t_token		*single_token;
 	t_char_iter	itr;
+	size_t		ret;
 
 	token_list = NULL;
 	itr = input_string;
 	while (has_next(itr))
 	{
-		if (take_correct_token(&single_token, &itr) == FAILURE)
+		ret = take_correct_token(&single_token, &itr);
+		if (ret == SPACE)
 			continue ;
+		else if (ret == MALLOC_FAILURE)
+			return (NULL);
 		element = ft_lstnew(single_token);
 		if (element == NULL)
 		{
-			printf("Allocating memory for token_list failed.\n");
+			perror("Error with malloc");
 			return (NULL);
 		}
 		ft_lstadd_back(&token_list, element);
