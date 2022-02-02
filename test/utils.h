@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:21 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/27 12:30:37 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/01/31 15:30:53 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdarg.h>
 # include <stdlib.h>
+# include <string.h>
 
 /* Unity header */
 #include "unity_fixture.h"
