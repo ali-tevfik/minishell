@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 16:23:54 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/02 11:55:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ TEST_GROUP_RUNNER(CheckGrammer)
 	RUN_TEST_CASE(CheckGrammer, OnlyPipeToken);
 	RUN_TEST_CASE(CheckGrammer, OnlyRedirectionToken);
 	RUN_TEST_CASE(CheckGrammer, OnlyRedirectionToken1);
+	RUN_TEST_CASE(CheckGrammer, NoClosingDQuote);
+	RUN_TEST_CASE(CheckGrammer, NoClosingQuote);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer0);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer1);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer2);
