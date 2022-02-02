@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/01 16:10:09 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/02 13:15:40 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,6 @@ SRC_FILES = minishell.c \
 			commands/export.c \
 			read_line.c \
 			expander.c \
-			fork_example.c \
 			tokenizer/iterator_api.c \
 			tokenizer/tokenize_dquotes.c \
 			tokenizer/tokenize_pipe.c \

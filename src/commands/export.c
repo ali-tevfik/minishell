@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/01 15:11:50 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/02 13:12:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ int	match_key_env(t_list **envp, char *argument, int where)
 {
 	t_list	*old_lst;
 	t_list	*head;
+	t_env	*env;
 
 	old_lst = NULL;
 	head = *envp;
 	while (head != NULL)
 	{
-		if (ft_strncmp(((t_env*)head->content)->key, argument, ft_strlen(((t_env*)head->content)->key)) == 0)
+		env = head->content;
+		if (ft_strncmp(env->key, argument, ft_strlen(env->key)) == 0)
 		{
 			if (where == 1)
 				delete_env(old_lst, envp);
@@ -57,7 +59,6 @@ void	export_command(t_list **envp, char *line)
 {
 	char	**argument;
 	t_env	*env;
-
 
 	if (ft_strrchr(line, '=') == 0)
 		return ;
@@ -76,5 +77,4 @@ void	export_command(t_list **envp, char *line)
 			env->value = "";
 		ft_lstadd_back(envp, ft_lstnew(env));
 	}
-
 }

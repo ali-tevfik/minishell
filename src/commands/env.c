@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/01 14:41:42 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/02 13:12:30 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_list	*add_envp(char *envp[])
 
 void	env_commands(t_list *envp)
 {
-	t_env *env;
+	t_env	*env;
 
 	while (envp != NULL)
 	{
