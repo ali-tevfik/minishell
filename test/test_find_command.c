@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:27:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 14:14:43 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/03 15:24:48 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ TEST_SETUP(FindCommand)
 TEST_TEAR_DOWN(FindCommand)
 {
 	free(actual_command);
+	free(expected_command);
 	free_command(command_data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:56:45 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/01 16:07:24 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/03 15:19:18 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 # include <errno.h>
-# define PATH_MAX 1024
+# define PATH_MAX_LEN 1024
 
 t_list	*add_envp(char *envp[]);
 void	cd_command(char *where);

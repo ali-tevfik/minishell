@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 16:21:17 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/03 15:43:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe)
 	char	*input = "ls -l | grep codam";
 
 	/* Tokenize input */
+	t_list	*head = token_list;
 	token_list = tokenize_input(input);
-	token_list = token_list->next->next->next;
+	head = token_list->next->next->next;
 
 	/* Expected command from tokens */
 	expected_command = ft_calloc(1, sizeof(t_command));
@@ -95,7 +96,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe)
 
 	/* Actual command from tokens */
 	size_t	location_token = 3;
-	actual_command = create_simple_command_up_until_pipe_token(token_list, &location_token);
+	actual_command = create_simple_command_up_until_pipe_token(head, &location_token);
 
 	/* Check token location, should be at grep , so 4th token (3th if starting from 0) */
 	TEST_ASSERT_EQUAL_size_t(5, location_token);

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/02 14:40:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/03 15:54:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 				return (false);
 			return (true);
 		}
+		free(path_array[i]);
 		path_array[i] = tmp;
 		i++;
 	}
@@ -135,5 +136,5 @@ bool	find_command(t_command *command)
 		return (true);
 	if (!append_slash_suffix_to_path(path_array))
 		return (false);
-	 return (get_executable_with_full_path(path_array, &command->command[0]));
+	return (get_executable_with_full_path(path_array, &command->command[0]));
 }

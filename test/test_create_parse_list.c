@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 12:58:27 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/31 17:26:15 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/03 15:52:05 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,13 @@ TEST(CreateParseList, SimplePipelineNoPipes)
 	TEST_ASSERT_EQUAL_INT_MESSAGE(1, actual_len, "Input: \"ls -l\"");
 
 	/* Compare all elements in the linked list */
-	while (actual_pipeline != NULL)
+	t_list	*actual_head = actual_pipeline;
+	t_list	*expected_head = expected_pipeline;
+	while (actual_head != NULL)
 	{
-		compare_command_structs(expected_pipeline->content, actual_pipeline->content);
-		actual_pipeline = actual_pipeline->next;
-		expected_pipeline = expected_pipeline->next;
+		compare_command_structs(expected_head->content, actual_head->content);
+		actual_head = actual_head->next;
+		expected_head = expected_head->next;
 	}
 }
 
@@ -95,11 +97,13 @@ TEST(CreateParseList, SimplePipelineOnePipe)
 	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: \"ls -l | grep codam > out_file\"");
 
 	/* Compare all elements in the linked list */
-	while (actual_pipeline != NULL)
+	t_list	*actual_head = actual_pipeline;
+	t_list	*expected_head = expected_pipeline;
+	while (actual_head != NULL)
 	{
-		compare_command_structs(expected_pipeline->content, actual_pipeline->content);
-		actual_pipeline = actual_pipeline->next;
-		expected_pipeline = expected_pipeline->next;
+		compare_command_structs(expected_head->content, actual_head->content);
+		actual_head = actual_head->next;
+		expected_head = expected_head->next;
 	}
 }
 
@@ -128,11 +132,13 @@ TEST(CreateParseList, SimplePipelineTwoPipes)
 	TEST_ASSERT_EQUAL_INT_MESSAGE(3, actual_len, "Input: \"ls -l | grep codam > out_file | < in_file wc -l > out_file_2\"");
 
 	/* Compare all elements in the linked list */
-	while (actual_pipeline != NULL)
+	t_list	*actual_head = actual_pipeline;
+	t_list	*expected_head = expected_pipeline;
+	while (actual_head != NULL)
 	{
-		compare_command_structs(expected_pipeline->content, actual_pipeline->content);
-		actual_pipeline = actual_pipeline->next;
-		expected_pipeline = expected_pipeline->next;
+		compare_command_structs(expected_head->content, actual_head->content);
+		actual_head = actual_head->next;
+		expected_head = expected_head->next;
 	}
 }
 
@@ -161,11 +167,13 @@ TEST(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection)
 	TEST_ASSERT_EQUAL_INT_MESSAGE(3, actual_len, "Input: \"ls -l | grep codam > out_file | < in_file wc -l > out_file_2\"");
 
 	/* Compare all elements in the linked list */
-	while (actual_pipeline != NULL)
+	t_list	*actual_head = actual_pipeline;
+	t_list	*expected_head = expected_pipeline;
+	while (actual_head != NULL)
 	{
-		compare_command_structs(expected_pipeline->content, actual_pipeline->content);
-		actual_pipeline = actual_pipeline->next;
-		expected_pipeline = expected_pipeline->next;
+		compare_command_structs(expected_head->content, actual_head->content);
+		actual_head = actual_head->next;
+		expected_head = expected_head->next;
 	}
 }
 
@@ -188,10 +196,12 @@ TEST(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder)
 	TEST_ASSERT_EQUAL_INT_MESSAGE(1, actual_len, "Input: \"grep < infile codam >> outfile -i\"");
 
 	/* Compare all elements in the linked list */
-	while (actual_pipeline != NULL)
+	t_list	*actual_head = actual_pipeline;
+	t_list	*expected_head = expected_pipeline;
+	while (actual_head != NULL)
 	{
-		compare_command_structs(expected_pipeline->content, actual_pipeline->content);
-		actual_pipeline = actual_pipeline->next;
-		expected_pipeline = expected_pipeline->next;
+		compare_command_structs(expected_head->content, actual_head->content);
+		actual_head = actual_head->next;
+		expected_head = expected_head->next;
 	}
 }
