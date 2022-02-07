@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 13:00:14 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 18:21:33 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/07 12:50:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_list	*create_parse_list(t_list *token_list)
 	size_t			len_list;
 	t_list			*parse_list;
 	t_list			*new_list_element;
-	t_command		*command;
+	t_pipeline		*pipeline;
 	t_list_location	location;
 
 	len_list = ft_lstsize(token_list);
@@ -39,11 +39,11 @@ t_list	*create_parse_list(t_list *token_list)
 	location.list_idx = 0;
 	while (1)
 	{
-		command = create_simple_command_up_until_pipe_token(location.head, \
+		pipeline = create_simple_pipeline_up_until_pipe_token(location.head, \
 															&location.list_idx);
-		if (command == NULL)
+		if (pipeline == NULL)
 			return (NULL);
-		new_list_element = ft_lstnew(command);
+		new_list_element = ft_lstnew(pipeline);
 		if (new_list_element == NULL)
 			return (NULL);
 		ft_lstadd_back(&parse_list, new_list_element);

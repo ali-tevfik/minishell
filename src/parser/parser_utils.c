@@ -6,40 +6,11 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 17:43:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/07 14:51:55 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_utils.h"
-
-/*
-** Allocates memory for command struct and initializes variables.
-*/
-
-t_command	*init_command(t_list *token_list)
-{
-	size_t		number_of_command_tokens;
-	t_command	*command;
-
-	number_of_command_tokens = number_command_tokens(token_list);
-	command = ft_calloc(3, sizeof(*command));
-	if (command == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
-	command->command = ft_calloc(number_of_command_tokens + 1, sizeof(char *));
-	if (command->command == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
-	command->in_file = NULL;
-	command->out_file = NULL;
-	command->redirection_operator_in = NONE;
-	command->redirection_operator_out = NONE;
-	return (command);
-}
 
 /*
 ** Returns the amount of command tokens in a command.
@@ -47,7 +18,7 @@ t_command	*init_command(t_list *token_list)
 ** and filename for redirection.
 */
 
-size_t	number_command_tokens(t_list *token_list)
+static size_t	number_command_tokens(t_list *token_list)
 {
 	size_t	i;
 
@@ -65,4 +36,31 @@ size_t	number_command_tokens(t_list *token_list)
 		i++;
 	}
 	return (i);
+}
+
+/*
+** Allocates memory for command struct and initializes variables.
+*/
+
+t_pipeline	*init_pipeline(t_list *token_list)
+{
+	size_t		number_of_command_tokens;
+	t_pipeline	*pipeline;
+
+	number_of_command_tokens = number_command_tokens(token_list);
+	pipeline = ft_calloc(1, sizeof(*pipeline));
+	if (pipeline == NULL)
+	{
+		perror("Error with malloc");
+		return (NULL);
+	}
+	pipeline->command = ft_calloc(number_of_command_tokens + 1, \
+									sizeof(*pipeline->command));
+	if (pipeline->command == NULL)
+	{
+		perror("Error with malloc");
+		return (NULL);
+	}
+	pipeline->redirection = NULL;
+	return (pipeline);
 }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/04 11:57:29 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/07 14:49:52 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** 1_file_in is redirected with READ operator.
 */
 
-t_redirection	*create_redirection_list(size_t total_redir_operators_plus_filenames, ...)
+t_list	*create_redirection_list(size_t total_redir_operators_plus_filenames, ...)
 {
 	t_list			*redirection_list;
 	va_list			ap;
@@ -26,11 +26,13 @@ t_redirection	*create_redirection_list(size_t total_redir_operators_plus_filenam
 	size_t			total_redirections;
 	t_redirection	*redir_element;
 
+	if (total_redir_operators_plus_filenames == 0)
+		return (NULL);
 	i = 0;
 	redirection_list = NULL;
 	total_redirections = total_redir_operators_plus_filenames / 2;
 	redir_element = ft_calloc(1, sizeof(t_redirection));
-	ve_start(ap, total_redir_operators_plus_filenames);
+	va_start(ap, total_redir_operators_plus_filenames);
 	while (i < total_redirections)
 	{
 		redir_element->file = va_arg(ap, char *);
@@ -39,6 +41,7 @@ t_redirection	*create_redirection_list(size_t total_redir_operators_plus_filenam
 		i++;
 	}
 	va_end(ap);
+	printf("redirection_list->file = %s\n", ((t_redirection *)(redirection_list->content))->file);
 	return (redirection_list);
 }
 
@@ -61,39 +64,87 @@ char	**create_command(size_t len_command, ...)
 	return (command);
 }
 
-void	free_command(void *command)
+t_pipeline	*create_pipeline_element(char **command, t_list *redirection)
 {
-	size_t		i;
-	t_command 	*casted_command;
+	t_pipeline	*pipeline;
 
-	i = 0;
-	casted_command = (t_command *)command;
-	while (casted_command->command[i] != NULL)
-	{
-		free(casted_command->command[i]);
-		i++;
-	}
-	free(casted_command->command);
-	free(casted_command->in_file);
-	free(casted_command->out_file);
-	free(casted_command);
+	pipeline = ft_calloc(1, sizeof(*pipeline));
+	pipeline->command = command;
+	pipeline->redirection = redirection;
+	return (pipeline);
 }
 
-void	compare_command_structs(t_command *expected_command, t_command *actual_command)
+static void	free_command(char **command)
+{
+	size_t	i;
+
+	i = 0;
+	while (command[i] != NULL)
+	{
+		free(command[i]);
+		i++;
+	}
+	free(command);
+}
+
+static void	free_redirection(void *redirection)
+{
+	t_redirection *casted_redir;
+
+	casted_redir = redirection;
+	free(casted_redir->file);
+}
+
+void	free_pipeline(void *pipeline)
+{
+	t_pipeline	*casted_pipeline;
+
+	casted_pipeline = pipeline;
+	free_command(casted_pipeline->command);									/* Free command */
+	ft_lstclear(&casted_pipeline->redirection, free_redirection);	/* Free redirection linked list */
+}
+
+// void	compare_command_structs(t_command *expected_command, t_command *actual_command)
+// {
+// 	/* Check length of both command arrays */
+// 	size_t	actual_len = len_string_array(actual_command->command);
+// 	size_t	expected_len = len_string_array(expected_command->command);
+// 	TEST_ASSERT_EQUAL_size_t(expected_len, actual_len);
+
+// 	/* Check 2D command array */
+// 	TEST_ASSERT_EQUAL_STRING_ARRAY(expected_command->command, actual_command->command, expected_len);
+
+// 	/* Check filename and redirection operator */
+// 	TEST_ASSERT_EQUAL_INT(expected_command->redirection_operator_in, actual_command->redirection_operator_in);
+// 	TEST_ASSERT_EQUAL_INT(expected_command->redirection_operator_out, actual_command->redirection_operator_out);
+// 	TEST_ASSERT_EQUAL_STRING(expected_command->in_file, actual_command->in_file);
+// 	TEST_ASSERT_EQUAL_STRING(expected_command->out_file, actual_command->out_file);
+// }
+
+void	compare_pipelines(t_pipeline *expected_pipeline, t_pipeline *actual_pipeline)
 {
 	/* Check length of both command arrays */
-	size_t	actual_len = len_string_array(actual_command->command);
-	size_t	expected_len = len_string_array(expected_command->command);
+	size_t	actual_len = len_string_array(actual_pipeline->command);
+	size_t	expected_len = len_string_array(expected_pipeline->command);
 	TEST_ASSERT_EQUAL_size_t(expected_len, actual_len);
 
 	/* Check 2D command array */
-	TEST_ASSERT_EQUAL_STRING_ARRAY(expected_command->command, actual_command->command, expected_len);
+	TEST_ASSERT_EQUAL_STRING_ARRAY(expected_pipeline->command, actual_pipeline->command, expected_len);
 
-	/* Check filename and redirection operator */
-	TEST_ASSERT_EQUAL_INT(expected_command->redirection_operator_in, actual_command->redirection_operator_in);
-	TEST_ASSERT_EQUAL_INT(expected_command->redirection_operator_out, actual_command->redirection_operator_out);
-	TEST_ASSERT_EQUAL_STRING(expected_command->in_file, actual_command->in_file);
-	TEST_ASSERT_EQUAL_STRING(expected_command->out_file, actual_command->out_file);
+	/* Compare redirection lists */
+	t_list	*expected_redir_list = expected_pipeline->redirection;
+	t_list	*actual_redir_list = actual_pipeline->redirection;
+	size_t	len_expected = ft_lstsize(expected_redir_list);
+	size_t	len_actual = ft_lstsize(actual_redir_list);
+	TEST_ASSERT_EQUAL_size_t(len_expected, len_actual);
+
+	while (expected_redir_list != NULL)
+	{
+		TEST_ASSERT_EQUAL_STRING(((t_redirection *)(expected_redir_list->content))->file, ((t_redirection *)(actual_redir_list->content))->file);
+		TEST_ASSERT_EQUAL_INT(((t_redirection *)(expected_redir_list->content))->redir_type, ((t_redirection *)(actual_redir_list->content))->redir_type);
+		expected_redir_list = expected_redir_list->next;
+		actual_redir_list = actual_redir_list->next;
+	}
 }
 
 size_t	len_string_array(char **string_array)

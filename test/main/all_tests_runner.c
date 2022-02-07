@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/02 14:37:15 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/07 14:42:21 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,29 +127,29 @@ TEST_GROUP_RUNNER(CreateSimpleCommand)
 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe);
 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile);
 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFile);
-	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection);
-	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand);
-	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand);
-	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand);
+	// RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection);
+	// RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand);
+	// RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand);
+	// RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand);
 }
 
-TEST_GROUP_RUNNER(CreateParseList)
-{
-	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipes);
-	RUN_TEST_CASE(CreateParseList, SimplePipelineOnePipe);
-	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipes);
-	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection);
-	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder);
-}
+// TEST_GROUP_RUNNER(CreateParseList)
+// {
+// 	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipes);
+// 	RUN_TEST_CASE(CreateParseList, SimplePipelineOnePipe);
+// 	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipes);
+// 	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection);
+// 	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder);
+// }
 
-TEST_GROUP_RUNNER(FindCommand)
-{
-	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathLs);
-	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathGrep);
-	RUN_TEST_CASE(FindCommand, CommandExistsWithRelativePath);
-	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithRelativePath);
-	RUN_TEST_CASE(FindCommand, CommandExistsWithAbsolutePath);
-	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithAbsolutePath);
-	RUN_TEST_CASE(FindCommand, CommandDoesntExist);
-	RUN_TEST_CASE(FindCommand, NoPathAvailable);
-}
+// TEST_GROUP_RUNNER(FindCommand)
+// {
+// 	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathLs);
+// 	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathGrep);
+// 	RUN_TEST_CASE(FindCommand, CommandExistsWithRelativePath);
+// 	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithRelativePath);
+// 	RUN_TEST_CASE(FindCommand, CommandExistsWithAbsolutePath);
+// 	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithAbsolutePath);
+// 	RUN_TEST_CASE(FindCommand, CommandDoesntExist);
+// 	RUN_TEST_CASE(FindCommand, NoPathAvailable);
+// }

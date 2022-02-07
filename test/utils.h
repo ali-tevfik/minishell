@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:21 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/04 11:56:33 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/07 13:50:52 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@
 
 /* Function prototypes */
 char			**create_command(size_t len_command, ...);
-t_redirection	*create_redirection_list(size_t total_redir_operators_plus_filenames, ...);
-void			free_command(void *command);
-void			compare_command_structs(t_command *expected_command, t_command *actual_command);
+t_list			*create_redirection_list(size_t total_redir_operators_plus_filenames, ...);
+t_pipeline		*create_pipeline_element(char **command, t_list *redirection);
+void			free_pipeline(void *pipeline);
+void			compare_pipelines(t_pipeline *expected_pipeline, t_pipeline *actual_pipeline);
 size_t			len_string_array(char **string_array);
 
 #endif
