@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/03 15:43:10 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/04 12:03:09 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@
 #include <stdlib.h>
 
 /* Variables */
-t_list		*token_list;
-t_command	*actual_command;
-t_command	*expected_command;
+t_list			*token_list;
+char			**actual_command;
+char			**expected_command;
+t_list			*expected_redirection_list;
+t_list			*actual_redirection_list;
+t_pipeline		*pipeline;
 
 TEST_GROUP(CreateSimpleCommand);
 
@@ -58,10 +61,11 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenList)
 	expected_command->command[0] = ft_strdup("ls");
 	expected_command->command[1] = ft_strdup("-l");
 	expected_command->command[2] = NULL;
-	expected_command->redirection_operator_in = NONE;
-	expected_command->redirection_operator_out = NONE;
-	expected_command->in_file = NULL;
-	expected_command->out_file = NULL;
+	// expected_command->redirection_operator_in = NONE;
+	// expected_command->redirection_operator_out = NONE;
+	// expected_command->in_file = NULL;
+	// expected_command->out_file = NULL;
+	expected_command->redirection = NULL;
 
 	/* Actual command from tokens */
 	size_t	location_token = 0;
@@ -89,10 +93,11 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe)
 	expected_command->command[0] = ft_strdup("grep");
 	expected_command->command[1] = ft_strdup("codam");
 	expected_command->command[2] = NULL;
-	expected_command->redirection_operator_in = NONE;
-	expected_command->redirection_operator_out = NONE;
-	expected_command->in_file = NULL;
-	expected_command->out_file = NULL;
+	// expected_command->redirection_operator_in = NONE;
+	// expected_command->redirection_operator_out = NONE;
+	// expected_command->in_file = NULL;
+	// expected_command->out_file = NULL;
+	expected_command->redirection = NULL;
 
 	/* Actual command from tokens */
 	size_t	location_token = 3;
@@ -114,14 +119,9 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile)
 
 	/* Expected command from tokens */
 	expected_command = ft_calloc(1, sizeof(t_command));
-	expected_command->command = ft_calloc(3, sizeof(char *));
-	expected_command->command[0] = ft_strdup("ls");
-	expected_command->command[1] = ft_strdup("-l");
-	expected_command->command[2] = NULL;
-	expected_command->redirection_operator_in = NONE;
-	expected_command->redirection_operator_out = OUT;
-	expected_command->in_file = NULL;
-	expected_command->out_file =  ft_strdup("out_file");
+	expected_command = create_command(2, "ls", "-l");
+	expected_redirection_list = create_redirection_list(2, ft_strdup("out_file"), OUT);
+	expected_command->redirection = expected_redirection_list;
 
 	/* Actual command from tokens */
 	size_t	location_token = 0;

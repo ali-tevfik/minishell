@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:21 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/31 15:30:53 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/04 11:56:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@
 /* Data structures */
 
 /* Function prototypes */
-t_command	*create_command(t_redir_type redir_in, t_redir_type redir_out, 
-							char *in_file, char *out_file, 
-							size_t len_command, ...);
-void	free_command(void *command);
-void	compare_command_structs(t_command *expected_command, t_command *actual_command);
-size_t	len_string_array(char **string_array);
+char			**create_command(size_t len_command, ...);
+t_redirection	*create_redirection_list(size_t total_redir_operators_plus_filenames, ...);
+void			free_command(void *command);
+void			compare_command_structs(t_command *expected_command, t_command *actual_command);
+size_t			len_string_array(char **string_array);
 
 #endif
