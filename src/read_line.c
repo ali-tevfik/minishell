@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 17:35:24 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 17:40:36 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@
 #include "../incl/fork.h"
 #include "parser/create_parse_list.h"
 
-/*
-** pwdaa works like pwd
-**
-**
-*/
-
-void	line_(char *line, t_list **env)
+void	line_(char *line, t_list **env, char *envp[])
 {
 	t_list *lst;
 	t_list	*command;
