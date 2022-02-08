@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 15:53:47 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/08 17:36:39 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,4 @@ void	line_(char *line, t_list **env, char *envp[])
 		wait_and_get_last_exit_status(last_id);
 	}
 }
+asfkas
