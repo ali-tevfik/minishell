@@ -6,11 +6,17 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/01 16:16:47 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/08 14:26:14 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+/*
+** pwdaa works like pwd
+**
+**
+*/
 
 void	line_(char *line, t_list **env)
 {
@@ -21,7 +27,7 @@ void	line_(char *line, t_list **env)
 	else if (ft_strncmp(line, "exit", 4) == 0)
 		exit (0);
 	else if (ft_strncmp(line, "echo ", 5) == 0)
-		echo_command(line);
+		echo_command(line+5);
 	else if (ft_strncmp(line, "env", 3) == 0)
 		env_commands(*env);
 	else if (ft_strncmp(line, "export ", 7) == 0)

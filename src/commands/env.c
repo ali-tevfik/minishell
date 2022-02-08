@@ -6,13 +6,19 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 13:07:00 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 15:47:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
 #include <stdio.h>
+
+/* NOTES
+** Calloc needs to change to 1 instead of 2. we need only one struct.
+** Protect all mallocs and free data of split.
+**
+*/
 
 t_list	*add_envp(char *envp[])
 {

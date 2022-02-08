@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 13:26:03 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 16:01:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int	match_key_env(t_list **envp, char *argument, int where)
 	}
 	return (0);
 }
+
+/*
+** From the parser, this gets command = {"export", "example=nice", NULL};
+**
+*/
 
 void	export_command(t_list **envp, char *line)
 {

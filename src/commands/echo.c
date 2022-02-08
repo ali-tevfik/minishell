@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/01/31 17:42:24 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/08 13:46:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	echo_command(char *text)
 	int	new_line;
 
 	new_line = 0;
-	i = 5 + skip_space_start(text + 5);
+	i = 5 + skip_space_start(text);
 	if (text[i] == '-')
 	{
 		if (text[i + 1] == 'n')
