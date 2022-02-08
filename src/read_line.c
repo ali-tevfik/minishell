@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 15:53:47 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/08 17:35:24 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@
 #include "../incl/fork.h"
 #include "parser/create_parse_list.h"
 
-void	line_(char *line, t_list **env, char *envp[])
+/*
+** pwdaa works like pwd
+**
+**
+*/
+
+void	line_(char *line, t_list **env)
 {
 	t_list *lst;
 	t_list	*command;
@@ -31,7 +37,7 @@ void	line_(char *line, t_list **env, char *envp[])
 	else if (ft_strncmp(line, "exit", 4) == 0)
 		exit (0);
 	else if (ft_strncmp(line, "echo ", 5) == 0)
-		echo_command(line);
+		echo_command(line+5);
 	else if (ft_strncmp(line, "env", 3) == 0)
 		env_commands(*env);
 	else if (ft_strncmp(line, "export ", 7) == 0)

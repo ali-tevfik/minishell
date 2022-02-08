@@ -14,7 +14,7 @@ fi
 
 # Use git diff-index to check for whitespace errors
 echo "pre-commit: Testing for norminette"
-if ! norminette src/tokenizer incl/ > /dev/null
+if ! norminette src/tokenizer > /dev/null
 then
     echo "pre-commit: Aborting commit due to norm errors."
     exit 1

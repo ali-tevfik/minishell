@@ -3,8 +3,6 @@
 #include "../incl/minishell.h"
 #include "../src/libft/libft.h"
 
-
-
 t_list	*expected_list;
 t_list	*actual_list;
 
@@ -18,14 +16,13 @@ TEST_SETUP(export)
 
 TEST_TEAR_DOWN(export)
 {
-
 }
-
 
 TEST(export, add_normal)
 {
 	t_list	*input_list = NULL;
 
+	/* Actual List */
 	export_command(&input_list,"export hello=codam");
 	export_command(&input_list,"export codam=42");
 	export_command(&input_list,"export coding=15");
@@ -35,24 +32,24 @@ TEST(export, add_normal)
 	t_env *env;
 
 	/* Input list */
-	env = ft_calloc(2,sizeof(env));
-	env->key = "hello";
-	env->value = "codam";
+	env = ft_calloc(1,sizeof(*env));
+	env->key = ft_strdup("hello");
+	env->value = ft_strdup("codam");
 	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
-	env = ft_calloc(2,sizeof(env));
-	env->key = "codam";
-	env->value = "42";
+	env = ft_calloc(1,sizeof(*env));
+	env->key = ft_strdup("codam");
+	env->value = ft_strdup("42");
 	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
-	env = ft_calloc(2,sizeof(env));
-	env->key = "coding";
-	env->value = "15";
+	env = ft_calloc(1,sizeof(*env));
+	env->key = ft_strdup("coding");
+	env->value = ft_strdup("15");
 	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
-	env = ft_calloc(2,sizeof(env));
-	env->key = "college";
-	env->value = "as";
+	env = ft_calloc(1,sizeof(*env));
+	env->key = ft_strdup("college");
+	env->value = ft_strdup("as");
 	ft_lstadd_back(&expected_list, ft_lstnew(env));
 
 	/* Compare contents */
