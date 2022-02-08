@@ -6,12 +6,13 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/02 13:12:30 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/08 13:07:00 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
+#include <stdio.h>
 
 t_list	*add_envp(char *envp[])
 {

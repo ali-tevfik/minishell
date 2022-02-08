@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/07 13:54:04 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/08 12:59:10 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,10 +88,10 @@ TEST_FILES = 	unity/src/unity.c \
 				src/parser/create_simple_command.c \
 				src/parser/parser_utils.c \
 				test/test_create_parse_list.c \
-				src/parser/create_parse_list.c
-
-				# test/test_find_command.c \
-				# src/executor/find_command.c
+				src/parser/create_parse_list.c\
+				test/test_find_command.c \
+				src/executor/find_command.c \
+				src/commands/env.c
 
 HEADER_FILES = 	incl/minishell.h
 

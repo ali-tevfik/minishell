@@ -6,9 +6,16 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/07 14:48:47 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 11:47:32 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** A pipeline is a single command or a sequence of commands separated by pipes.
+** Example pipelines:
+** --> ls -l
+** --> ls -l | wc -l
+*/
 
 /* Unity unit-tester */
 #include "unity_fixture.h"
@@ -54,12 +61,12 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenList)
 	/* Tokenize input */
 	token_list = tokenize_input(input);
 
-	/* Expected command from tokens */
+	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
 	redirection_list = create_redirection_list(0);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
-	/* Actual command from tokens */
+	/* Actual pipeline from tokens */
 	size_t		location_token = 0;
 	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
 
@@ -79,12 +86,12 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe)
 	token_list = tokenize_input(input);
 	head = token_list->next->next->next;
 
-	/* Expected command from tokens */
+	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "grep", "codam");
 	redirection_list = create_redirection_list(0);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
-	/* Actual command from tokens */
+	/* Actual pipeline from tokens */
 	size_t	location_token = 3;
 	actual_pipeline = create_simple_pipeline_up_until_pipe_token(head, &location_token);
 
@@ -95,8 +102,6 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe)
 	compare_pipelines(expected_pipeline, actual_pipeline);
 }
 
-//char	*input = "ls -l 2 > out_file | grep codam";
-
 TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile)
 {
 	char	*input = "ls -l > out_file | grep codam";
@@ -104,12 +109,12 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile)
 	/* Tokenize input */
 	token_list = tokenize_input(input);
 
-	/* Expected command from tokens */
+	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
-	redirection_list = create_redirection_list(2, ft_strdup("out_file"), OUT);
+	redirection_list = create_redirection_list(2, "out_file", OUT);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
-	/* Actual command from tokens */
+	/* Actual pipeline from tokens */
 	size_t	location_token = 0;
 	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
 
@@ -127,14 +132,12 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFi
 	/* Tokenize input */
 	token_list = tokenize_input(input);
 
-	/* Expected command from tokens */
+	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
-	redirection_list = create_redirection_list(4, ft_strdup("in_file"), READ, ft_strdup("out_file"), OUT);
+	redirection_list = create_redirection_list(4, "in_file", READ, "out_file", OUT);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
-	printf("redirection_list->file = %s\n", ((t_redirection *)(redirection_list->content))->file);
-
-	/* Actual command from tokens */
+	/* Actual pipeline from tokens */
 	size_t	location_token = 0;
 	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
 
@@ -145,120 +148,100 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFi
 	compare_pipelines(expected_pipeline, actual_pipeline);
 }
 
-// TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand)
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand)
+{
+	char	*input = "> out_file ls -l | grep codam";
+
+	/* Tokenize input */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline from tokens */
+	expected_command = create_command(2, "ls", "-l");
+	redirection_list = create_redirection_list(2, "out_file", OUT);
+	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
+
+	/* Actual pipeline from tokens */
+	size_t	location_token = 0;
+	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
+
+	/* Check token location, should be at grep , so 6th token (5th if starting from 0) */
+	TEST_ASSERT_EQUAL_size_t(5, location_token);
+
+	/* Compare both actual and expected structs with each other */
+	compare_pipelines(expected_pipeline, actual_pipeline);
+}
+
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand)
+{
+	char	*input = "ls > out_file -l -a | grep codam";
+
+	/* Tokenize input */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline from tokens */
+	expected_command = create_command(3, "ls", "-l", "-a");
+	redirection_list = create_redirection_list(2, "out_file", OUT);
+	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
+
+	/* Actual pipeline from tokens */
+	size_t	location_token = 0;
+	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
+
+	/* Check token location, should be at grep , so 6th token (5th if starting from 0) */
+	TEST_ASSERT_EQUAL_size_t(6, location_token);
+
+	/* Compare both actual and expected structs with each other */
+	compare_pipelines(expected_pipeline, actual_pipeline);
+}
+
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand)
+{
+	char	*input = "ls >> append_file -l -a";
+
+	/* Tokenize input */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline from tokens */
+	expected_command = create_command(3, "ls", "-l", "-a");
+	redirection_list = create_redirection_list(2, "append_file", APPEND);
+	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
+
+	/* Actual pipeline from tokens */
+	size_t	location_token = 0;
+	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
+
+	/* Check token location, should be at grep , so 6th token (5th if starting from 0) */
+	TEST_ASSERT_EQUAL_size_t(5, location_token);
+
+	/* Compare both actual and expected structs with each other */
+	compare_pipelines(expected_pipeline, actual_pipeline);
+}
+
+TEST(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection)
+{
+	char	*input = "ls -l";
+
+	/* Tokenize input */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline from tokens */
+	expected_command = create_command(2, "ls", "-l");
+	redirection_list = create_redirection_list(0);
+	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
+
+	/* Actual pipeline from tokens */
+	size_t	location_token = 0;
+	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
+
+	/* End of tokenlist will be reached, so location should be 2 */
+	TEST_ASSERT_EQUAL_size_t(2, location_token);
+
+	/* Compare both actual and expected structs with each other */
+	compare_pipelines(expected_pipeline, actual_pipeline);
+}
+
+// TEST(CreateSimpleCommand, CreateCommandFromTokenListStderrRedirect)
 // {
-// 	char	*input = "> out_file ls -l | grep codam";
-
-// 	/* Tokenize input */
-// 	token_list = tokenize_input(input);
-
-// 	/* Expected command from tokens */
-// 	expected_command = ft_calloc(1, sizeof(t_command));
-// 	expected_command->command = ft_calloc(3, sizeof(char *));
-// 	expected_command->command[0] = ft_strdup("ls");
-// 	expected_command->command[1] = ft_strdup("-l");
-// 	expected_command->command[2] = NULL;
-// 	expected_command->redirection_operator_in = NONE;
-// 	expected_command->redirection_operator_out = OUT;
-// 	expected_command->in_file = NULL;
-// 	expected_command->out_file =  ft_strdup("out_file");
-
-// 	/* Actual command from tokens */
-// 	size_t	location_token = 0;
-// 	actual_command = create_simple_command_up_until_pipe_token(token_list, &location_token);
-
-// 	/* Check token location, should be at grep , so 6th token (5th if starting from 0) */
-// 	TEST_ASSERT_EQUAL_size_t(5, location_token);
-
-// 	/* Compare both actual and expected structs with each other */
-// 	compare_command_structs(expected_command, actual_command);
-// }
-
-// TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand)
-// {
-// 	char	*input = "ls > out_file -l -a | grep codam";
-
-// 	/* Tokenize input */
-// 	token_list = tokenize_input(input);
-
-// 	/* Expected command from tokens */
-// 	expected_command = ft_calloc(1, sizeof(t_command));
-// 	expected_command->command = ft_calloc(4, sizeof(char *));
-// 	expected_command->command[0] = ft_strdup("ls");
-// 	expected_command->command[1] = ft_strdup("-l");
-// 	expected_command->command[2] = ft_strdup("-a");
-// 	expected_command->command[3] = NULL;
-// 	expected_command->redirection_operator_in = NONE;
-// 	expected_command->redirection_operator_out = OUT;
-// 	expected_command->in_file = NULL;
-// 	expected_command->out_file =  ft_strdup("out_file");
-
-// 	/* Actual command from tokens */
-// 	size_t	location_token = 0;
-// 	actual_command = create_simple_command_up_until_pipe_token(token_list, &location_token);
-
-// 	/* Check token location, should be at grep , so 6th token (5th if starting from 0) */
-// 	TEST_ASSERT_EQUAL_size_t(6, location_token);
-
-// 	/* Compare both actual and expected structs with each other */
-// 	compare_command_structs(expected_command, actual_command);
-// }
-
-// TEST(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand)
-// {
-// 	char	*input = "ls >> out_file -l -a";
-
-// 	/* Tokenize input */
-// 	token_list = tokenize_input(input);
-
-// 	/* Expected command from tokens */
-// 	expected_command = ft_calloc(1, sizeof(t_command));
-// 	expected_command->command = ft_calloc(4, sizeof(char *));
-// 	expected_command->command[0] = ft_strdup("ls");
-// 	expected_command->command[1] = ft_strdup("-l");
-// 	expected_command->command[2] = ft_strdup("-a");
-// 	expected_command->command[3] = NULL;
-// 	expected_command->redirection_operator_in = NONE;
-// 	expected_command->redirection_operator_out = APPEND;
-// 	expected_command->in_file = NULL;
-// 	expected_command->out_file =  ft_strdup("out_file");
-
-// 	/* Actual command from tokens */
-// 	size_t	location_token = 0;
-// 	actual_command = create_simple_command_up_until_pipe_token(token_list, &location_token);
-
-// 	/* Check token location, should be at grep , so 6th token (5th if starting from 0) */
-// 	TEST_ASSERT_EQUAL_size_t(5, location_token);
-
-// 	/* Compare both actual and expected structs with each other */
-// 	compare_command_structs(expected_command, actual_command);
-// }
-
-// TEST(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection)
-// {
-// 	char	*input = "ls -l";
-
-// 	/* Tokenize input */
-// 	token_list = tokenize_input(input);
-
-// 	/* Expected command from tokens */
-// 	expected_command = ft_calloc(1, sizeof(t_command));
-// 	expected_command->command = ft_calloc(3, sizeof(char *));
-// 	expected_command->command[0] = ft_strdup("ls");
-// 	expected_command->command[1] = ft_strdup("-l");
-// 	expected_command->command[2] = NULL;
-// 	expected_command->redirection_operator_in = NONE;
-// 	expected_command->redirection_operator_out = NONE;
-// 	expected_command->in_file = NULL;
-// 	expected_command->out_file = NULL;
-
-// 	/* Actual command from tokens */
-// 	size_t	location_token = 0;
-// 	actual_command = create_simple_command_up_until_pipe_token(token_list, &location_token);
-
-// 	/* End of tokenlist will be reached, so location should be 2 */
-// 	TEST_ASSERT_EQUAL_size_t(2, location_token);
-
-// 	/* Compare both actual and expected structs with each other */
-// 	compare_command_structs(expected_command, actual_command);
+// 	TEST_IGNORE();
+// 	//char	*input = "ls -l 2 > out_file | grep codam";
 // }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 12:58:27 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/07 13:53:26 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 12:33:09 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,171 +29,186 @@
 /* Variables */
 t_list			*token_list;
 char			**command;
-t_redirection	*redirection_list;
-t_pipeline		*expected_pipeline;
-t_pipeline		*actual_pipeline;
+t_pipeline		*pipeline_element;
+t_list			*redirection_list;
+t_list			*expected_pipeline_list;
+t_list			*actual_pipeline_list;
 
-// TEST_GROUP(CreateParseList);
+TEST_GROUP(CreateParseList);
 
-// TEST_SETUP(CreateParseList)
-// {
-// 	expected_pipeline = NULL;
-// }
+TEST_SETUP(CreateParseList)
+{
+	expected_pipeline_list = NULL;
+}
 
-// TEST_TEAR_DOWN(CreateParseList)
-// {
-// 	ft_lstclear(&expected_pipeline, free_pipeline);
-// 	ft_lstclear(&actual_pipeline, free_pipeline);
-// 	ft_lstclear(&token_list, free_token);
-// }
+TEST_TEAR_DOWN(CreateParseList)
+{
+	ft_lstclear(&expected_pipeline_list, free_pipeline);
+	ft_lstclear(&actual_pipeline_list, free_pipeline);
+	ft_lstclear(&token_list, free_token);
+}
 
-// TEST(CreateParseList, SimplePipelineNoPipes)
-// {
-// 	char	*input = "ls -l";
+TEST(CreateParseList, SimplePipelineNoPipes)
+{
+	char	*input = "ls -l";
 
-// 	/* Generated token list */
-// 	token_list = tokenize_input(input);
+	/* Generated token list */
+	token_list = tokenize_input(input);
 
-// 	/* Expected list */
-// 	command = create_command(2, "ls", "-l");
-// 	redirection_list = create_redirection_list(0);
-// 	actual_pipeline = create_pipeline_element(command, redirection_list);
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(actual_pipeline));
+	/* Expected pipeline list */
+	command = create_command(2, "ls", "-l");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
-// 	/* Actual list */
-// 	actual_pipeline = create_parse_list(token_list);
+	/* Actual pipeline list */
+	actual_pipeline_list = create_parse_list(token_list);
 
-// 	/* Compare pipelines */
-// 	compare_pipelines(expected_pipeline, actual_pipeline);
-// }
+	/* Compare pipelines */
+	t_list	*head_expected = expected_pipeline_list;
+	t_list	*head_actual = actual_pipeline_list;
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(head_expected), ft_lstsize(head_actual));
+	while (head_expected != NULL)
+	{
+		compare_pipelines((t_pipeline *)head_expected->content, (t_pipeline *)head_actual->content);
+		head_expected = head_expected->next;
+		head_actual = head_actual->next;
+	}
+}
 
-// TEST(CreateParseList, SimplePipelineOnePipe)
-// {
-// 	char	*input = "ls -l | grep codam > out_file";
+TEST(CreateParseList, SimplePipelineOnePipe)
+{
+	char	*input = "ls -l | grep codam > out_file";
 
-// 	/* Generated token list */
-// 	token_list = tokenize_input(input);
+	/* Generated token list */
+	token_list = tokenize_input(input);
 
-// 	/* Expected list */
-// 	command = create_command(NONE, NONE, NULL, NULL, 2, "ls", "-l");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
+	/* Expected pipeline list */
+	command = create_command(2, "ls", "-l");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(2, "grep", "codam");
+	redirection_list = create_redirection_list(2, "out_file", OUT);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	/* Actual pipeline list */
+	actual_pipeline_list = create_parse_list(token_list);
+
+	/* Compare pipelines */
+	t_list	*head_expected = expected_pipeline_list;
+	t_list	*head_actual = actual_pipeline_list;
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(head_expected), ft_lstsize(head_actual));
+	while (head_expected != NULL)
+	{
+		compare_pipelines((t_pipeline *)head_expected->content, (t_pipeline *)head_actual->content);
+		head_expected = head_expected->next;
+		head_actual = head_actual->next;
+	}
+}
+
+TEST(CreateParseList, SimplePipelineTwoPipes)
+{
+	char	*input = "ls -l | grep codam > out_file | < in_file wc -l -a > out_file_2";
+
+	/* Generated token list */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline list */
+	command = create_command(2, "ls", "-l");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(2, "grep", "codam");
+	redirection_list = create_redirection_list(2, "out_file", OUT);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(3, "wc", "-l", "-a");
+	redirection_list = create_redirection_list(4, "in_file", READ, "out_file_2", OUT);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	/* Actual pipeline list */
+	actual_pipeline_list = create_parse_list(token_list);
+
+	/* Compare pipelines */
+	t_list	*head_expected = expected_pipeline_list;
+	t_list	*head_actual = actual_pipeline_list;
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(head_expected), ft_lstsize(head_actual));
+	while (head_expected != NULL)
+	{
+		compare_pipelines((t_pipeline *)head_expected->content, (t_pipeline *)head_actual->content);
+		head_expected = head_expected->next;
+		head_actual = head_actual->next;
+	}
+}
+
+TEST(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection)
+{
+	char	*input = "ls -l | > out_file grep codam | < in_file wc > out_file_2 -l";
+
+	/* Generated token list */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline list */
+	command = create_command(2, "ls", "-l");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(2, "grep", "codam");
+	redirection_list = create_redirection_list(2, "out_file", OUT);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(2, "wc", "-l");
+	redirection_list = create_redirection_list(4, "in_file", READ, "out_file_2", OUT);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	/* Actual pipeline list */
+	actual_pipeline_list = create_parse_list(token_list);
+
+	/* Compare pipelines */
+	t_list	*head_expected = expected_pipeline_list;
+	t_list	*head_actual = actual_pipeline_list;
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(head_expected), ft_lstsize(head_actual));
+	while (head_expected != NULL)
+	{
+		compare_pipelines((t_pipeline *)head_expected->content, (t_pipeline *)head_actual->content);
+		head_expected = head_expected->next;
+		head_actual = head_actual->next;
+	}
+}
+
+TEST(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder)
+{
+	char	*input = "grep < infile codam >> outfile -i";
+
+	/* Generated token list */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline list */
+	command = create_command(3, "grep", "codam", "-i");
+	redirection_list = create_redirection_list(4, "infile", READ, "outfile", APPEND);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 	
-// 	command = create_command(NONE, OUT, NULL, ft_strdup("out_file"), 2, "grep", "codam");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
+	/* Actual pipeline list */
+	actual_pipeline_list = create_parse_list(token_list);
 
-// 	/* Actual list */
-// 	actual_pipeline = create_parse_list(token_list);
-
-// 	/* Compare lists length */
-// 	int actual_len = ft_lstsize(actual_pipeline);
-// 	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: \"ls -l | grep codam > out_file\"");
-
-// 	/* Compare all elements in the linked list */
-// 	t_list	*actual_head = actual_pipeline;
-// 	t_list	*expected_head = expected_pipeline;
-// 	while (actual_head != NULL)
-// 	{
-// 		compare_command_structs(expected_head->content, actual_head->content);
-// 		actual_head = actual_head->next;
-// 		expected_head = expected_head->next;
-// 	}
-// }
-
-// TEST(CreateParseList, SimplePipelineTwoPipes)
-// {
-// 	char	*input = "ls -l | grep codam > out_file | < in_file wc -l > out_file_2";
-
-// 	/* Generated token list */
-// 	token_list = tokenize_input(input);
-
-// 	/* Expected list */
-// 	command = create_command(NONE, NONE, NULL, NULL, 2, "ls", "-l");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
-
-// 	command = create_command(NONE, OUT, NULL, ft_strdup("out_file"), 2, "grep", "codam");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
-
-// 	command = create_command(READ, OUT, ft_strdup("in_file"), ft_strdup("out_file_2"), 2, "wc", "-l");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
-
-// 	/* Actual list */
-// 	actual_pipeline = create_parse_list(token_list);
-
-// 	/* Compare lists length */
-// 	int actual_len = ft_lstsize(actual_pipeline);
-// 	TEST_ASSERT_EQUAL_INT_MESSAGE(3, actual_len, "Input: \"ls -l | grep codam > out_file | < in_file wc -l > out_file_2\"");
-
-// 	/* Compare all elements in the linked list */
-// 	t_list	*actual_head = actual_pipeline;
-// 	t_list	*expected_head = expected_pipeline;
-// 	while (actual_head != NULL)
-// 	{
-// 		compare_command_structs(expected_head->content, actual_head->content);
-// 		actual_head = actual_head->next;
-// 		expected_head = expected_head->next;
-// 	}
-// }
-
-// TEST(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection)
-// {
-// 	char	*input = "ls -l | > out_file grep codam | < in_file wc > out_file_2 -l";
-
-// 	/* Generated token list */
-// 	token_list = tokenize_input(input);
-
-// 	/* Expected list */
-// 	command = create_command(NONE, NONE, NULL, NULL, 2, "ls", "-l");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
-
-// 	command = create_command(NONE, OUT, NULL, ft_strdup("out_file"), 2, "grep", "codam");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
-
-// 	command = create_command(READ, OUT, ft_strdup("in_file"), ft_strdup("out_file_2"), 2, "wc", "-l");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
-
-// 	/* Actual list */
-// 	actual_pipeline = create_parse_list(token_list);
-
-// 	/* Compare lists length */
-// 	int actual_len = ft_lstsize(actual_pipeline);
-// 	TEST_ASSERT_EQUAL_INT_MESSAGE(3, actual_len, "Input: \"ls -l | grep codam > out_file | < in_file wc -l > out_file_2\"");
-
-// 	/* Compare all elements in the linked list */
-// 	t_list	*actual_head = actual_pipeline;
-// 	t_list	*expected_head = expected_pipeline;
-// 	while (actual_head != NULL)
-// 	{
-// 		compare_command_structs(expected_head->content, actual_head->content);
-// 		actual_head = actual_head->next;
-// 		expected_head = expected_head->next;
-// 	}
-// }
-
-// TEST(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder)
-// {
-// 	char	*input = "grep < infile codam >> outfile -i";
-
-// 	/* Generated token list */
-// 	token_list = tokenize_input(input);
-
-// 	/* Expected list */
-// 	command = create_command(READ, APPEND, ft_strdup("infile"), ft_strdup("outfile"), 3, "grep", "codam", "-i");
-// 	ft_lstadd_back(&expected_pipeline, ft_lstnew(command));
-
-// 	/* Actual list */
-// 	actual_pipeline = create_parse_list(token_list);
-
-// 	/* Compare lists length */
-// 	int actual_len = ft_lstsize(actual_pipeline);
-// 	TEST_ASSERT_EQUAL_INT_MESSAGE(1, actual_len, "Input: \"grep < infile codam >> outfile -i\"");
-
-// 	/* Compare all elements in the linked list */
-// 	t_list	*actual_head = actual_pipeline;
-// 	t_list	*expected_head = expected_pipeline;
-// 	while (actual_head != NULL)
-// 	{
-// 		compare_command_structs(expected_head->content, actual_head->content);
-// 		actual_head = actual_head->next;
-// 		expected_head = expected_head->next;
-// 	}
-// }
+	/* Compare pipelines */
+	t_list	*head_expected = expected_pipeline_list;
+	t_list	*head_actual = actual_pipeline_list;
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(head_expected), ft_lstsize(head_actual));
+	while (head_expected != NULL)
+	{
+		compare_pipelines((t_pipeline *)head_expected->content, (t_pipeline *)head_actual->content);
+		head_expected = head_expected->next;
+		head_actual = head_actual->next;
+	}
+}

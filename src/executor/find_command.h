@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:25 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 14:13:56 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 13:03:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 /* User defined header */
 # include "../libft/libft.h"
 # include "../parser/parser_data_structs.h"
+# include "../../incl/commands.h"
 
 /* Macros */
 // # define SUCCESS 0
@@ -33,6 +34,6 @@
 /* Data structures */
 
 /* Function prototypes */
-bool	find_command(t_command *command);
+bool    find_command(char **command_array, t_list *lst);
 
 #endif

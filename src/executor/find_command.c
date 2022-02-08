@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/03 15:54:40 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 13:20:30 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,24 +117,25 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 **		true otherwise
 */
 
-/* USE OWN GETENV */
-bool	find_command(t_command *command)
+bool    find_command(char **command_array, t_list *lst)
 {
-	char	*path;
-	char	**path_array;
-
-	path = getenv("PATH");
-	if (path == NULL)
-		return (true);
-	path_array = ft_split(path, ':');
-	if (path_array == NULL)
+    char    *path;
+    char    **path_array;
+    path = expander("PATH", lst);
+    if (path == NULL)
 	{
-		perror("Error with malloc");
-		return (false);
+		printf("returning\n");
+	    return (true);
 	}
-	if (check_given_executable_on_slashes(command->command[0]))
-		return (true);
-	if (!append_slash_suffix_to_path(path_array))
-		return (false);
-	return (get_executable_with_full_path(path_array, &command->command[0]));
+	path_array = ft_split(path, ':');
+    if (path_array == NULL)
+    {
+        perror("Error with malloc");
+        return (false);
+    }
+    if (check_given_executable_on_slashes(command_array[0]))
+        return (true);
+    if (!append_slash_suffix_to_path(path_array))
+        return (false);
+     return (get_executable_with_full_path(path_array, &command_array[0]));
 }
