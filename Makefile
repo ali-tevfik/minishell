@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/02 14:38:51 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/08 12:38:32 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,10 @@ SRC_FILES = minishell.c \
 			tokenizer/validate_grammer.c \
 			parser/create_parse_list.c \
 			parser/create_simple_command.c \
-			parser/parser_utils.c
+			parser/parser_utils.c \
+			fork/fork.c \
+			src/executor/find_command.c\
+			src/fork/waiting_last_child.c
 
 TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
@@ -136,7 +139,7 @@ $(NAME): $(OBJ)
 $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@mkdir -p $(@D)
 	@$(GCC) $(FLAGS) -c $< -o $@
-	
+
 # Build debug
 debug: $(DBG_OBJ_DIR) $(LIBFT) $(DBG_NAME)
 

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:25 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/01 14:13:56 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/02 15:57:30 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@
 /* Data structures */
 
 /* Function prototypes */
-bool	find_command(t_command *command);
+bool	find_command(t_command *command, t_list *lst);
 
 #endif

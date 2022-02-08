@@ -6,11 +6,12 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/02 14:40:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/02 15:56:40 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "find_command.h"
+#include "../../incl/commands.h"
 
 /*
 ** Checks whether the current executable is given with a path.
@@ -110,19 +111,19 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 ** 2. If no slashes, get PATH from environment.
 ** 3. Append a "/" in front of the command.
 ** 4. Loop over PATH and try to find executable.
-** 
+**
 ** Returns:
 ** 		false if malloc failed. Minishell should stop.
 **		true otherwise
 */
 
 /* USE OWN GETENV */
-bool	find_command(t_command *command)
+bool	find_command(t_command *command, t_list *lst)
 {
 	char	*path;
 	char	**path_array;
 
-	path = getenv("PATH");
+	path = expander("PATH", lst);
 	if (path == NULL)
 		return (true);
 	path_array = ft_split(path, ':');
