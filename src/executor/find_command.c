@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 13:20:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/08 13:30:24 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,10 @@ bool    find_command(char **command_array, t_list *lst)
 {
     char    *path;
     char    **path_array;
+	
     path = expander("PATH", lst);
     if (path == NULL)
-	{
-		printf("returning\n");
 	    return (true);
-	}
 	path_array = ft_split(path, ':');
     if (path_array == NULL)
     {
