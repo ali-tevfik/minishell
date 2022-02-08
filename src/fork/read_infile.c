@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   read_infile.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 14:39:09 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 16:01:54 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/08 12:49:50 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/commands.h"
-#include "../../incl/minishell.h"
-
-void	pwd_command(void)
+int read_infile(t_command *command)
 {
-	char	*path;
-
-	path = (char *) malloc(sizeof(path) * PATH_MAX_LEN);
-	if (!path)
-		printf("malloc error");
-	printf("%s\n", getcwd(path, PATH_MAX_LEN));
-	free(path);
+	int	id;
+	id = open(command->in_file, O_RDONLY);
+	if (command->redirection_operator_in == OUT){}
+	else if (command->redirection_operator_in == APPEND){}
+	else if (command->redirection_operator_in == READ)
+		id = read(codam->in_file, O_RDONLY);
+	else if (command->redirection_operator_in == HERE_DOC){}
+	return (id);
 }

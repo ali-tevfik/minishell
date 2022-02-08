@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   fork.h                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 14:39:09 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 16:01:54 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/04 13:06:56 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/08 14:20:33 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/commands.h"
-#include "../../incl/minishell.h"
+#ifndef FORK_H
+# define FORK_H
 
-void	pwd_command(void)
-{
-	char	*path;
-
-	path = (char *) malloc(sizeof(path) * PATH_MAX_LEN);
-	if (!path)
-		printf("malloc error");
-	printf("%s\n", getcwd(path, PATH_MAX_LEN));
-	free(path);
-}
+#include "../src/parser/parser_data_structs.h"
+void fork_func(t_list *command_lst, char *envp[], t_list *env, int *last_id);
+int	wait_and_get_last_exit_status(int last_process_pid);
+#endif

@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   write_outfile.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 14:39:09 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 16:01:54 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/08 11:43:40 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/08 12:50:55 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/commands.h"
-#include "../../incl/minishell.h"
-
-void	pwd_command(void)
+int write_outfile(t_command *command)
 {
-	char	*path;
+	int	id;
 
-	path = (char *) malloc(sizeof(path) * PATH_MAX_LEN);
-	if (!path)
-		printf("malloc error");
-	printf("%s\n", getcwd(path, PATH_MAX_LEN));
-	free(path);
+	if (command->redirection_operator_out == OUT){
+		id = open(command->out_file, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+	}
+	else if (command->redirection_operator_out == APPEND){}
+	else if (command->redirection_operator_out == READ){}
+	else if (command->redirection_operator_out == HERE_DOC){}
+	return (id);
 }
