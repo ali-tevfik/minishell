@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/08 15:16:23 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/09 12:00:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 #include "parser/create_parse_list.h"
 #include "tokenizer/tokenizer.h"
+#include <signal.h>
+
+
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -23,6 +26,7 @@ int	main(int argc, char *argv[], char *envp[])
 	env = add_envp(envp);
 	argc = 1;
 	argv = NULL;
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("> ");
