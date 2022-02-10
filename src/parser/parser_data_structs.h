@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 16:44:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/10 14:22:54 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/10 18:06:04 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,10 @@ typedef struct s_list_location
 }				t_list_location;
 
 #endif
+
+//
+// > export alo=a hi=a
+// command[0] = export
+// command[1] = alo=a
+// command[2] = hi=a
+//

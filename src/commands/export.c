@@ -6,12 +6,13 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 16:01:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/10 18:37:02 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/commands.h"
 #include "../../incl/minishell.h"
+#include "../parser/parser_data_structs.h"
 
 t_list	*delete_env(t_list *old_lst, t_list **envp)
 {
@@ -60,26 +61,32 @@ int	match_key_env(t_list **envp, char *argument, int where)
 **
 */
 
-void	export_command(t_list **envp, char *line)
+void	export_command(t_list **envp, t_pipeline *pipe_line)
 {
 	char	**argument;
 	t_env	*env;
+	int		i;
 
-	if (ft_strrchr(line, '=') == 0)
-		return ;
-	argument = ft_split(skip_space(line + 6), '=');
-	if (!argument)
-		exit(0);
-	if (!ft_isalpha(argument[0][0]) && argument[0][0] != 95)
-		return ;
-	if (match_key_env(envp, argument[0], 0) == 0)
+	i = 1;
+	while(pipe_line->command[i])
 	{
-		env = ft_calloc(2, sizeof(env));
-		env->key = argument[0];
-		if (argument[1])
-			env->value = argument[1];
-		else
-			env->value = "";
-		ft_lstadd_back(envp, ft_lstnew(env));
+		if (ft_strrchr(pipe_line->command[i], '=') == 0)
+			return ;
+		argument = ft_split(pipe_line->command[i], '=');
+		if (!argument)
+			exit(0);
+		if (!ft_isalpha(argument[0][0]) && argument[0][0] != 95)
+			return ;
+		if (match_key_env(envp, argument[0], 0) == 0)
+		{
+			env = ft_calloc(2, sizeof(env));
+			env->key = argument[0];
+			if (argument[1])
+				env->value = argument[1];
+			else
+				env->value = "";
+			ft_lstadd_back(envp, ft_lstnew(env));
+		}
+		i++;
 	}
 }

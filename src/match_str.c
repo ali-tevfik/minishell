@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   unset.c                                            :+:    :+:            */
+/*   match_str.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/21 17:19:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/10 18:36:45 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/10 18:16:53 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/10 18:58:10 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/commands.h"
-#include "../../incl/minishell.h"
+#include "../incl/minishell.h"
+#include "parser/parser_data_structs.h"
+#include "parser/create_simple_command.h"
+#include "tokenizer/tokenizer.h"
+#include "../incl/fork.h"
+#include "parser/create_parse_list.h"
 
-void	unset_command(t_list **envp, t_pipeline *pipe_line)
+int match_str(char *s1, char *s2)
 {
 	int	i;
 
-	i = 1;
-	while (pipe_line->command[i])
+	i = 0;
+	if (!s1 || !s2)
+		return (-1);
+	while (s1[i])
 	{
-		match_key_env(envp, pipe_line->command[i], 1);
+		if (!s2[i])
+			return (-1);
+		if (s1[i] != s2[i])
+			return (-1);
 		i++;
 	}
+	if (s2[i])
+		return (-1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/10 17:41:55 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/10 20:16:11 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,16 @@ void	one_argument(t_pipeline *pip_line, t_list *env, char *envp[], int *lastid)
 		exit(1);
 	}
 }
-void fork_func(t_list *pipe_lst, char *envp[], t_list *env, int *last_id)
+
+void fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 {
 	int	fd[2];
 	int	end_file;
 	int	i;
 	t_pipeline	*pip_line;
+	char **envp;
 
+	envp = create_envp(env);
 	i = 0;
 	end_file = -1;
 	while (pipe_lst)

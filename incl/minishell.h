@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 15:16:09 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/10 20:17:07 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/types.h>
 # include <fcntl.h>
 
-void	line_(char *line, t_list **env, char *envp[]);
+void	line_(char *line, t_list **env);
+char **create_envp(t_list *env_lst);
 
 #endif

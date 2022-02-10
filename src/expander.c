@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/02 14:30:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/10 18:57:08 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*expander(char *txt, t_list *lst)
 	while (lst)
 	{
 		env = lst->content;
-		if (ft_strncmp(env->key, txt, ft_strlen(env->key)) == 0)
+		if (match_str(env->key, txt) == 0)
 			return (env->value);
 		lst = lst->next;
 	}

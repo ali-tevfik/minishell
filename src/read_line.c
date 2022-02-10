@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 17:40:36 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/10 20:12:43 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,36 @@
 #include "../incl/fork.h"
 #include "parser/create_parse_list.h"
 
-void	line_(char *line, t_list **env, char *envp[])
+void	line_(char *line, t_list **env)
 {
 	t_list *lst;
-	t_list	*command;
+	t_list	*pipe_lst;
 	int	last_id;
+	t_pipeline *pipeline;
 
+	lst = tokenize_input(line);
+	pipe_lst = create_parse_list(lst);
+	pipeline = pipe_lst->content;
 	last_id = 0;
-	if (ft_strncmp(line, "cd ", 3) == 0)
-		cd_command(line);
-	else if (ft_strncmp(line, "pwd", 3) == 0)
+
+	if (match_str(pipeline->command[0], "cd") == 0)
+		cd_command(pipeline->command[1]);
+	else if (match_str(pipeline->command[0], "pwd") == 0)
 		pwd_command();
-	else if (ft_strncmp(line, "exit", 4) == 0)
+	else if (match_str(pipeline->command[0], "exit") == 0)
 		exit (0);
-	else if (ft_strncmp(line, "echo ", 5) == 0)
-		echo_command(line+5);
-	else if (ft_strncmp(line, "env", 3) == 0)
+	else if (match_str(pipeline->command[0], "echo") == 0)
+		echo_command(pipeline, *env);
+	else if (match_str(pipeline->command[0], "env") == 0)
 		env_commands(*env);
-	else if (ft_strncmp(line, "export ", 7) == 0)
-		export_command(env, line);
-	else if (ft_strncmp(line, "unset ", 6) == 0)
-		unset_command(env, line);
+	else if (match_str(pipeline->command[0], "export") == 0)
+		export_command(env, pipeline);
+	else if (match_str(pipeline->command[0], "unset") == 0)
+		unset_command(env, pipeline);
 	else
 	{
-		lst = tokenize_input(line);
-		command = create_parse_list(lst);
-		fork_func(command, envp, *env, &last_id);
+		fork_func(pipe_lst, *env, &last_id);
 		wait_and_get_last_exit_status(last_id);
 	}
+
 }
