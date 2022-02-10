@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/10 14:39:13 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/10 15:01:31 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int read_infile(t_pipeline *pipe_line)
 	id = 0;
 	if (redirection->redir_type == READ)
 		id = open(redirection->file, O_RDONLY);
-	// else if (redirection->redir_type == HERE_DOC){}
+	// else
+	// {}
 	if(id < 0)
 		printf("infile read error!\n");
 	else
@@ -41,14 +42,11 @@ int write_outfile(t_pipeline *pipe_line)
 	int	id;
 	t_redirection *redirection;
 
-	id = 0;
 	redirection = pipe_line->redirection->content;
 	if (redirection->redir_type == OUT)
-	{
 		id = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-
-	}
-	// else if (redirection->redir_type == APPEND){}
+	else
+		id = open(redirection->file,  O_CREAT | O_WRONLY | O_APPEND, 0666);
 	if(id < 0)
 		printf("infile read error!\n");
 	else
