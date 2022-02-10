@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/08 15:39:46 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/10 14:04:55 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ SRC_FILES = minishell.c \
 			parser/parser_utils.c \
 			fork/fork.c \
 			src/executor/find_command.c\
-			src/fork/waiting_last_child.c
+			src/fork/waiting_last_child.c\
+			src/fork/fork_file.c
 
 TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 16:44:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/04 12:03:22 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/10 14:22:54 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef enum e_redir_type
 	APPEND,
 	READ,
 	HERE_DOC,
-	NONE
 }	t_redir_type;
 
 /* Data struct for redirection */
@@ -36,8 +35,8 @@ typedef struct s_redirection
 	t_redir_type	redir_type;
 }				t_redirection;
 
-/* 
-** Data struct for storing all information 
+/*
+** Data struct for storing all information
 ** needed for a process to execute a command.
 */
 typedef struct s_pipeline
