@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/10 14:34:51 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/10 17:41:55 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 	id = fork();
 	if (id == 0)
 	{
+		// printf("first childeren worked!\n\n");
 		find_command(pip_line->command, env);
 		if (pip_line-> redirection)
 			fork_file(pip_line);
@@ -36,6 +37,7 @@ void first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 		close(fd[1]);
 		execve(pip_line->command[0], pip_line->command, envp);
 		perror("Error with execve");
+		exit(1);
 	}
 }
 
@@ -46,6 +48,8 @@ void middle_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2], int
 	id = fork();
 	if (id == 0)
 	{
+
+		// printf("middle_child  worked!\n\n");
 		dup2(fd[1],1);
 		dup2(endfile,0);
 		close(fd[0]);
@@ -54,6 +58,7 @@ void middle_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2], int
 		find_command(pip_line->command, env);
 		execve(pip_line->command[0], pip_line->command, envp);
 		perror("Error with execve");
+		exit(1);
 	}
 
 }
@@ -63,6 +68,7 @@ void last_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2], int *
 	*lastid = fork();
 	if (*lastid == 0)
 	{
+		// printf("last_child  worked!\n\n");
 		find_command(pip_line->command, env);
 		if (pip_line-> redirection)
 		{
@@ -73,6 +79,7 @@ void last_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2], int *
 		close(fd[0]);
 		execve(pip_line->command[0], pip_line->command, envp);
 		perror("Error with execve");
+		exit(1);
 	}
 }
 
@@ -84,6 +91,7 @@ void	one_argument(t_pipeline *pip_line, t_list *env, char *envp[], int *lastid)
 
 	if (*lastid == 0)
 	{
+		// printf("one_argument  worked!\n\n");
 		find_command(pip_line->command, env);
 		if (pip_line-> redirection)
 		{
@@ -91,6 +99,7 @@ void	one_argument(t_pipeline *pip_line, t_list *env, char *envp[], int *lastid)
 		}
 		execve(pip_line->command[0], pip_line->command, envp);
 		perror("Error with execve");
+		exit(1);
 	}
 }
 void fork_func(t_list *pipe_lst, char *envp[], t_list *env, int *last_id)
@@ -118,10 +127,20 @@ void fork_func(t_list *pipe_lst, char *envp[], t_list *env, int *last_id)
 			last_child(pip_line, env, envp, fd, last_id);
 		else
 			middle_child(pip_line, env, envp, fd, end_file);
+
 		end_file = fd[0];
 		pipe_lst = pipe_lst->next;
 		if (pipe_lst)
+		{
 			close(fd[1]);
+			// close(fd[0]);
+		}
 		i++;
 	}
 }
+//  dklsf | cat deneme_out
+//  ls -l | dsfdsgsg
+//  < deneme_out1 cat
+//  > out_hilmi
+// < deneme_out
+//  < deneme_out1 cat

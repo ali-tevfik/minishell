@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/10 15:01:31 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/10 17:40:45 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int read_infile(t_pipeline *pipe_line)
 	// else
 	// {}
 	if(id < 0)
+	{
 		printf("infile read error!\n");
+		exit(1);
+	}
 	else
 	{
 			dup2(id, 0);
@@ -48,7 +51,10 @@ int write_outfile(t_pipeline *pipe_line)
 	else
 		id = open(redirection->file,  O_CREAT | O_WRONLY | O_APPEND, 0666);
 	if(id < 0)
-		printf("infile read error!\n");
+	{
+		printf("outfile write error!\n");
+		exit(1);
+	}
 	else
 	{
 		dup2(id, 1);
@@ -65,7 +71,6 @@ int	fork_file(t_pipeline * pipe_line)
 
 	while (pipe_line->redirection)
 	{
-
 		redirection = pipe_line->redirection->content;
 		if (redirection->redir_type == READ || redirection->redir_type == HERE_DOC)
 			id = read_infile(pipe_line);
@@ -75,3 +80,9 @@ int	fork_file(t_pipeline * pipe_line)
 	}
 	return (id);
 }
+
+//  dklsf | cat deneme_out
+//  ls -l | dsfdsgsg
+//  < deneme_out1 cat
+//  > out_hilmi
+// < deneme_out
