@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 14:41:33 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 17:40:38 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 TEST_GROUP_RUNNER(ExportBuiltin)
 {
 	RUN_TEST_CASE(ExportBuiltin, ExportOneVariable);
+	RUN_TEST_CASE(ExportBuiltin, ExportTwoVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportThreeVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment0);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment1);
+	RUN_TEST_CASE(ExportBuiltin, ExportNoInput);
+	//RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameStartsWithUnderscore);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore);
 }
 
 // TEST_GROUP_RUNNER(expander)

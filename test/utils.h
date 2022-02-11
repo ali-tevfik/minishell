@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:21 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 14:37:58 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 17:00:03 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ size_t			len_string_array(char **string_array);
 void			print_string_array(char **string_array);
 t_list			*copy_environment_linked_list(t_list *env_list);
 void			compare_environment_lists(t_list *expected_env_list, t_list *actual_env_list);
+t_env			*create_env_variable(char *key, char *value);
+void			free_env_variable(void *environment_variable);
 
 #endif

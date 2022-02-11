@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 14:46:16 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 17:52:26 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,4 +187,24 @@ void	compare_environment_lists(t_list *expected_env_list, t_list *actual_env_lis
 		expected_env_list = expected_env_list->next;
 		actual_env_list = actual_env_list->next;
 	}
+}
+
+t_env	*create_env_variable(char *key, char *value)
+{
+	t_env	*env_variable;
+
+	env_variable = ft_calloc(1, sizeof(*env_variable));
+	env_variable->key = strdup(key);
+	env_variable->value = strdup(value);
+	return (env_variable);
+}
+
+void	free_env_variable(void *environment_variable)
+{
+	t_env	*casted_env_variable;
+
+	casted_env_variable = environment_variable;
+	free(casted_env_variable->key);
+	free(casted_env_variable->value);
+	free(casted_env_variable);
 }
