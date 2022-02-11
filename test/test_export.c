@@ -6,12 +6,12 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 13:41:17 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 19:43:52 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity_fixture.h"
-#include "../incl/commands.h"
+#include "../incl/built_in.h"
 #include "../incl/minishell.h"
 #include "../src/libft/libft.h"
 

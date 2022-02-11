@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   create_envp.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 14:39:09 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 17:35:11 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/02/11 19:24:40 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/11 19:24:50 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/commands.h"
+#include "../../incl/built_in.h"
 #include "../../incl/minishell.h"
-#include <limits.h>
 
-/*
-** Use PATH_MAX from limists.h
-** check retturn value of getcwd
-** Make path = NULL, getcwd handles the allocating itself
-*/
-
-void	pwd_command(void)
+t_list	*add_envp(char *envp[])
 {
-	char	*path;
-	char	*ret;
+	t_list	*envp_;
+	t_env	*env;
+	int		i;
+	char	**argument;
 
-	path = NULL;
-	ret = getcwd(path, 0);
-	if (ret == NULL)
+	i = 0;
+	envp_ = NULL;
+	while (envp[i])
 	{
-		perror("Error");
-		if (errno == ENOMEM)
-			exit (1);
-		return ;
+		env = ft_calloc(2, sizeof(*env));
+		argument = ft_split(ft_strdup(envp[i]), '=');
+		if (!argument)
+			exit(0);
+		env->key = argument[0];
+		env->value = argument[1];
+		ft_lstadd_back(&envp_, ft_lstnew(env));
+		i++;
 	}
-	printf("%s\n", ret);
-	free(path);
+	return (envp_);
 }

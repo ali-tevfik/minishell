@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:27:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 13:49:08 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 19:43:52 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "../src/libft/libft.h"
 #include "../src/parser/create_parse_list.h"
 #include "../src/parser/parser_data_structs.h"
-#include "../incl/commands.h"
+#include "../incl/built_in.h"
 #include "utils.h"
 
 /* System headers */

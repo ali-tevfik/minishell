@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/10 20:13:03 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/11 13:59:33 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strncmp(line, "", 1) != 0)
-			add_history(line);
 		if ('-' == line[0] && '1' == line[1])
 			break ;
-		line_(line, &env);
+		if (ft_strncmp(line, "", 1) != 0)
+		{
+			add_history(line);
+			line_(line, &env);
+		}
 		free(line);
 	}
 	free(line);

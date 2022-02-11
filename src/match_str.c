@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 18:16:53 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/10 18:58:10 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/11 19:10:02 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "../incl/fork.h"
 #include "parser/create_parse_list.h"
 
-int match_str(char *s1, char *s2)
+int	match_str(char *s1, char *s2)
 {
 	int	i;
 

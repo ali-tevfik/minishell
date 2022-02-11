@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   fork.h                                             :+:    :+:            */
+/*   unset.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/04 13:06:56 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:18:21 by adoner        ########   odam.nl         */
+/*   Created: 2022/01/21 17:19:17 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/11 19:59:34 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORK_H
-# define FORK_H
-# include "../src/parser/parser_data_structs.h"
+#include "../../incl/built_in.h"
+#include "../../incl/minishell.h"
 
-void	fork_func(t_list *command_lst, t_list *env, int *last_id);
-int		wait_and_get_last_exit_status(int last_process_pid);
-int		fork_file(t_pipeline *pipe_line);
-#endif
+void	unset_command(t_list **envp, t_pipeline *pipe_line)
+{
+	int	i;
+
+	i = 1;
+	while (pipe_line->command[i])
+	{
+		if (!ft_isname(pipe_line->command[i]))
+			printf("unset: `%s': not a valid identifier\n",
+				pipe_line->command[i]);
+		else
+			match_key_env(envp, pipe_line->command[i]);
+		i++;
+	}
+}

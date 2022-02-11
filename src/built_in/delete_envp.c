@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
+/*   delete_envp.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:21:52 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/11 19:25:44 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/11 19:25:54 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/built_in.h"
+#include "../../incl/built_in.h"
+#include "../../incl/minishell.h"
+#include "../parser/parser_data_structs.h"
 
-char	*expander(char *txt, t_list *lst)
+t_list	*delete_env(t_list *old_lst, t_list **envp)
 {
-	t_env	*env;
+	t_list	*fake;
 
-	while (lst)
+	if (!old_lst)
 	{
-		env = lst->content;
-		if (match_str(env->key, txt) == 0)
-			return (env->value);
-		lst = lst->next;
+		old_lst = *envp;
+		*envp = (*envp)->next;
+		free(old_lst->content);
+		free(old_lst);
+		return (*envp);
 	}
-	return (NULL);
+	fake = old_lst->next;
+	old_lst->next = old_lst->next->next;
+	free(fake->content);
+	free(fake);
+	return (old_lst);
 }

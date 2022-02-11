@@ -6,19 +6,32 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 14:38:16 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 19:17:05 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/commands.h"
+#include "../../incl/built_in.h"
 #include "../../incl/minishell.h"
+#include "../parser/parser_data_structs.h"
 
-void	cd_command(char *where)
+void	cd_command(char *where, t_list *env)
 {
-	int	result;
+	int		result;
+	char	*old_pwd;
 
 	result = 0;
-	result = chdir(skip_space(where + 2));
+	old_pwd = getcwd(NULL, 0);
+	if (where == NULL)
+		where = expander("HOME", env);
+	if (!match_str(where, "-"))
+		result = chdir(expander("OLDPWD", env));
+	else
+		result = chdir(where);
 	if (result == -1)
-		printf("minishell: cd: %s: %s\n", skip_space(where + 2), strerror(errno));
+		printf("minishell: cd: %s: %s\n", where, strerror(errno));
+	else
+	{
+		match_key_env(&env, "OLDPWD");
+		add_new_export(&env, "OLDPWD", old_pwd);
+	}
 }

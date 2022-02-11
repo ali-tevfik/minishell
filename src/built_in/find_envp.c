@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
+/*   find_envp.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:21:52 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/11 19:27:10 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/11 19:27:10 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/built_in.h"
+#include "../../incl/built_in.h"
+#include "../../incl/minishell.h"
+#include "../parser/parser_data_structs.h"
 
-char	*expander(char *txt, t_list *lst)
+int	match_key_env(t_list **envp, char *argument)
 {
+	t_list	*old_lst;
+	t_list	*head;
 	t_env	*env;
 
-	while (lst)
+	old_lst = NULL;
+	head = *envp;
+	while (head != NULL)
 	{
-		env = lst->content;
-		if (match_str(env->key, txt) == 0)
-			return (env->value);
-		lst = lst->next;
+		env = head->content;
+		if (match_str(env->key, argument) == 0)
+		{
+			delete_env(old_lst, envp);
+			return (0);
+		}
+		old_lst = head;
+		head = head->next;
 	}
-	return (NULL);
+	return (0);
 }

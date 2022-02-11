@@ -1,38 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   waiting_last_child.c                               :+:    :+:            */
+/*   pwd.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/08 11:45:43 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:17:05 by adoner        ########   odam.nl         */
+/*   Created: 2022/01/18 14:39:09 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/11 19:29:16 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser/create_parse_list.h"
-#include "../../incl/minishell.h"
 #include "../../incl/built_in.h"
-#include "../executor/find_command.h"
-#include "../../incl/fork.h"
+#include "../../incl/minishell.h"
+#include <limits.h>
+
 #include "../parser/parser_data_structs.h"
+/*
+** Use PATH_MAX from limists.h
+** check retturn value of getcwd
+** Make path = NULL, getcwd handles the allocating itself
+*/
 
-int	wait_and_get_last_exit_status(int last_process_pid)
+void	pwd_command(t_pipeline *pipeline)
 {
-	int	pid;
-	int	last_process_status;
-	int	status;
+	char	*ret;
 
-	pid = 1;
-	last_process_status = 0;
-	while (pid > 0)
+	if (pipeline->command[1])
+		printf("bad option %s\n", pipeline->command[1]);
+	else
 	{
-		pid = wait(&status);
-		if (pid == last_process_pid)
+		ret = NULL;
+		ret = getcwd(NULL, 0);
+		if (ret == NULL)
 		{
-			if (WIFEXITED(status))
-				last_process_status = WEXITSTATUS(status);
+			perror("Error");
+			if (errno == ENOMEM)
+				exit (1);
+			return ;
 		}
+		printf("%s\n", ret);
+		free(ret);
 	}
-	return (last_process_status);
 }

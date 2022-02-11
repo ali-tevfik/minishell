@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   unset.c                                            :+:    :+:            */
+/*   env.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/21 17:19:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/10 18:36:45 by adoner        ########   odam.nl         */
+/*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/11 19:24:35 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/commands.h"
+#include "../../incl/built_in.h"
 #include "../../incl/minishell.h"
+#include <stdio.h>
 
-void	unset_command(t_list **envp, t_pipeline *pipe_line)
+/* NOTES
+** Calloc needs to change to 1 instead of 2. we need only one struct.
+** Protect all mallocs and free data of split.
+**
+*/
+void	env_commands(t_list *envp)
 {
-	int	i;
+	t_env	*env;
 
-	i = 1;
-	while (pipe_line->command[i])
+	while (envp != NULL)
 	{
-		match_key_env(envp, pipe_line->command[i], 1);
-		i++;
+		env = envp->content;
+		printf("%s=%s\n", env->key, env->value);
+		envp = envp->next;
 	}
 }

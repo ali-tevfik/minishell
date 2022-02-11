@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/11 13:50:20 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/11 19:52:31 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,12 @@ UNITY_OPTIONS = -D UNITY_FIXTURE_NO_EXTRAS \
 # Source, tests, header and object files
 SRC_DIR = src
 SRC_FILES = minishell.c \
-			commands/cd.c \
-			commands/pwd.c \
-			commands/skip_space.c \
-			commands/echo.c \
-			commands/env.c \
-			commands/unset.c \
-			commands/export.c \
+			built_in/cd.c \
+			built_in/pwd.c \
+			built_in/echo.c \
+			built_in/env.c \
+			built_in/unset.c \
+			built_in/export.c \
 			read_line.c \
 			expander.c \
 			tokenizer/iterator_api.c \
@@ -58,16 +57,20 @@ SRC_FILES = minishell.c \
 			src/fork/waiting_last_child.c\
 			src/fork/fork_file.c \
 			src/match_str.c\
-			src/create_envp.c
+			src/create_envp.c \
+			src/built_in/find_envp.c \
+			src/built_in/file_name_check.c \
+			src/built_in/create_lst_envp.c \
+			src/built_in/delete_envp.c
+
 
 TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
 				test/main/all_tests.c \
 				test/main/all_tests_runner.c \
 				test/test_unset.c \
-				src/commands/unset.c \
-				src/commands/export.c \
-				src/commands/skip_space.c \
+				src/built_in/unset.c \
+				src/built_in/export.c \
 				test/test_export.c \
 				test/test_expander.c \
 				src/expander.c \
@@ -97,8 +100,13 @@ TEST_FILES = 	unity/src/unity.c \
 				src/parser/create_parse_list.c \
 				test/test_find_command.c \
 				src/executor/find_command.c \
-				src/commands/env.c \
-				src/match_str.c
+				src/built_in/env.c \
+				src/match_str.c \
+				src/built_in/delete_envp.c \
+				src/create_envp.c \
+				src/built_in/find_envp.c \
+				src/built_in/file_name_check.c \
+				src/built_in/create_lst_envp.c \
 
 HEADER_FILES = 	incl/minishell.h
 
