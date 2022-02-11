@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:27:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 13:26:38 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 13:49:08 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,31 +213,31 @@ TEST(FindCommand, CommandDoesntExist)
 	TEST_ASSERT_EQUAL_STRING(expected_command, actual_command);
 }
 
-TEST(FindCommand, NoPathAvailable)
-{
-	/* Create command data struct */
-	if (!ft_strncmp("Linux", uname_data.sysname, 5))
-		command_array = create_command(2, "ls", "-l");
-	else
-		command_array = create_command(2, "ls", "-l");
+// TEST(FindCommand, NoPathAvailable)
+// {
+// 	/* Create command data struct */
+// 	if (!ft_strncmp("Linux", uname_data.sysname, 5))
+// 		command_array = create_command(2, "ls", "-l");
+// 	else
+// 		command_array = create_command(2, "ls", "-l");
 
-	/* Expected command */
-	if (!ft_strncmp("Linux", uname_data.sysname, 5))
-		expected_command = ft_strdup("ls");
-	else
-		expected_command = ft_strdup("ls");
+// 	/* Expected command */
+// 	if (!ft_strncmp("Linux", uname_data.sysname, 5))
+// 		expected_command = ft_strdup("ls");
+// 	else
+// 		expected_command = ft_strdup("ls");
 
-	/* Save and unset PATH variable */
-	char *path = expander("PATH", env_list);
-	unset_command(&env_list, "unset PATH");
+// 	/* Save and unset PATH variable */
+// 	char *path = expander("PATH", env_list);
+// 	unset_command(&env_list, "unset PATH");
 
-	/* Actual command */
-	find_command(command_array, env_list);
-	actual_command = ft_strdup(command_array[0]);
+// 	/* Actual command */
+// 	find_command(command_array, env_list);
+// 	actual_command = ft_strdup(command_array[0]);
 
-	/* Compare commands */
-	TEST_ASSERT_EQUAL_STRING(expected_command, actual_command);
+// 	/* Compare commands */
+// 	TEST_ASSERT_EQUAL_STRING(expected_command, actual_command);
 
-	/* Reset PATH */
-	export_command(&env_list, path);
-}
+// 	/* Reset PATH */
+// 	export_command(&env_list, path);
+// }
