@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 13:02:05 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 14:46:16 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,42 @@ void	print_string_array(char **string_array)
 	{
 		printf("%s\n", string_array[i]);
 		i++;
+	}
+}
+
+t_list	*copy_environment_linked_list(t_list *env_list)
+{
+	t_list	*copied_list;
+	t_env	*env_variable;
+
+	copied_list = NULL;
+	while (env_list != NULL)
+	{
+		env_variable = ft_calloc(1, sizeof(*env_variable));
+		env_variable->key = ft_strdup(((t_env *)(env_list->content))->key);
+		env_variable->value = ft_strdup(((t_env *)(env_list->content))->value);
+		ft_lstadd_back(&copied_list, ft_lstnew(env_variable));
+		env_list = env_list->next;
+	}
+	return (copied_list);
+}
+
+void	compare_environment_lists(t_list *expected_env_list, t_list *actual_env_list)
+{
+	char	*expected_key;
+	char	*expected_value;
+	char	*actual_key;
+	char	*actual_value;
+	
+	while (expected_env_list != NULL)
+	{
+		expected_key = ((t_env *)(expected_env_list->content))->key;
+		expected_value = ((t_env *)(expected_env_list->content))->value;
+		actual_key = ((t_env *)(actual_env_list->content))->key;
+		actual_value = ((t_env *)(actual_env_list->content))->value;
+		TEST_ASSERT_EQUAL_STRING(expected_key, actual_key);
+		TEST_ASSERT_EQUAL_STRING(expected_value, actual_value);
+		expected_env_list = expected_env_list->next;
+		actual_env_list = actual_env_list->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 13:47:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/11 14:41:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@
 
 // }
 
-// TEST_GROUP_RUNNER(export)
-// {
-// 	// RUN_TEST_CASE(export, wrong);
-// 	// RUN_TEST_CASE(export, add_normal);
-// 	// RUN_TEST_CASE(export, check_tab);
-// }
+TEST_GROUP_RUNNER(ExportBuiltin)
+{
+	RUN_TEST_CASE(ExportBuiltin, ExportOneVariable);
+}
 
 // TEST_GROUP_RUNNER(expander)
 // {
