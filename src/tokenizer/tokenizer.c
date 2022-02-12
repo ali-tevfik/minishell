@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/02 11:37:03 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/12 11:29:23 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static size_t	take_correct_token(t_token **single_token, t_char_iter *itr)
 	else if (ft_isspace(**itr) == 1)
 	{
 		next(itr);
-		return (SPACE);
+		return (BLANK_SPACE);
 	}
 	else if (**itr == '&' || **itr == ';')
 	{
@@ -64,7 +64,7 @@ t_list	*tokenize_input(char *input_string)
 	while (has_next(itr))
 	{
 		ret = take_correct_token(&single_token, &itr);
-		if (ret == SPACE)
+		if (ret == BLANK_SPACE)
 			continue ;
 		else if (ret == MALLOC_FAILURE)
 			return (NULL);

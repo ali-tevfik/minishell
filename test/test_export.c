@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 17:55:42 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/12 17:28:02 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ TEST_SETUP(ExportBuiltin)
 TEST_TEAR_DOWN(ExportBuiltin)
 {
 	// ft_lstclear(&expected_env, free_env_variable);
-	ft_lstclear(&actual_env, free_env_variable);
-	ft_lstclear(&parse_list, free_pipeline);
-	ft_lstclear(&token_list, free_token);
+	// ft_lstclear(&actual_env, free_env_variable);
+	// ft_lstclear(&parse_list, free_pipeline);
+	// ft_lstclear(&token_list, free_token);
 }
 
 TEST(ExportBuiltin, ExportOneVariable)
@@ -224,9 +224,36 @@ TEST(ExportBuiltin, ExportNoInput)
 	compare_environment_lists(expected_env, actual_env);
 }
 
-TEST(ExportBuiltin, ExportAssignEmpty)
+TEST(ExportBuiltin, ExportAssignEmpty0)
 {
 	char	*input = "export codam=";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
+
+	env_variable = create_env_variable("codam", "");
+	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
+
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(ExportBuiltin, ExportAssignEmpty1)
+{
+	char	*input = "export codam=\"\"";
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
@@ -289,21 +316,21 @@ TEST(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore)
 	/* Expected environment list */
 	expected_env = copy_environment_linked_list(env_list);
 
-	printf("\nCurrent Environment:\n");
-	env_commands(expected_env);
+	// printf("\nCurrent Environment:\n");
+	// env_commands(expected_env);
 
 	env_variable = create_env_variable("_ali", "_yoo");
 	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
 
-	printf("\nExpected Environment:\n");
-	env_commands(expected_env);
+	// printf("\nExpected Environment:\n");
+	// env_commands(expected_env);
 
 	/* Actual environment list */
 	actual_env = env_list;
 	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
 
-	printf("\nActual Environment:\n");
-	env_commands(actual_env);
+	// printf("\nActual Environment:\n");
+	// env_commands(actual_env);
 
 	/* Compare length linked lists */
 	int	len_expected_list = ft_lstsize(expected_env);
@@ -314,90 +341,158 @@ TEST(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore)
 	compare_environment_lists(expected_env, actual_env);
 }
 
+TEST(ExportBuiltin, ExportAssignWithSpaceBeforeEqualSign)
+{
+	char	*input = "export codam =hilmiyilmaz";
 
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
 
-// TEST(export, add_normal)
-// {
-// 	t_list	*input_list = NULL;
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
 
-// 	/* Actual List */
-// 	export_command(&input_list,"export hello=codam");
-// 	export_command(&input_list,"export codam=42");
-// 	export_command(&input_list,"export coding=15");
-// 	export_command(&input_list,"export college=as");
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
 
-// 	/* Expected list (Removing 3rd element) */
-// 	t_env *env;
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
 
-// 	/* Input list */
-// 	env = ft_calloc(1,sizeof(*env));
-// 	env->key = ft_strdup("hello");
-// 	env->value = ft_strdup("codam");
-// 	ft_lstadd_back(&expected_list, ft_lstnew(env));
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
 
-// 	env = ft_calloc(1,sizeof(*env));
-// 	env->key = ft_strdup("codam");
-// 	env->value = ft_strdup("42");
-// 	ft_lstadd_back(&expected_list, ft_lstnew(env));
+TEST(ExportBuiltin, ExportAssignWithSpaceAfterEqualSign)
+{
+	char	*input = "export codam= hilmiyilmaz";
 
-// 	env = ft_calloc(1,sizeof(*env));
-// 	env->key = ft_strdup("coding");
-// 	env->value = ft_strdup("15");
-// 	ft_lstadd_back(&expected_list, ft_lstnew(env));
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
 
-// 	env = ft_calloc(1,sizeof(*env));
-// 	env->key = ft_strdup("college");
-// 	env->value = ft_strdup("as");
-// 	ft_lstadd_back(&expected_list, ft_lstnew(env));
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
 
-// 	/* Compare contents */
-// 	while (expected_list)
-// 	{
-// 		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->key, ((t_env *)input_list->content)->key);
-// 		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->value, ((t_env *)input_list->content)->value);
-// 		expected_list = expected_list->next;
-// 		input_list = input_list->next;
-// 	}
-// }
+	env_variable = create_env_variable("codam", "");
+	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
 
-// TEST(export, wrong)
-// {
-// 	t_list	*input_list = NULL;
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
 
-// 	export_command(&input_list,"export hello");
-// 	TEST_ASSERT_EQUAL_INT(ft_lstsize(expected_list), ft_lstsize(input_list));
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
 
-// 	/* Compare contents */
-// 	while (expected_list)
-// 	{
-// 		TEST_ASSERT_EQUAL_STRING((char *)(expected_list->content), (char *)(input_list->content));
-// 		expected_list = expected_list->next;
-// 		input_list = input_list->next;
-// 	}
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
 
-// }
+TEST(ExportBuiltin, ExportAssignWithSpaceBeforeAndAfterEqualSign)
+{
+	char	*input = "export codam = hilmiyilmaz";
 
-// TEST(export, check_tab)
-// {
-// 	t_list	*input_list = NULL;
-// 	t_env *env;
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
 
-// 	export_command(&input_list,"export 			hello=codam");
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
 
-// 	/* Expected list (Removing 3rd element) */
-// 	env = ft_calloc(2,sizeof(env));
-// 	env->key = "hello";
-// 	env->value = "codam";
-// 	ft_lstadd_back(&expected_list, ft_lstnew(env));
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
 
-// 	TEST_ASSERT_EQUAL_INT(ft_lstsize(expected_list), ft_lstsize(input_list));
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
 
-// 	/* Compare contents */
-// 	while (expected_list)
-// 	{
-// 		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->key, ((t_env *)input_list->content)->key);
-// 		TEST_ASSERT_EQUAL_STRING(((t_env *)expected_list->content)->value, ((t_env *)input_list->content)->value);
-// 		expected_list = expected_list->next;
-// 		input_list = input_list->next;
-// 	}
-// }
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(ExportBuiltin, ExportCaseSensitivity)
+{
+	char	*input = "export No=10 no=11";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
+
+	env_variable = create_env_variable("No", "10");
+	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
+
+	env_variable = create_env_variable("no", "11");
+	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
+
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(ExportBuiltin, ExportInvalidOption)
+{
+	char	*input = "export -hilmiadsdas=yilmaz=abi_len";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
+
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(ExportBuiltin, ExportSpaceInValue)
+{
+	char	*input = "export helloworld=\"ali doner codam\"";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
+
+	env_variable = create_env_variable("helloworld", "ali doner codam");
+	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
+
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}

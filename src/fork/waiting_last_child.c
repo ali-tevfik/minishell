@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:45:43 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 11:53:26 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/12 11:34:03 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../executor/find_command.h"
 #include "../../incl/fork.h"
 #include "../parser/parser_data_structs.h"
+
+#include <sys/wait.h>
 
 int	wait_and_get_last_exit_status(int last_process_pid)
 {

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/08 15:47:37 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/12 12:53:31 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ t_list	*add_envp(char *envp[])
 	envp_ = NULL;
 	while (envp[i])
 	{
-		env = ft_calloc(2, sizeof(*env));
+		env = ft_calloc(1, sizeof(*env));
 		argument = ft_split(ft_strdup(envp[i]), '=');
 		if (!argument)
 			exit(0);
-		env->key = argument[0];
-		env->value = argument[1];
+		env->key = ft_strdup(argument[0]);
+		env->value = ft_strdup(argument[1]);
 		ft_lstadd_back(&envp_, ft_lstnew(env));
 		i++;
 	}
