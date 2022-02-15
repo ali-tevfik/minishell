@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 13:02:05 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/15 13:39:17 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,4 +150,87 @@ void	print_string_array(char **string_array)
 		printf("%s\n", string_array[i]);
 		i++;
 	}
+}
+
+t_list	*copy_environment_linked_list(t_list *env_list)
+{
+	t_list	*copied_list;
+	t_env	*env_variable;
+
+	copied_list = NULL;
+	while (env_list != NULL)
+	{
+		env_variable = ft_calloc(1, sizeof(*env_variable));
+		env_variable->key = ft_strdup(((t_env *)(env_list->content))->key);
+		env_variable->value = ft_strdup(((t_env *)(env_list->content))->value);
+		ft_lstadd_back(&copied_list, ft_lstnew(env_variable));
+		env_list = env_list->next;
+	}
+	return (copied_list);
+}
+
+void	compare_environment_lists(t_list *expected_env_list, t_list *actual_env_list)
+{
+	char	*expected_key;
+	char	*expected_value;
+	char	*actual_key;
+	char	*actual_value;
+	
+	while (expected_env_list != NULL)
+	{
+		expected_key = ((t_env *)(expected_env_list->content))->key;
+		expected_value = ((t_env *)(expected_env_list->content))->value;
+		actual_key = ((t_env *)(actual_env_list->content))->key;
+		actual_value = ((t_env *)(actual_env_list->content))->value;
+		TEST_ASSERT_EQUAL_STRING(expected_key, actual_key);
+		TEST_ASSERT_EQUAL_STRING(expected_value, actual_value);
+		expected_env_list = expected_env_list->next;
+		actual_env_list = actual_env_list->next;
+	}
+}
+
+t_env	*create_env_variable(char *key, char *value)
+{
+	t_env	*env_variable;
+
+	env_variable = ft_calloc(1, sizeof(*env_variable));
+	env_variable->key = strdup(key);
+	env_variable->value = strdup(value);
+	return (env_variable);
+}
+
+void	free_env_variable(void *environment_variable)
+{
+	t_env	*casted_env_variable;
+
+	casted_env_variable = environment_variable;
+	free(casted_env_variable->key);
+	free(casted_env_variable->value);
+	free(casted_env_variable);
+}
+
+/*
+** Create an environment list.
+** Each element of the linked list contains t_env *
+*/
+t_list	*create_environment_list(int len, ...)
+{
+	int		i;
+	t_list	*env_list;
+	va_list	ap;
+	t_env	*env_variable;
+
+	i = 0;
+	env_list = NULL;
+	va_start(ap, len);
+	while (i < len / 2)
+	{
+		env_variable = ft_calloc(1, sizeof(*env_variable));
+		env_variable->key = ft_strdup(va_arg(ap, char *));
+		env_variable->value = ft_strdup(va_arg(ap, char *));
+		ft_lstadd_back(&env_list, ft_lstnew(env_variable));
+		i++;
+	}
+	va_end(ap);
+	return (env_list);
 }

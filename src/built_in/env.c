@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:24:35 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 14:37:16 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "../../incl/minishell.h"
 #include <stdio.h>
 
-/* NOTES
-** Calloc needs to change to 1 instead of 2. we need only one struct.
-** Protect all mallocs and free data of split.
-**
-*/
 void	env_commands(t_list *envp)
 {
 	t_env	*env;

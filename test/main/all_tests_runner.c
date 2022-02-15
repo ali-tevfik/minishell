@@ -6,30 +6,44 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 13:47:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/15 14:40:38 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity_fixture.h"
 
-// TEST_GROUP_RUNNER(unset)
-// {
-// 	RUN_TEST_CASE(unset, delete_first);
-// 	RUN_TEST_CASE(unset, delete_third);
-// 	RUN_TEST_CASE(unset, delete_all);
-// 	RUN_TEST_CASE(unset, delete_nooit);
-// 	RUN_TEST_CASE(unset, delete_last);
-// 	RUN_TEST_CASE(unset, delete_all_and_extra);
-// 	RUN_TEST_CASE(unset, export_and_delete);
+TEST_GROUP_RUNNER(UnsetBuiltin)
+{
+	RUN_TEST_CASE(UnsetBuiltin, DeleteFromMiddle);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteLast);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteFirst);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteAll);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteAllAndExtra);
+	RUN_TEST_CASE(UnsetBuiltin, NonExisting0);
+	RUN_TEST_CASE(UnsetBuiltin, NonExisting1);
+	RUN_TEST_CASE(UnsetBuiltin, NoArgument);
+	RUN_TEST_CASE(UnsetBuiltin, WrongArgument);
+}
 
-// }
-
-// TEST_GROUP_RUNNER(export)
-// {
-// 	// RUN_TEST_CASE(export, wrong);
-// 	// RUN_TEST_CASE(export, add_normal);
-// 	// RUN_TEST_CASE(export, check_tab);
-// }
+TEST_GROUP_RUNNER(ExportBuiltin)
+{
+	RUN_TEST_CASE(ExportBuiltin, ExportOneVariable);
+	RUN_TEST_CASE(ExportBuiltin, ExportTwoVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportThreeVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment0);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment1);
+	RUN_TEST_CASE(ExportBuiltin, ExportNoInput);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty0);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty1);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameStartsWithUnderscore);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceAfterEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeAndAfterEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportCaseSensitivity);
+	RUN_TEST_CASE(ExportBuiltin, ExportInvalidOption);
+	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
+}
 
 // TEST_GROUP_RUNNER(expander)
 // {
@@ -52,6 +66,7 @@ TEST_GROUP_RUNNER(Tokenizer)
 	RUN_TEST_CASE(Tokenizer, CommandPlusRedirection);
 	RUN_TEST_CASE(Tokenizer, CommandPlusRedirectionPlusPipes);
 	RUN_TEST_CASE(Tokenizer, CommandPlusDquotes);
+	RUN_TEST_CASE(Tokenizer, CommandPlusDquotesEmpty);
 	RUN_TEST_CASE(Tokenizer, CommandPlusDquotesPlusPipes);
 	RUN_TEST_CASE(Tokenizer, CommandPlusQuotes);
 	RUN_TEST_CASE(Tokenizer, CommandPlusUnclosedQuotes);

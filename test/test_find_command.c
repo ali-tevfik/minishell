@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:27:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 19:43:52 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 14:33:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char			**command_array;
 char			*actual_command;
 char			*expected_command;
 struct utsname	uname_data;				/* To get operating system, Linux or Darwin */
-char			*env[] = {	"SHELL=/bin/zsh",
+static char			*env[] = {	"SHELL=/bin/zsh",
 							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
 							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
 							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",

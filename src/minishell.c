@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/11 13:59:33 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 14:34:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char *argv[], char *envp[])
 	env = add_envp(envp);
 	argc = 1;
 	argv = NULL;
+	(void)argv;
 	while (1)
 	{
 		line = readline("> ");
@@ -33,6 +34,8 @@ int	main(int argc, char *argv[], char *envp[])
 			add_history(line);
 			line_(line, &env);
 		}
+		line_(line, &env);
+		argc++;
 		free(line);
 	}
 	free(line);
