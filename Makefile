@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/15 16:00:37 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/15 16:05:53 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ SRC_FILES = minishell.c \
 			src/built_in/file_name_check.c \
 			src/built_in/create_lst_envp.c \
 			src/built_in/delete_envp.c \
-			# src/built_in/infile_and_built_in.c
+			src/built_in/infile_and_built_in.c
 
 
 TEST_FILES = 	unity/src/unity.c \
