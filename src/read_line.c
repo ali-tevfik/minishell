@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 15:43:37 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 16:03:17 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	line_(char *line, t_list **env)
 	t_pipeline	*pipeline;
 
 	lst = tokenize_input(line);
-	if (!validate_grammer(lst))
-		return ;
+	// if (!validate_grammer(lst))
+	// 	return ;
 	pipe_lst = create_parse_list(lst);
 	pipeline = pipe_lst->content;
 	if (built_in_and_infile_check(pipeline))
