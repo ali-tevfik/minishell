@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 13:23:11 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 15:30:11 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 17:17:24 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@
 
 void	infile_and_built_in(t_pipeline *pipeline, t_list *env)
 {
-	printf("check infile!\n");
 	int	id;
 
 	id = fork();
 	if (id == 0)
 	{
 		fork_file(pipeline);
+		wait_and_get_last_exit_status(id);
 		built_in(pipeline, &env);
+		exit(1);
 	}
-	wait_and_get_last_exit_status(id);
+	if (match_str(pipeline->command[0], "unset") == 0 || match_str(pipeline->command[0], "cd") == 0 || (match_str(pipeline->command[0], "export") == 0 && pipeline->command[1]))
+		built_in(pipeline, &env);
 }

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 15:49:08 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 16:10:44 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 	if (*lastid == 0)
 	{
 		find_command(pip_line->command, env);
-		printf("%s\n", pip_line->command[0]);
 		if (pip_line-> redirection)
 			fork_file(pip_line);
 		execve(pip_line->command[0], pip_line->command, envp);

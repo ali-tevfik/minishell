@@ -6,11 +6,11 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:21:52 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 17:29:16 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/built_in.h"
+#include "../../incl/built_in.h"
 
 char	*expander(char *txt, t_list *lst)
 {

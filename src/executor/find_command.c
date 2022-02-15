@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 15:56:25 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 16:11:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 		{
 			if (!found_command(path_array[i], command, tmp))
 				return (false);
-
-			printf("geldo!\n:");
 			return (true);
 		}
 		free(path_array[i]);

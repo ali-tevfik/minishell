@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/15 16:05:53 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/15 17:31:28 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,8 @@ SRC_FILES = minishell.c \
 			built_in/env.c \
 			built_in/unset.c \
 			built_in/export.c \
-			read_line.c \
-			expander.c \
+			utils/read_line.c \
+			src/utils/expander.c \
 			tokenizer/iterator_api.c \
 			tokenizer/tokenize_dquotes.c \
 			tokenizer/tokenize_pipe.c \
@@ -56,13 +56,13 @@ SRC_FILES = minishell.c \
 			src/executor/find_command.c\
 			src/fork/waiting_last_child.c\
 			src/fork/fork_file.c \
-			src/match_str.c\
-			src/create_envp.c \
-			src/built_in/find_envp.c \
-			src/built_in/file_name_check.c \
-			src/built_in/create_lst_envp.c \
-			src/built_in/delete_envp.c \
-			src/built_in/infile_and_built_in.c
+			src/utils/match_str.c\
+			src/envp/create_envp.c \
+			src/envp/find_envp.c \
+			src/utils/file_name_check.c \
+			src/envp/create_lst_envp.c \
+			src/envp/delete_envp.c \
+			src/utils/infile_and_built_in.c
 
 
 TEST_FILES = 	unity/src/unity.c \
@@ -74,7 +74,7 @@ TEST_FILES = 	unity/src/unity.c \
 				src/built_in/export.c \
 				test/test_export.c \
 				test/test_expander.c \
-				src/expander.c \
+				src/utils/expander.c \
 				test/utils.c \
 				test/test_tokenizer.c \
 				src/tokenizer/tokenizer.c \
@@ -102,12 +102,12 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_find_command.c \
 				src/executor/find_command.c \
 				src/built_in/env.c \
-				src/match_str.c \
-				src/built_in/delete_envp.c \
-				src/create_envp.c \
-				src/built_in/find_envp.c \
-				src/built_in/file_name_check.c \
-				src/built_in/create_lst_envp.c \
+				src/utils/match_str.c \
+				src/envp/delete_envp.c \
+				src/envp/create_envp.c \
+				src/envp/find_envp.c \
+				src/utils/file_name_check.c \
+				src/envp/create_lst_envp.c \
 
 HEADER_FILES = 	incl/minishell.h
 
