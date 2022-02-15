@@ -6,31 +6,33 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/12 17:28:02 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/12 18:04:39 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* Unity unit-tester */
 #include "unity_fixture.h"
+
+/* File to test */
 #include "../incl/commands.h"
+
+/* User defined headers */
 #include "../incl/minishell.h"
 #include "../src/libft/libft.h"
-#include "utils.h"
-
 #include "../src/tokenizer/tokenizer_data_structs.h"
 #include "../src/tokenizer/tokenizer.h"
 #include "../src/parser/parser_data_structs.h"
 #include "../src/parser/create_parse_list.h"
+#include "utils.h"
 
-t_list	*token_list;
-t_list	*parse_list;
-t_list	*env_list;
-
-t_list	*expected_env;
-t_list	*actual_env;
+/* Variables */
+static t_list	*token_list;
+static t_list	*parse_list;
+static t_list	*env_list;
+static t_list	*expected_env;
+static t_list	*actual_env;
 static t_env	*env_variable;
-
-
-static char			*env[] = {	"SHELL=/bin/zsh",
+static char		*env[] = {	"SHELL=/bin/zsh",
 							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
 							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
 							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
@@ -66,6 +68,7 @@ TEST(ExportBuiltin, ExportOneVariable)
 
 	/* Expected environment list */
 	expected_env = copy_environment_linked_list(env_list);
+	
 	env_variable = create_env_variable("ali", "hilmi");
 	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
 
@@ -92,6 +95,7 @@ TEST(ExportBuiltin, ExportTwoVariables)
 
 	/* Expected environment list */
 	expected_env = copy_environment_linked_list(env_list);
+
 	env_variable = create_env_variable("ali", "hilmi");
 	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
 
@@ -121,6 +125,7 @@ TEST(ExportBuiltin, ExportThreeVariables)
 
 	/* Expected environment list */
 	expected_env = copy_environment_linked_list(env_list);
+
 	env_variable = create_env_variable("ali", "hilmi");
 	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
 
