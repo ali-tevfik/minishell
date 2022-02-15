@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/11 17:52:26 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/15 13:39:17 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,4 +207,30 @@ void	free_env_variable(void *environment_variable)
 	free(casted_env_variable->key);
 	free(casted_env_variable->value);
 	free(casted_env_variable);
+}
+
+/*
+** Create an environment list.
+** Each element of the linked list contains t_env *
+*/
+t_list	*create_environment_list(int len, ...)
+{
+	int		i;
+	t_list	*env_list;
+	va_list	ap;
+	t_env	*env_variable;
+
+	i = 0;
+	env_list = NULL;
+	va_start(ap, len);
+	while (i < len / 2)
+	{
+		env_variable = ft_calloc(1, sizeof(*env_variable));
+		env_variable->key = ft_strdup(va_arg(ap, char *));
+		env_variable->value = ft_strdup(va_arg(ap, char *));
+		ft_lstadd_back(&env_list, ft_lstnew(env_variable));
+		i++;
+	}
+	va_end(ap);
+	return (env_list);
 }

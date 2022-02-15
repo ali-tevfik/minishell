@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/12 17:49:25 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/12 18:05:48 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/15 14:17:13 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ static t_list	*env_list;
 static t_list	*expected_env;
 static t_list	*actual_env;
 static char		*env[] = {	"SHELL=/bin/zsh",
-							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
-							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
-							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
+							"SYSTEM=LINUX",
 							"LOGNAME=hyilmaz",
-							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
 							NULL,
 						};
 
@@ -63,6 +60,30 @@ TEST_TEAR_DOWN(UnsetBuiltin)
 
 TEST(UnsetBuiltin, DeleteFromMiddle)
 {
+	char	*input = "unset SYSTEM";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(4, "SHELL", "/bin/zsh", "LOGNAME", "hyilmaz");
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(UnsetBuiltin, DeleteLast)
+{
 	char	*input = "unset LOGNAME";
 
 	/* Tokenize and parse */
@@ -70,7 +91,187 @@ TEST(UnsetBuiltin, DeleteFromMiddle)
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
-	expected_env = copy_environment_linked_list(env_list);
+	expected_env = create_environment_list(4, "SHELL", "/bin/zsh", "SYSTEM", "LINUX");
 
-	
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(UnsetBuiltin, DeleteFirst)
+{
+	char	*input = "unset SHELL";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(4, "SYSTEM", "LINUX", "LOGNAME", "hyilmaz");
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(UnsetBuiltin, DeleteAll)
+{
+	char	*input = "unset SHELL SYSTEM LOGNAME";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(0);
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare both lists are NULL */
+	TEST_ASSERT_NULL(expected_env);
+	TEST_ASSERT_NULL(actual_env);
+}
+
+TEST(UnsetBuiltin, DeleteAllAndExtra)
+{
+	char	*input = "unset SHELL SYSTEM LOGNAME HILMI";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(0);
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare both lists are NULL */
+	TEST_ASSERT_NULL(expected_env);
+	TEST_ASSERT_NULL(actual_env);
+}
+
+TEST(UnsetBuiltin, NonExisting0)
+{
+	char	*input = "unset HILMI";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(6, "SHELL", "/bin/zsh", "SYSTEM", "LINUX", "LOGNAME", "hyilmaz");
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(UnsetBuiltin, NonExisting1)
+{
+	char	*input = "unset SHELLL";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(6, "SHELL", "/bin/zsh", "SYSTEM", "LINUX", "LOGNAME", "hyilmaz");
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(UnsetBuiltin, NoArgument)
+{
+	char	*input = "unset";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(6, "SHELL", "/bin/zsh", "SYSTEM", "LINUX", "LOGNAME", "hyilmaz");
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(UnsetBuiltin, WrongArgument)
+{
+	char	*input = "unset asgadg sg fhdfhdh -d fgdfg-g-df-gg";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = create_environment_list(6, "SHELL", "/bin/zsh", "SYSTEM", "LINUX", "LOGNAME", "hyilmaz");
+
+	/* Actual environment list */
+	actual_env = env_list;
+	unset_command(&actual_env, (t_pipeline *)(parse_list->content));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
 }

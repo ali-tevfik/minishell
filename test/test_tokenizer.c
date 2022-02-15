@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/26 18:54:11 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/15 14:11:11 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,36 @@ TEST(Tokenizer, CommandPlusDquotes)
 	/* Compare the length of the linked lists. */
 	int actual_len = ft_lstsize(actual_list);
 	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: echo \"$HOME\"");
+
+	/* Compare elements of the linked lists */
+	t_list	*expected_head = expected_list;
+	t_list	*actual_head = actual_list;
+	while (1)
+	{
+		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
+		if (expected_head->next == NULL)
+			break ;
+		expected_head = expected_head->next;
+		actual_head = actual_head->next;
+	}
+}
+
+TEST(Tokenizer, CommandPlusDquotesEmpty)
+{
+	char	*input = "echo \"\"";
+	t_token	*token;
+	actual_list = tokenize_input(input);
+
+	/* Create the expected token */
+	token = create_token(input, 4, WORD);
+	expected_list = ft_lstnew(token);
+
+	token = create_token(input + 5, 2, DQUOTE);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare the length of the linked lists. */
+	int actual_len = ft_lstsize(actual_list);
+	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: echo \"\"");
 
 	/* Compare elements of the linked lists */
 	t_list	*expected_head = expected_list;
