@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 18:16:53 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:10:02 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 15:22:06 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	match_str(char *s1, char *s2)
 
 	i = 0;
 	if (!s1 || !s2)
-		return (-1);
+		return (0);
 	while (s1[i])
 	{
 		if (!s2[i])
-			return (-1);
+			return (0);
 		if (s1[i] != s2[i])
-			return (-1);
+			return (0);
 		i++;
 	}
 	if (s2[i])
-		return (-1);
-	return (0);
+		return (0);
+	return (1);
 }

@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   file_name_check.c                                  :+:    :+:            */
+/*   infile_and_built_in.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/11 19:26:30 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 15:35:19 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/15 13:23:11 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/15 15:30:11 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/built_in.h"
+#include "../../incl/fork.h"
 #include "../../incl/minishell.h"
 #include "../parser/parser_data_structs.h"
 
-int	ft_isname(char *txt)
+void	infile_and_built_in(t_pipeline *pipeline, t_list *env)
 {
-	int	i;
+	printf("check infile!\n");
+	int	id;
 
-	i = 1;
-	if (!txt)
-		return (0);
-	if (!(ft_isalpha(txt[0]) || txt[0] == '_'))
-		return (0);
-	while (txt[i])
+	id = fork();
+	if (id == 0)
 	{
-		if (!(ft_isalnum(txt[i]) || txt[i] == '_'))
-			return (0);
-		i++;
+		fork_file(pipeline);
+		built_in(pipeline, &env);
 	}
-	return (1);
+	wait_and_get_last_exit_status(id);
 }
