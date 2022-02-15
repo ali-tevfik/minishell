@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   expander.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:35:20 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/15 17:29:16 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/built_in.h"
-#include "../../incl/minishell.h"
-#include <stdio.h>
 
-void	env_commands(t_list *envp)
+char	*expander(char *txt, t_list *lst)
 {
 	t_env	*env;
 
-	while (envp != NULL)
+	while (lst)
 	{
-		env = envp->content;
-		printf("%s=%s\n", env->key, env->value);
-		envp = envp->next;
+		env = lst->content;
+		if (match_str(env->key, txt) == 0)
+			return (env->value);
+		lst = lst->next;
 	}
+	return (NULL);
 }

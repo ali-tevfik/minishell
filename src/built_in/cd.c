@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 14:35:21 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/15 17:44:39 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	cd_command(char *where, t_list *env)
 		result = chdir(expander("OLDPWD", env));
 	else
 		result = chdir(where);
-	result = chdir(skip_space(where));
 	if (result == -1)
 		printf("minishell: cd: %s: %s\n", where, strerror(errno));
 	else

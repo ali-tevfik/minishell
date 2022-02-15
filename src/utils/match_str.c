@@ -6,16 +6,16 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 18:16:53 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:10:02 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 17:29:28 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
-#include "parser/parser_data_structs.h"
-#include "parser/create_simple_command.h"
-#include "tokenizer/tokenizer.h"
-#include "../incl/fork.h"
-#include "parser/create_parse_list.h"
+#include "../../incl/minishell.h"
+#include "../parser/parser_data_structs.h"
+#include "../parser/create_simple_command.h"
+#include "../tokenizer/tokenizer.h"
+#include "../../incl/fork.h"
+#include "../parser/create_parse_list.h"
 
 int	match_str(char *s1, char *s2)
 {

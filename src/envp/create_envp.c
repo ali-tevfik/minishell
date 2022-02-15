@@ -6,16 +6,16 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 20:16:20 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:22:17 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 17:29:42 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser/create_parse_list.h"
-#include "../incl/minishell.h"
-#include "../incl/built_in.h"
-#include "executor/find_command.h"
-#include "../incl/fork.h"
-#include "parser/parser_data_structs.h"
+#include "../parser/create_parse_list.h"
+#include "../../incl/minishell.h"
+#include "../../incl/built_in.h"
+#include "../executor/find_command.h"
+#include "../../incl/fork.h"
+#include "../parser/parser_data_structs.h"
 
 char	**create_envp(t_list *env_lst)
 {

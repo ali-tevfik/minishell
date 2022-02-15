@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 20:03:14 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/15 15:18:24 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	write_export_env(t_list *env_lst)
 	}
 }
 
-void	export_command(t_list **envp, t_pipeline *pipe_line)
+void	export_command(t_list **env, t_pipeline *pipe_line)
 {
 	char	**argument;
 	int		i;
 
 	i = 0;
 	if (!pipe_line->command[1])
-		write_export_env(*envp);
+		write_export_env(*env);
 	while (pipe_line->command[i + 1])
 	{
 		i++;
@@ -61,7 +61,8 @@ void	export_command(t_list **envp, t_pipeline *pipe_line)
 		}
 		else if (!ft_strrchr(pipe_line->command[i], '='))
 			continue ;
-		else if (match_key_env(envp, argument[0]) == 0)
-			add_new_export(envp, argument[0], argument[1]);
+		else if (match_key_env(env, argument[0]) == 0)
+			add_new_export(env, argument[0], argument[1]);
 	}
+
 }

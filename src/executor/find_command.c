@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 13:30:24 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/15 16:11:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 ** 2. If no slashes, get PATH from environment.
 ** 3. Append a "/" in front of the command.
 ** 4. Loop over PATH and try to find executable.
-** 
+**
 ** Returns:
 ** 		false if malloc failed. Minishell should stop.
 **		true otherwise
@@ -121,7 +121,7 @@ bool    find_command(char **command_array, t_list *lst)
 {
     char    *path;
     char    **path_array;
-	
+
     path = expander("PATH", lst);
     if (path == NULL)
 	    return (true);
