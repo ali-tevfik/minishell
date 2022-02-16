@@ -6,15 +6,13 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 15:16:52 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/16 15:06:59 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/built_in.h"
 #include "../../incl/minishell.h"
 #include "../parser/parser_data_structs.h"
-
-
 
 void	echo_command(t_pipeline *pipe_line)
 {

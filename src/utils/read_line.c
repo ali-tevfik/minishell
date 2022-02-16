@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:29:07 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/16 15:13:30 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	work_execve(t_list *pipe_lst, t_list **env)
 	wait_and_get_last_exit_status(last_id);
 }
 
-int check_built_in_file(t_pipeline *pipeline)
+int	check_built_in_file(t_pipeline *pipeline)
 {
 	int	i;
 
@@ -49,7 +49,7 @@ int check_built_in_file(t_pipeline *pipeline)
 	return (i);
 }
 
-int built_in_and_infile_check(t_pipeline *pipeline)
+int	built_in_and_infile_check(t_pipeline *pipeline)
 {
 	if (pipeline-> redirection)
 	{

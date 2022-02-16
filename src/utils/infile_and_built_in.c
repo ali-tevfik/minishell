@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 13:23:11 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:17:24 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/16 15:13:16 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	infile_and_built_in(t_pipeline *pipeline, t_list *env)
 		built_in(pipeline, &env);
 		exit(1);
 	}
-	if (match_str(pipeline->command[0], "unset") == 0 || match_str(pipeline->command[0], "cd") == 0 || (match_str(pipeline->command[0], "export") == 0 && pipeline->command[1]))
+	if (match_str(pipeline->command[0], "unset") == 0
+		|| match_str(pipeline->command[0], "cd") == 0
+		|| (match_str(pipeline->command[0], "export") == 0
+			&& pipeline->command[1]))
 		built_in(pipeline, &env);
 }

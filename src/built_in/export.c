@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 15:18:24 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/16 15:07:08 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,4 @@ void	export_command(t_list **env, t_pipeline *pipe_line)
 		else if (match_key_env(env, argument[0]) == 0)
 			add_new_export(env, argument[0], argument[1]);
 	}
-
 }
