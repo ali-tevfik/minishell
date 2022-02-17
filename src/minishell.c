@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:40:13 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/17 13:41:33 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	while (1)
 	{
-		line = readline("> ");
+		line = readline("Minishell> ");
 		if ('-' == line[0] && '1' == line[1])
 			break ;
 		if (ft_strncmp(line, "", 1) != 0)
