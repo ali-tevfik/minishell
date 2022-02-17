@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/17 13:41:33 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/17 19:04:59 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ int	main(int argc, char *argv[], char *envp[])
 
 	env = add_envp(envp);
 	argc = 1;
-	argv = NULL;
+	// argv = NULL;
 	(void)argv;
+	if (match_str(argv[1],"-c") == 0)
+	{
+		test_working(argv, &env);
+	}
 	while (1)
 	{
 		line = readline("Minishell> ");
