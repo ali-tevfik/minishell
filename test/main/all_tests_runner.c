@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/18 14:25:00 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/18 20:55:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,25 @@ TEST_GROUP_RUNNER(ExportBuiltin)
 	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
 }
 
+/* Expander */
+
 TEST_GROUP_RUNNER(ExpandSingleVariable)
 {
 	RUN_TEST_CASE(ExpandSingleVariable, Existing0);
 	RUN_TEST_CASE(ExpandSingleVariable, Existing1);
 	RUN_TEST_CASE(ExpandSingleVariable, Existing2);
 	RUN_TEST_CASE(ExpandSingleVariable, Existing3);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing4);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing5);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing6);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing7);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing8);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing9);
 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting0);
 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting1);
 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting2);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting3);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting4);
 }
 
 /* Tokenizer */

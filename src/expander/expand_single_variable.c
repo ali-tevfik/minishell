@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 18:57:57 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/18 15:31:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/18 15:43:35 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static bool	get_value_of_key(t_list *env_list, char **value, char *key)
 	{
 		if (!match_str(((t_env *)(env_list->content))->key, key))
 		{
-			*value = ft_strdup(((t_env *)(env_list->content))->value);
+			if (((t_env *)(env_list->content))->value == NULL)
+				*value = ft_strdup("");
+			else
+				*value = ft_strdup(((t_env *)(env_list->content))->value);
 			if (*value == NULL)
 			{
 				perror("Error with malloc");

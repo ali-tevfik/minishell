@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:42:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/16 18:47:58 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/18 21:06:13 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ static char		*env[] = {	"SHELL=/bin/zsh",
 							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
 							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
 							"LOGNAME=hyilmaz",
+							"HOME=/home/hilmi",
 							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
+							"a=b",
+							"hilmi_8=bro",
+							"codam_=",
 							NULL,
 						};
 
@@ -52,12 +56,16 @@ TEST_TEAR_DOWN(Expander)
 
 TEST(Expander, ExpandSimple0)
 {
-	char	*input = "echo $PATH";
+	char	*input = "echo $LOGNAME";
 
 	/* Tokenize and expand */
 	actual_token_list = tokenize_input(input);
 	int res = expander(actual_token_list, env_list);
 
-	
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(input, 4, WORD, NULL);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(input + 5, 8, WORD, "hyilmaz");
 	
 }
