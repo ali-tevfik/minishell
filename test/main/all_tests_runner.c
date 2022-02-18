@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 14:40:38 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/18 14:25:00 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,16 @@ TEST_GROUP_RUNNER(ExportBuiltin)
 	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
 }
 
-// TEST_GROUP_RUNNER(expander)
-// {
-
-// 	RUN_TEST_CASE(expander, expander_find_first);
-// 	RUN_TEST_CASE(expander, expander_find_second);
-// 	RUN_TEST_CASE(expander, expander_find_middle);
-// 	RUN_TEST_CASE(expander, expander_find_last);
-// 	RUN_TEST_CASE(expander, expander_dont_find);
-// }
+TEST_GROUP_RUNNER(ExpandSingleVariable)
+{
+	RUN_TEST_CASE(ExpandSingleVariable, Existing0);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing1);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing2);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing3);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting0);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting1);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting2);
+}
 
 /* Tokenizer */
 
@@ -130,6 +131,8 @@ TEST_GROUP_RUNNER(CheckGrammer)
 	RUN_TEST_CASE(CheckGrammer, OnlyRedirectionToken1);
 	RUN_TEST_CASE(CheckGrammer, NoClosingDQuote);
 	RUN_TEST_CASE(CheckGrammer, NoClosingQuote);
+	RUN_TEST_CASE(CheckGrammer, SingleDoubleSingleDoubleQuotesSequence);
+	RUN_TEST_CASE(CheckGrammer, DoubleSingleDoubleSingleQuotesSequence);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer0);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer1);
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer2);

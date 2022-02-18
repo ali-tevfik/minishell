@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/15 14:50:11 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/18 15:30:01 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ YELLOW = \033[1;33m
 
 # Compiler settings
 GCC = gcc
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror
 DBG_FLAGS = -g -fsanitize=address
 
 # Unity tester requirements
@@ -72,7 +72,6 @@ TEST_FILES = 	unity/src/unity.c \
 				src/built_in/unset.c \
 				src/built_in/export.c \
 				test/test_export.c \
-				test/test_expander.c \
 				src/expander.c \
 				test/utils.c \
 				test/test_tokenizer.c \
@@ -106,7 +105,9 @@ TEST_FILES = 	unity/src/unity.c \
 				src/create_envp.c \
 				src/built_in/find_envp.c \
 				src/built_in/file_name_check.c \
-				src/built_in/create_lst_envp.c
+				src/built_in/create_lst_envp.c \
+				src/expander/expand_single_variable.c \
+				test/test_expand_single_variable.c
 
 HEADER_FILES = 	incl/minishell.h
 

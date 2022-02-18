@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:42:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 15:58:47 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/16 18:47:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,9 @@
 #include "utils.h"
 
 /* Variables */
-static t_list	*token_list;
-static t_list	*parse_list;
+static t_list	*expected_token_list;
+static t_list	*actual_token_list;
 static t_list	*env_list;
-static t_list	*expected_env;
-static t_list	*actual_env;
-static t_env	*env_variable;
 static char		*env[] = {	"SHELL=/bin/zsh",
 							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
 							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
@@ -44,6 +41,9 @@ TEST_GROUP(Expander);
 
 TEST_SETUP(Expander)
 {
+	env_list = add_envp(env);
+	expected_token_list = NULL;
+	actual_token_list = NULL;
 }
 
 TEST_TEAR_DOWN(Expander)
@@ -54,9 +54,10 @@ TEST(Expander, ExpandSimple0)
 {
 	char	*input = "echo $PATH";
 
-	/* Tokenize and parse */
-	token_list = tokenize_input(input);
-	parse_list = create_parse_list(token_list);
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
 
+	
 	
 }
