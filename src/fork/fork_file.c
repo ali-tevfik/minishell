@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/17 13:48:31 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/18 23:41:18 by tevfik        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void here_doc(t_pipeline *pipline)
 	}
 	while(lst)
 	{
-		printf("%s\n", lst->content);
 		lst = lst->next;
 	}
 	ft_lstclear(&lst, del_lst);

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 16:10:44 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/19 01:20:09 by tevfik        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 	end_file = -1;
 	while (pipe_lst)
 	{
+		check_dolar(pipe_lst, env);
 		pip_line = pipe_lst->content;
+		printf("piplen [%s]\n",pip_line->command[0]);
 		if (pipe_lst->next)
 		{
 			if (pipe(fd) == -1)
