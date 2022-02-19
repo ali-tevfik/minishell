@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 18:53:46 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/17 19:18:40 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/19 01:36:07 by tevfik        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void test_working(char *argv[], t_list **env)
 
 		i++;
 	}
-
-	printf("hello  %s\n", txt);
 	if (txt){
 	line_(txt, env);
 	free(txt);
