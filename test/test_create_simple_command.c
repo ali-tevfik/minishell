@@ -6,15 +6,15 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 11:47:32 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 20:59:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 ** A pipeline is a single command or a sequence of commands separated by pipes.
 ** Example pipelines:
-** --> ls -l
-** --> ls -l | wc -l
+** --> ls -l (single command is pipeline)
+** --> ls -l | wc -l (multiple commands separated by pipes is also a pipeline)
 */
 
 /* Unity unit-tester */
@@ -51,7 +51,7 @@ TEST_TEAR_DOWN(CreateSimpleCommand)
 {
 	free_pipeline(expected_pipeline);
 	free_pipeline(actual_pipeline);
-	ft_lstclear(&token_list, free_token);
+	ft_lstclear(&token_list, free);
 }
 
 TEST(CreateSimpleCommand, CreateCommandFromTokenList)
@@ -111,7 +111,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile)
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
-	redirection_list = create_redirection_list(2, "out_file", OUT);
+	redirection_list = create_redirection_list(2, "out_file", WRITE);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
 	/* Actual pipeline from tokens */
@@ -134,7 +134,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFi
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
-	redirection_list = create_redirection_list(4, "in_file", READ, "out_file", OUT);
+	redirection_list = create_redirection_list(4, "in_file", READ, "out_file", WRITE);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
 	/* Actual pipeline from tokens */
@@ -157,7 +157,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBefore
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
-	redirection_list = create_redirection_list(2, "out_file", OUT);
+	redirection_list = create_redirection_list(2, "out_file", WRITE);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
 	/* Actual pipeline from tokens */
@@ -180,7 +180,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheM
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(3, "ls", "-l", "-a");
-	redirection_list = create_redirection_list(2, "out_file", OUT);
+	redirection_list = create_redirection_list(2, "out_file", WRITE);
 	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
 
 	/* Actual pipeline from tokens */
@@ -240,8 +240,25 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection)
 	compare_pipelines(expected_pipeline, actual_pipeline);
 }
 
-// TEST(CreateSimpleCommand, CreateCommandFromTokenListStderrRedirect)
-// {
-// 	TEST_IGNORE();
-// 	//char	*input = "ls -l 2 > out_file | grep codam";
-// }
+TEST(CreateSimpleCommand, CreateCommandFromTokenListWithHereDoc)
+{
+	char	*input = "<< EOF cat > outfile";
+
+	/* Tokenize input */
+	token_list = tokenize_input(input);
+
+	/* Expected pipeline from tokens */
+	expected_command = create_command(1, "cat");
+	redirection_list = create_redirection_list(4, "EOF", HERE_DOC, "outfile", WRITE);
+	expected_pipeline = create_pipeline_element(expected_command, redirection_list);
+
+	/* Actual pipeline from tokens */
+	size_t	location_token = 0;
+	actual_pipeline = create_simple_pipeline_up_until_pipe_token(token_list, &location_token);
+
+	/* Check token location, should be after outfile, so 5th. */
+	TEST_ASSERT_EQUAL_size_t(5, location_token);
+
+	/* Compare both actual and expected structs with each other */
+	compare_pipelines(expected_pipeline, actual_pipeline);
+}

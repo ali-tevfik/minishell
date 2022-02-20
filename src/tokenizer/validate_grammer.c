@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:17:55 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 13:11:12 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 19:01:05 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static bool	print_unexpected_token_message(t_token *token)
 	return (false);
 }
 
-static bool	is_redirection(t_token_type type)
+bool	is_redirection(t_token_type type)
 {
 	if (type == READ || type == WRITE || \
 		type == HERE_DOC || type == APPEND)

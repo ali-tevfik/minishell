@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 12:57:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 21:06:32 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,6 @@
 // 	RUN_TEST_CASE(ExportBuiltin, ExportCaseSensitivity);
 // 	RUN_TEST_CASE(ExportBuiltin, ExportInvalidOption);
 // 	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
-// }
-
-// /* Expander */
-
-// TEST_GROUP_RUNNER(ExpandSingleVariable)
-// {
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing0);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing1);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing2);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing3);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing4);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing5);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing6);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing7);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing8);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing9);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting0);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting1);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting2);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting3);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting4);
 // }
 
 /* Tokenizer */
@@ -151,28 +130,50 @@ TEST_GROUP_RUNNER(CheckGrammer)
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer2);
 }
 
-// /* Parser */
-// TEST_GROUP_RUNNER(CreateSimpleCommand)
-// {
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenList);
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe);
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile);
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFile);
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand);
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand);
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand);
-// 	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection);
-// 	// RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListStderrRedirect);
-// }
+/* Parser */
+TEST_GROUP_RUNNER(CreateSimpleCommand)
+{
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenList);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFile);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBeforeCommand);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheMiddleOfCommand);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddleOfCommand);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection);
+	RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListWithHereDoc);
+	// RUN_TEST_CASE(CreateSimpleCommand, CreateCommandFromTokenListStderrRedirect);
+}
 
-// TEST_GROUP_RUNNER(CreateParseList)
-// {
-// 	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipes);
-// 	RUN_TEST_CASE(CreateParseList, SimplePipelineOnePipe);
-// 	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipes);
-// 	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection);
-// 	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder);
-// }
+TEST_GROUP_RUNNER(CreateParseList)
+{
+	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipes);
+	RUN_TEST_CASE(CreateParseList, SimplePipelineOnePipe);
+	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipes);
+	RUN_TEST_CASE(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection);
+	RUN_TEST_CASE(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder);
+}
+
+/* Expander */
+
+TEST_GROUP_RUNNER(ExpandSingleVariable)
+{
+	RUN_TEST_CASE(ExpandSingleVariable, Existing0);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing1);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing2);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing3);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing4);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing5);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing6);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing7);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing8);
+	RUN_TEST_CASE(ExpandSingleVariable, Existing9);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting0);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting1);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting2);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting3);
+	RUN_TEST_CASE(ExpandSingleVariable, NonExisting4);
+}
 
 // TEST_GROUP_RUNNER(FindCommand)
 // {

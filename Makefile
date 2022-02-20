@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/20 12:42:54 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/20 21:08:26 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,24 +83,25 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_tokenizer.c \
 				src/tokenizer/tokenizer.c \
 				test/test_validate_grammer.c \
-				src/tokenizer/validate_grammer.c
-
-# test/test_create_simple_command.c
-# src/parser/create_simple_command.c
-# src/parser/parser_utils.c
-# test/test_create_parse_list.c
-# src/parser/create_parse_list.c
+				src/tokenizer/validate_grammer.c \
+				test/test_create_simple_command.c \
+				src/parser/create_simple_command.c \
+				src/parser/parser_utils.c \
+				test/test_create_parse_list.c \
+				src/parser/create_parse_list.c \
+				test/test_expand_single_variable.c \
+				src/expander/expand_single_variable.c \
+				src/match_str.c \
+				src/built_in/create_lst_envp.c
+				
 # test/test_find_command.c
 # src/executor/find_command.c
 # src/built_in/env.c
-# src/match_str.c
+
 # src/built_in/delete_envp.c
 # src/create_envp.c
 # src/built_in/find_envp.c
 # src/built_in/file_name_check.c
-# src/built_in/create_lst_envp.c
-# src/expander/expand_single_variable.c
-# test/test_expand_single_variable.c
 
 # test/test_unset.c
 # src/built_in/unset.c

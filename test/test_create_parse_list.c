@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 12:58:27 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/08 12:33:09 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 21:03:08 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ TEST_TEAR_DOWN(CreateParseList)
 {
 	ft_lstclear(&expected_pipeline_list, free_pipeline);
 	ft_lstclear(&actual_pipeline_list, free_pipeline);
-	ft_lstclear(&token_list, free_token);
+	ft_lstclear(&token_list, free);
 }
 
 TEST(CreateParseList, SimplePipelineNoPipes)
@@ -90,7 +90,7 @@ TEST(CreateParseList, SimplePipelineOnePipe)
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
 	command = create_command(2, "grep", "codam");
-	redirection_list = create_redirection_list(2, "out_file", OUT);
+	redirection_list = create_redirection_list(2, "out_file", WRITE);
 	pipeline_element = create_pipeline_element(command, redirection_list);
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
@@ -123,12 +123,12 @@ TEST(CreateParseList, SimplePipelineTwoPipes)
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
 	command = create_command(2, "grep", "codam");
-	redirection_list = create_redirection_list(2, "out_file", OUT);
+	redirection_list = create_redirection_list(2, "out_file", WRITE);
 	pipeline_element = create_pipeline_element(command, redirection_list);
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
 	command = create_command(3, "wc", "-l", "-a");
-	redirection_list = create_redirection_list(4, "in_file", READ, "out_file_2", OUT);
+	redirection_list = create_redirection_list(4, "in_file", READ, "out_file_2", WRITE);
 	pipeline_element = create_pipeline_element(command, redirection_list);
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
@@ -161,12 +161,12 @@ TEST(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection)
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
 	command = create_command(2, "grep", "codam");
-	redirection_list = create_redirection_list(2, "out_file", OUT);
+	redirection_list = create_redirection_list(2, "out_file", WRITE);
 	pipeline_element = create_pipeline_element(command, redirection_list);
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 
 	command = create_command(2, "wc", "-l");
-	redirection_list = create_redirection_list(4, "in_file", READ, "out_file_2", OUT);
+	redirection_list = create_redirection_list(4, "in_file", READ, "out_file_2", WRITE);
 	pipeline_element = create_pipeline_element(command, redirection_list);
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/07 14:51:55 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 19:18:39 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Returns the amount of command tokens in a command.
-** The commands tokens are all tokens except for the redirection operator
+** The tokens are command-tokens except for the redirection operator
 ** and filename for redirection.
 */
 
@@ -26,7 +26,7 @@ static size_t	number_command_tokens(t_list *token_list)
 	while (token_list != NULL && \
 			((t_token *)(token_list->content))->type != PIPE)
 	{
-		if (((t_token *)(token_list->content))->type == REDIRECTION)
+		if (is_redirection(((t_token *)(token_list->content))->type))
 		{
 			token_list = token_list->next;
 			token_list = token_list->next;

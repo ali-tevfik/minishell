@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 11:48:03 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 19:13:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,30 @@ void	compare_token_lists(t_list *expected_list, t_list *actual_list)
 		expected_list = expected_list->next;
 		actual_list = actual_list->next;
 	}
+}
+
+/*
+** Create a command from the inputs.
+**
+*/
+
+char	**create_command(size_t len_command, ...)
+{
+	char		**command;
+	va_list		ap;
+	size_t		i;
+
+	i = 0;
+	command = ft_calloc(len_command + 1, sizeof(char *));
+	va_start(ap, len_command);
+	while (i < len_command)
+	{
+		command[i] = ft_strdup(va_arg(ap, char *));
+		i++;
+	}
+	command[i] = NULL;
+	va_end(ap);
+	return (command);
 }
 
 /*
@@ -64,25 +88,6 @@ t_list	*create_redirection_list(size_t total_redir_operators_plus_filenames, ...
 	}
 	va_end(ap);
 	return (redirection_list);
-}
-
-char	**create_command(size_t len_command, ...)
-{
-	char		**command;
-	va_list		ap;
-	size_t		i;
-
-	i = 0;
-	command = ft_calloc(len_command + 1, sizeof(char *));
-	va_start(ap, len_command);
-	while (i < len_command)
-	{
-		command[i] = ft_strdup(va_arg(ap, char *));
-		i++;
-	}
-	command[i] = NULL;
-	va_end(ap);
-	return (command);
 }
 
 t_pipeline	*create_pipeline_element(char **command, t_list *redirection)
