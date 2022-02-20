@@ -6,11 +6,33 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 13:39:17 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 11:48:03 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+
+/*
+** Compare token lists.
+*/
+
+void	compare_token_lists(t_list *expected_list, t_list *actual_list)
+{
+	t_token	*expected_token;
+	t_token	*actual_token;
+
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(expected_list), ft_lstsize(actual_list));
+
+	while (expected_list != NULL)
+	{
+		expected_token = expected_list->content;
+		actual_token = actual_list->content;
+		TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+		TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+		expected_list = expected_list->next;
+		actual_list = actual_list->next;
+	}
+}
 
 /*
 ** Give va_args as pairs like: 

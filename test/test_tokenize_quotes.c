@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/21 11:37:04 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/21 11:47:58 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 12:57:02 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ TEST_SETUP(TokenizeQuotes)
 
 TEST_TEAR_DOWN(TokenizeQuotes)
 {
+	free(expected_token->content);
+	free(actual_token->content);
 	free(expected_token);
 	free(actual_token);
 }
@@ -42,13 +44,13 @@ TEST(TokenizeQuotes, TakeSingleQuotesSimple0)
 	char		*input = "\'hilmi\'codam";
 
 	itr = input;
-	actual_token = take_single_quotes(&itr);
-	expected_token->content = input;
-	expected_token->len_content = 7;
+	actual_token = take_quotes(&itr, '\'');
+	expected_token->content = ft_strdup("hilmi");
 	expected_token->type = QUOTE;
 
-	/* Compare structs */
-	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
 
 	/* Check that iter moved to next character */
 	TEST_ASSERT_EQUAL_CHAR('c', *itr);
@@ -60,13 +62,157 @@ TEST(TokenizeQuotes, TakeSingleQuotesSimple1)
 	char		*input = "\'ls -l | grep codam &\'";
 
 	itr = input;
-	actual_token = take_single_quotes(&itr);
-	expected_token->content = input;
-	expected_token->len_content = 22;
+	actual_token = take_quotes(&itr, '\'');
+	expected_token->content = ft_strdup("ls -l | grep codam &");
 	expected_token->type = QUOTE;
 
-	/* Compare structs */
-	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeQuotes, TakeSingleQuotesHard0)
+{
+	t_char_iter	itr;
+	char		*input = "\'\'";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\'');
+	expected_token->content = ft_strdup("");
+	expected_token->type = QUOTE;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeQuotes, TakeSingleQuotesHard1)
+{
+	t_char_iter	itr;
+	char		*input = "\'a\'";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\'');
+	expected_token->content = ft_strdup("a");
+	expected_token->type = QUOTE;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeQuotes, TakeDoubleQuotesSimple0)
+{
+	t_char_iter	itr;
+	char		*input = "\"hilmi\"codam";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\"');
+	expected_token->content = ft_strdup("hilmi");
+	expected_token->type = DQUOTE;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('c', *itr);
+}
+
+TEST(TokenizeQuotes, TakeDoubleQuotesSimple1)
+{
+	t_char_iter	itr;
+	char		*input = "\"ls -l | grep codam &\"";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\"');
+	expected_token->content = ft_strdup("ls -l | grep codam &");
+	expected_token->type = DQUOTE;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeQuotes, TakeDoubleQuotesHard0)
+{
+	t_char_iter	itr;
+	char		*input = "\"\"";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\"');
+	expected_token->content = ft_strdup("");
+	expected_token->type = DQUOTE;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeQuotes, TakeDoubleQuotesHard1)
+{
+	t_char_iter	itr;
+	char		*input = "\"a\"";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\"');
+	expected_token->content = ft_strdup("a");
+	expected_token->type = DQUOTE;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeQuotes, NoClosingSingleQuote)
+{
+	t_char_iter	itr;
+	char		*input = "\'hilmi";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\"');
+	expected_token->content = ft_strdup("hilmi");
+	expected_token->type = ERROR;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeQuotes, NoClosingDoubleQuote)
+{
+	t_char_iter	itr;
+	char		*input = "\"hilmi";
+
+	itr = input;
+	actual_token = take_quotes(&itr, '\"');
+	expected_token->content = ft_strdup("hilmi");
+	expected_token->type = ERROR;
+
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
 
 	/* Check that iter moved to next character */
 	TEST_ASSERT_EQUAL_CHAR('\0', *itr);

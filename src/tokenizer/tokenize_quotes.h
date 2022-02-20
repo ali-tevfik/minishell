@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/21 11:34:21 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/21 18:16:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 10:58:17 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@
 /* Data structures */
 
 /* Function prototypes */
-t_token	*take_single_quotes(t_char_iter *itr);
+t_token	*take_quotes(t_char_iter *itr, char c);
 
 #endif

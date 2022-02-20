@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 14:11:11 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 12:56:16 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "../src/libft/libft.h"
 #include "../src/tokenizer/tokenizer_data_structs.h"
 #include "../src/tokenizer/tokenizer_utils.h"
+#include "utils.h"
 
 /* System headers */
 #include <stdio.h>
@@ -46,15 +47,11 @@ TEST(Tokenizer, Command)
 	t_token	*token;
 	actual_list = tokenize_input(input);
 
-	token = create_token(input, 2, WORD);
+	token = create_token(ft_strdup("ls"), WORD);
 	expected_list = ft_lstnew(token);
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(1, actual_len, "Input: \"ls\"");
-
-	/* Compare elements of the linked lists */
-	TEST_ASSERT_EQUAL_MEMORY(expected_list->content, actual_list->content, sizeof(t_token));
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list); 
 }
 
 TEST(Tokenizer, CommandPlusArgument)
@@ -63,19 +60,14 @@ TEST(Tokenizer, CommandPlusArgument)
 	t_token	*token;
 	actual_list = tokenize_input(input);
 
-	token = create_token(input, 2, WORD);
+	token = create_token(ft_strdup("ls"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 3, 2, WORD);
+	token = create_token(ft_strdup("-l"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: \"ls -l\"");
-
-	/* Compare elements of the linked lists */
-	TEST_ASSERT_EQUAL_MEMORY(expected_list->content, actual_list->content, sizeof(t_token));
-	TEST_ASSERT_EQUAL_MEMORY(expected_list->next->content, actual_list->next->content, sizeof(t_token));
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list); 
 }
 
 TEST(Tokenizer, CommandPlusArgumentStartingWithSomeSpaces)
@@ -84,19 +76,14 @@ TEST(Tokenizer, CommandPlusArgumentStartingWithSomeSpaces)
 	t_token	*token;
 	actual_list = tokenize_input(input);
 
-	token = create_token(input + 3, 2, WORD);
+	token = create_token(ft_strdup("ls"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 6, 2, WORD);
+	token = create_token(ft_strdup("-l"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: \"   ls -l\"");
-
-	/* Compare elements of the linked lists */
-	TEST_ASSERT_EQUAL_MEMORY(expected_list->content, actual_list->content, sizeof(t_token));
-	TEST_ASSERT_EQUAL_MEMORY(expected_list->next->content, actual_list->next->content, sizeof(t_token));
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list); 
 }
 
 TEST(Tokenizer, MultipleCommandsPlusArgumentsWithPipes)
@@ -106,45 +93,32 @@ TEST(Tokenizer, MultipleCommandsPlusArgumentsWithPipes)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 2, WORD);					/* ls */
+	token = create_token(ft_strdup("ls"), WORD);				/* ls */
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 3, 2, WORD);				/* -l */
+	token = create_token(ft_strdup("-l"), WORD);				/* -l */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 6, 1, PIPE);				/* | */
+	token = create_token(NULL, PIPE);							/* | */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 8, 4, WORD);				/* grep */
+	token = create_token(ft_strdup("grep"), WORD);				/* grep */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 13, 5, WORD);				/* codam */
+	token = create_token(ft_strdup("codam"), WORD);				/* codam */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 19, 1, PIPE);				/* | */
+	token = create_token(NULL, PIPE);							/* | */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 21, 2, WORD);				/* wc */
+	token = create_token(ft_strdup("wc"), WORD);				/* wc */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 24, 2, WORD);				/* -l */
+	token = create_token(ft_strdup("-l"), WORD);				/* -l */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(8, actual_len, "Input: \"ls -l | grep codam | wc -l\"");
-
-	/* Compare elements of the linked lists */
-	int	i = 0;
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (i < 8)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-		i++;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list); 
 }
 
 TEST(Tokenizer, CommandPlusRedirection)
@@ -154,30 +128,17 @@ TEST(Tokenizer, CommandPlusRedirection)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 1, REDIRECTION);
+	token = create_token(NULL, READ);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 2, 10, WORD);
+	token = create_token(ft_strdup("input_file"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 13, 5, WORD);
+	token = create_token(ft_strdup("hahah"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(3, actual_len, "Input: \"< input_file hahah\"");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list); 
 }
 
 TEST(Tokenizer, CommandPlusRedirectionPlusPipes)
@@ -187,51 +148,38 @@ TEST(Tokenizer, CommandPlusRedirectionPlusPipes)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 1, REDIRECTION);		/* < */
+	token = create_token(NULL, READ);						/* < */
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 2, 2, WORD);			/* ls */
+	token = create_token(ft_strdup("ls"), WORD);			/* ls */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 5, 2, WORD);			/* -l */
+	token = create_token(ft_strdup("-l"), WORD);			/* -l */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 8, 2, WORD);			/* -a */
+	token = create_token(ft_strdup("-a"), WORD);			/* -a */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 11, 9, WORD);			/* ~/Desktop */
+	token = create_token(ft_strdup("~/Desktop"), WORD);		/* ~/Desktop */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 21, 1, PIPE);			/* | */
+	token = create_token(NULL, PIPE);						/* | */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 23, 2, WORD);			/* wc */
+	token = create_token(ft_strdup("wc"), WORD);			/* wc */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 26, 2, WORD);			/* -l */
+	token = create_token(ft_strdup("-l"), WORD);			/* -l */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 29, 1, REDIRECTION);	/* > */
+	token = create_token(NULL, WRITE);						/* > */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 31, 7, WORD);			/* outfile */
+	token = create_token(ft_strdup("outfile"), WORD);		/* outfile */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(10, actual_len, "Input: \"< ls -l -a ~/Desktop | wc -l > outfile\"");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list); 
 }
 
 TEST(Tokenizer, CommandPlusDquotes)
@@ -241,27 +189,14 @@ TEST(Tokenizer, CommandPlusDquotes)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 4, WORD);
+	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 5, 7, DQUOTE);
+	token = create_token(ft_strdup("$HOME"), DQUOTE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: echo \"$HOME\"");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list); 
 }
 
 TEST(Tokenizer, CommandPlusDquotesEmpty)
@@ -271,27 +206,14 @@ TEST(Tokenizer, CommandPlusDquotesEmpty)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 4, WORD);
+	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 5, 2, DQUOTE);
+	token = create_token(ft_strdup(""), DQUOTE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: echo \"\"");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusDquotesPlusPipes)
@@ -301,36 +223,23 @@ TEST(Tokenizer, CommandPlusDquotesPlusPipes)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 4, WORD);
+	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 5, 7, DQUOTE);
+	token = create_token(ft_strdup("$HOME"), DQUOTE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 13, 1, PIPE);
+	token = create_token(NULL, PIPE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 15, 4, WORD);
+	token = create_token(ft_strdup("grep"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 20, 17, DQUOTE);
+	token = create_token(ft_strdup("codam amsterdam"), DQUOTE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(5, actual_len, "Input: echo \"$HOME\"");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusQuotes)
@@ -340,27 +249,14 @@ TEST(Tokenizer, CommandPlusQuotes)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 4, WORD);
+	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 5, 7, QUOTE);
+	token = create_token(ft_strdup("$HOME"), QUOTE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: echo \'$HOME\'");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusUnclosedQuotes)
@@ -370,27 +266,14 @@ TEST(Tokenizer, CommandPlusUnclosedQuotes)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 4, WORD);
+	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 5, 14, ERROR);
+	token = create_token(ft_strdup("hilmi | wc -l"), ERROR);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(2, actual_len, "Input: echo \'hilmi | wc -l");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, MultiplePipesBackToBack)
@@ -400,36 +283,23 @@ TEST(Tokenizer, MultiplePipesBackToBack)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input, 1, PIPE);
+	token = create_token(NULL, PIPE);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 1, 1, PIPE);
+	token = create_token(NULL, PIPE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 3, 1, PIPE);
+	token = create_token(NULL, PIPE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 4, 1, PIPE);
+	token = create_token(NULL, PIPE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 5, 1, PIPE);
+	token = create_token(NULL, PIPE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(5, actual_len, "Input: || |||");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, WeirdSpacing)
@@ -439,34 +309,21 @@ TEST(Tokenizer, WeirdSpacing)
 	actual_list = tokenize_input(input);
 
 	/* Create the expected token */
-	token = create_token(input + 1, 4, WORD);			/* echo */
+	token = create_token(ft_strdup("echo"), WORD);			/* echo */
 	expected_list = ft_lstnew(token);
 
-	token = create_token(input + 8, 5, WORD);			/* hilmi */
+	token = create_token(ft_strdup("hilmi"), WORD);			/* hilmi */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 13, 1, PIPE);			/* | */
+	token = create_token(NULL, PIPE);						/* | */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 14, 4, WORD);			/* grep */
+	token = create_token(ft_strdup("grep"), WORD);			/* grep */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(input + 23, 5, WORD);			/* codam */
+	token = create_token(ft_strdup("codam"), WORD);			/* codam */
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	/* Compare the length of the linked lists. */
-	int actual_len = ft_lstsize(actual_list);
-	TEST_ASSERT_EQUAL_INT_MESSAGE(5, actual_len, "Input: \\techo   hilmi|grep   \\t codam");
-
-	/* Compare elements of the linked lists */
-	t_list	*expected_head = expected_list;
-	t_list	*actual_head = actual_list;
-	while (1)
-	{
-		TEST_ASSERT_EQUAL_MEMORY(expected_head->content, actual_head->content, sizeof(t_token));
-		if (expected_head->next == NULL)
-			break ;
-		expected_head = expected_head->next;
-		actual_head = actual_head->next;
-	}
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
 }

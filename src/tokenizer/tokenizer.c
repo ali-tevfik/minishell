@@ -6,11 +6,22 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/12 11:29:23 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 13:09:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+
+static t_token	*take_other_tokens(t_char_iter *itr)
+{
+	t_token	*token;
+
+	if (peek(*itr) == '&')
+		token = create_token(NULL, AMPERSAND);
+	else
+		token = create_token(NULL, SEMICOLON);
+	return (token);
+}
 
 /*
 ** Returns FAILURE when space is found, so we can continue in loop.
@@ -24,9 +35,9 @@ static size_t	take_correct_token(t_token **single_token, t_char_iter *itr)
 	else if (**itr == '<' || **itr == '>')
 		*single_token = take_redirection(itr);
 	else if (**itr == '\'')
-		*single_token = take_single_quotes(itr);
+		*single_token = take_quotes(itr, '\'');
 	else if (**itr == '\"')
-		*single_token = take_double_quotes(itr);
+		*single_token = take_quotes(itr, '\"');
 	else if (ft_isspace(**itr) == 1)
 	{
 		next(itr);
@@ -34,7 +45,7 @@ static size_t	take_correct_token(t_token **single_token, t_char_iter *itr)
 	}
 	else if (**itr == '&' || **itr == ';')
 	{
-		*single_token = create_token(*itr, 1, ERROR);
+		*single_token = take_other_tokens(itr);
 		if (*single_token == NULL)
 			return (MALLOC_FAILURE);
 		next(itr);

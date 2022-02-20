@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:42:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/18 21:06:13 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/18 21:15:07 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static char		*env[] = {	"SHELL=/bin/zsh",
 							"a=b",
 							"hilmi_8=bro",
 							"codam_=",
+							"test=hilmi yilmaz",
 							NULL,
 						};
 
@@ -56,16 +57,16 @@ TEST_TEAR_DOWN(Expander)
 
 TEST(Expander, ExpandSimple0)
 {
-	char	*input = "echo $LOGNAME";
+	char	*input = "echo $test";
 
 	/* Tokenize and expand */
 	actual_token_list = tokenize_input(input);
 	int res = expander(actual_token_list, env_list);
 
 	/* Expected tokens after expansion */
-	t_token	*token = create_token(input, 4, WORD, NULL);
+	t_token	*token = create_token(input, 4, WORD);
 	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
 
-	token = create_token(input + 5, 8, WORD, "hyilmaz");
+	token = create_token(input + 5, 8, WORD);
 	
 }

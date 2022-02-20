@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:38:39 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:30:54 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 11:31:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ TEST(TokenizeWord, TakeWordSimple0)
 
 	itr = input;
 	actual_token = take_word(&itr);
-	expected_token->content = input;
-	expected_token->len_content = 6;
+	expected_token->content = ft_strdup("yilmaz");
 	expected_token->type = WORD;
 	
-	/* Compare structs */
-	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
 }
 
 TEST(TokenizeWord, TakeWordSimple1)
@@ -58,12 +61,12 @@ TEST(TokenizeWord, TakeWordSimple1)
 
 	itr = input;
 	actual_token = take_word(&itr);
-	expected_token->content = input;
-	expected_token->len_content = 3;
+	expected_token->content = ft_strdup("yil");
 	expected_token->type = WORD;
 	
-	/* Compare structs */
-	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
 
 	/* Check that iter moved to next character */
 	TEST_ASSERT_EQUAL_CHAR(' ', *itr);
@@ -76,12 +79,12 @@ TEST(TokenizeWord, TakeWordSimple2)
 
 	itr = input;
 	actual_token = take_word(&itr);
-	expected_token->content = input;
-	expected_token->len_content = 2;
+	expected_token->content = ft_strdup("ls");
 	expected_token->type = WORD;
 	
-	/* Compare structs */
-	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+	/* Compare tokens */
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
 
 	/* Check that iter moved to next character */
 	TEST_ASSERT_EQUAL_CHAR('|', *itr);
@@ -90,16 +93,32 @@ TEST(TokenizeWord, TakeWordSimple2)
 TEST(TokenizeWord, TakeWordSimple3)
 {
 	t_char_iter itr;
-	char		*input = "#$^&|grep codam";
+	char		*input = "#$^|grep codam";
 
 	itr = input;
 	actual_token = take_word(&itr);
-	expected_token->content = input;
-	expected_token->len_content = 4;
+	expected_token->content = ft_strdup("#$^");
 	expected_token->type = WORD;
 	
-	/* Compare structs */
-	TEST_ASSERT_EQUAL_MEMORY(expected_token, actual_token, sizeof(t_token));
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('|', *itr);
+}
+
+TEST(TokenizeWord, TakeWordHard0)
+{
+	t_char_iter itr;
+	char		*input = "a|grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("a");
+	expected_token->type = WORD;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
 
 	/* Check that iter moved to next character */
 	TEST_ASSERT_EQUAL_CHAR('|', *itr);
