@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 12:56:16 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 14:23:29 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ TEST(Tokenizer, CommandPlusArgument)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
-	compare_token_lists(expected_list, actual_list); 
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusArgumentStartingWithSomeSpaces)
@@ -192,7 +192,7 @@ TEST(Tokenizer, CommandPlusDquotes)
 	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(ft_strdup("$HOME"), DQUOTE);
+	token = create_token(ft_strdup("\"$HOME\""), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
@@ -209,7 +209,7 @@ TEST(Tokenizer, CommandPlusDquotesEmpty)
 	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(ft_strdup(""), DQUOTE);
+	token = create_token(ft_strdup("\"\""), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
@@ -226,7 +226,7 @@ TEST(Tokenizer, CommandPlusDquotesPlusPipes)
 	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(ft_strdup("$HOME"), DQUOTE);
+	token = create_token(ft_strdup("\"$HOME\""), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	token = create_token(NULL, PIPE);
@@ -235,7 +235,7 @@ TEST(Tokenizer, CommandPlusDquotesPlusPipes)
 	token = create_token(ft_strdup("grep"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
-	token = create_token(ft_strdup("codam amsterdam"), DQUOTE);
+	token = create_token(ft_strdup("\"codam amsterdam\""), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
@@ -252,7 +252,7 @@ TEST(Tokenizer, CommandPlusQuotes)
 	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(ft_strdup("$HOME"), QUOTE);
+	token = create_token(ft_strdup("\'$HOME\'"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
@@ -269,7 +269,7 @@ TEST(Tokenizer, CommandPlusUnclosedQuotes)
 	token = create_token(ft_strdup("echo"), WORD);
 	expected_list = ft_lstnew(token);
 
-	token = create_token(ft_strdup("hilmi | wc -l"), ERROR);
+	token = create_token(ft_strdup("\'hilmi | wc -l"), ERROR);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */

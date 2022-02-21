@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 12:58:27 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 21:03:08 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 15:01:29 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ t_pipeline		*pipeline_element;
 t_list			*redirection_list;
 t_list			*expected_pipeline_list;
 t_list			*actual_pipeline_list;
+
+// static t_list	*env_list;
+// static char		*env[] = {	"SHELL=/bin/zsh",
+// 							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
+// 							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
+// 							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
+// 							"LOGNAME=hyilmaz",
+// 							"HOME=/home/hilmi",
+// 							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
+// 							"ali=s -l",
+// 							"hilmi=ep",
+// 							"codam_=",
+// 							NULL,
+// 						};
 
 TEST_GROUP(CreateParseList);
 
@@ -195,6 +209,54 @@ TEST(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder)
 	/* Expected pipeline list */
 	command = create_command(3, "grep", "codam", "-i");
 	redirection_list = create_redirection_list(4, "infile", READ, "outfile", APPEND);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+	
+	/* Actual pipeline list */
+	actual_pipeline_list = create_parse_list(token_list);
+
+	/* Compare pipelines */
+	t_list	*head_expected = expected_pipeline_list;
+	t_list	*head_actual = actual_pipeline_list;
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(head_expected), ft_lstsize(head_actual));
+	while (head_expected != NULL)
+	{
+		compare_pipelines((t_pipeline *)head_expected->content, (t_pipeline *)head_actual->content);
+		head_expected = head_expected->next;
+		head_actual = head_actual->next;
+	}
+}
+
+TEST(CreateParseList, SimplePipelineNoPipeWithExpansion)
+{
+	/* 
+	** ali="s -l" 
+	** hilmi="ep"
+	*/
+	char	*input = "l\"$ali\" | gr$hilmi uni | wc -l";
+
+	/* Environment */
+	// env_list = add_envp(env);
+
+	/* Generated token list */
+	token_list = tokenize_input(input);
+
+	/* Expander */
+
+
+	/* Expected pipeline list */
+	command = create_command(1, "ls -l");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(2, "grep", "uni");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(2, "wc", "-l");
+	redirection_list = create_redirection_list(0);
 	pipeline_element = create_pipeline_element(command, redirection_list);
 	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
 	

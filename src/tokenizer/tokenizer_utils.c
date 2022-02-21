@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 11:49:44 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 13:26:09 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	is_char_a_delimiter(char c)
 {
 	int			i;
-	const char	*delimiters = "|<>\'\"\n \t\0";
+	const char	*delimiters = "|<>;&\n \t\0";
 
 	i = 0;
 	while (i < 9)

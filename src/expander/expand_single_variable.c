@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 18:57:57 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/18 15:43:35 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 15:03:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,40 +56,34 @@ static bool	get_value_of_key(t_list *env_list, char **value, char *key)
 
 /*
 ** First char of string has to be a dollar sign.
-** Loop only n characters.
+** len_variable is set as the length of the variable including dollar sign.
 ** Returns NULL when allocation fails.
 ** Returns "" (empty string) if key not found in environment.
 */
 
-char	*expand_single_variable(t_list *env_list, char *string, size_t n)
+char	*expand_single_variable(t_list *env_list, char *string, size_t *len_variable)
 {
 	size_t	i;
 	char	*key;
 	char	*value;
-	char	*remainder;
-	char	*expansion;
 
 	i = 1;
 	value = NULL;
+	*len_variable = 1;
 	if (is_separator(string[i]))
 	{
-		expansion = ft_substr(string, 0, n);
-		return (expansion);
+		value = ft_substr(string, 0, 1);
+		return (value);
 	}
-	while (string[i] != '\0' && i < n)
+	while (string[i] != '\0')
 	{
 		if (is_separator(string[i]))
 			break ;
 		i++;
 	}
+	*len_variable = i;
 	key = ft_substr(string, 1, i - 1);
 	if (key == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
-	remainder = ft_substr(string, i, n);
-	if (remainder == NULL)
 	{
 		perror("Error with malloc");
 		return (NULL);
@@ -106,13 +100,5 @@ char	*expand_single_variable(t_list *env_list, char *string, size_t n)
 			return (NULL);
 		}
 	}
-	expansion = ft_strjoin(value, remainder);
-	if (expansion == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
-	free(value);
-	free(remainder);
-	return (expansion);
+	return (value);
 }

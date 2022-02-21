@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:38:39 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 11:31:33 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 13:30:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,123 @@ TEST(TokenizeWord, TakeWordHard0)
 
 	/* Check that iter moved to next character */
 	TEST_ASSERT_EQUAL_CHAR('|', *itr);
+}
+
+TEST(TokenizeWord, TakeWordWithDoubleQuotes)
+{
+	t_char_iter itr;
+	char		*input = "l\"s -la\"|grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("l\"s -la\"");
+	expected_token->type = WORD;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('|', *itr);
+}
+
+TEST(TokenizeWord, TakeWordWithSingleQuotes)
+{
+	t_char_iter itr;
+	char		*input = "l\'s -la\'|grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("l\'s -la\'");
+	expected_token->type = WORD;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('|', *itr);
+}
+
+TEST(TokenizeWord, TakeWordWithUnclosedDoubleQuotes)
+{
+	t_char_iter itr;
+	char		*input = "l\"s -la|grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("l\"s -la|grep codam");
+	expected_token->type = ERROR;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeWord, TakeWordWithUnclosedSingleQuotes)
+{
+	t_char_iter itr;
+	char		*input = "l\'s -la|grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("l\'s -la|grep codam");
+	expected_token->type = ERROR;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeWord, TakeWordWithFourDoubleQuotes)
+{
+	t_char_iter itr;
+	char		*input = "l\"s -la\"\"$HOME\";grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("l\"s -la\"\"$HOME\"");
+	expected_token->type = WORD;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR(';', *itr);
+}
+
+TEST(TokenizeWord, TakeWordWithOpeningDoubleQuoteAndClosingSingleQuote)
+{
+	t_char_iter itr;
+	char		*input = "l\"s -la\'|grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("l\"s -la\'|grep codam");
+	expected_token->type = ERROR;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
+}
+
+TEST(TokenizeWord, TakeWordWithOpeningSingleQuoteAndClosingDoubleQuote)
+{
+	t_char_iter itr;
+	char		*input = "l\'s -la\"|grep codam";
+
+	itr = input;
+	actual_token = take_word(&itr);
+	expected_token->content = ft_strdup("l\'s -la\"|grep codam");
+	expected_token->type = ERROR;
+	
+	TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+	TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+
+	/* Check that iter moved to next character */
+	TEST_ASSERT_EQUAL_CHAR('\0', *itr);
 }

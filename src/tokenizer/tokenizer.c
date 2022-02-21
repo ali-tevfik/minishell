@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 13:09:37 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 17:54:34 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ static size_t	take_correct_token(t_token **single_token, t_char_iter *itr)
 		*single_token = take_pipe(itr);
 	else if (**itr == '<' || **itr == '>')
 		*single_token = take_redirection(itr);
-	else if (**itr == '\'')
-		*single_token = take_quotes(itr, '\'');
-	else if (**itr == '\"')
-		*single_token = take_quotes(itr, '\"');
 	else if (ft_isspace(**itr) == 1)
 	{
 		next(itr);

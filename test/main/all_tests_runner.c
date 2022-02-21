@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 21:06:32 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 13:29:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ TEST_GROUP_RUNNER(TokenizeWord)
 	RUN_TEST_CASE(TokenizeWord, TakeWordSimple2);
 	RUN_TEST_CASE(TokenizeWord, TakeWordSimple3);
 	RUN_TEST_CASE(TokenizeWord, TakeWordHard0);
+	RUN_TEST_CASE(TokenizeWord, TakeWordWithDoubleQuotes);
+	RUN_TEST_CASE(TokenizeWord, TakeWordWithSingleQuotes);
+	RUN_TEST_CASE(TokenizeWord, TakeWordWithUnclosedDoubleQuotes);
+	RUN_TEST_CASE(TokenizeWord, TakeWordWithUnclosedSingleQuotes);
+	RUN_TEST_CASE(TokenizeWord, TakeWordWithFourDoubleQuotes);
+	RUN_TEST_CASE(TokenizeWord, TakeWordWithOpeningDoubleQuoteAndClosingSingleQuote);
+	RUN_TEST_CASE(TokenizeWord, TakeWordWithOpeningSingleQuoteAndClosingDoubleQuote);
 }
 
 TEST_GROUP_RUNNER(Tokenizer)

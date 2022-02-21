@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:42:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/18 21:15:07 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 14:27:21 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static char		*env[] = {	"SHELL=/bin/zsh",
 							"hilmi_8=bro",
 							"codam_=",
 							"test=hilmi yilmaz",
+							"hilmi=ho -n",
 							NULL,
 						};
 
@@ -53,9 +54,34 @@ TEST_SETUP(Expander)
 
 TEST_TEAR_DOWN(Expander)
 {
+	ft_lstclear(&env_list, free_env_variable);
+	ft_lstclear(&actual_token_list, free_token);
+	ft_lstclear(&expected_token_list, free_token);
 }
 
 TEST(Expander, ExpandSimple0)
+{
+	char	*input = "cat -c $hilmi_8";
+
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
+
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(ft_strdup("cat"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("-c"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("bro"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list); 
+}
+
+TEST(Expander, ExpandHard0)
 {
 	char	*input = "echo $test";
 
@@ -64,9 +90,62 @@ TEST(Expander, ExpandSimple0)
 	int res = expander(actual_token_list, env_list);
 
 	/* Expected tokens after expansion */
-	t_token	*token = create_token(input, 4, WORD);
+	t_token	*token = create_token(ft_strdup("echo"), WORD);
 	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
 
-	token = create_token(input + 5, 8, WORD);
-	
+	token = create_token(ft_strdup("hilmi"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("yilmaz"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list);
+}
+
+TEST(Expander, ExpandHard1)
+{
+	char	*input = "ec$hilmi $test";
+
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
+
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(ft_strdup("echo"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	t_token	*token = create_token(ft_strdup("-n"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("hilmi"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("yilmaz"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list);
+}
+
+TEST(Expander, ExpandHard2)
+{
+	char	*input = "ec\"$hilmi\" $test";
+
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
+
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(ft_strdup("echo -n"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("hilmi"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("yilmaz"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list);
 }
