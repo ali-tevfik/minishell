@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:32:56 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 17:43:00 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 #include "../parser/create_parse_list.h"
 #include "../tokenizer/validate_grammer.h"
 
-void work_execve(t_list *pipe_lst, t_list **env)
+void	work_execve(t_list *pipe_lst, t_list **env)
 {
-	int last_id;
+	int	last_id;
 
 	last_id = 0;
 	fork_func(pipe_lst, *env, &last_id);
 	wait_and_get_last_exit_status(last_id);
 }
 
-int check_built_in_file(t_pipeline *pipeline)
+int	check_built_in_file(t_pipeline *pipeline)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (match_str(pipeline->command[0], "cd") == 0)
@@ -49,9 +49,9 @@ int check_built_in_file(t_pipeline *pipeline)
 	return (i);
 }
 
-int built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
+int	built_in_and_infile_check(t_pipeline *pipeline)
 {
-	if (pipeline->redirection || pipe_lst->next)
+	if (pipeline->redirection)
 	{
 		if (check_built_in_file(pipeline))
 			return (1);
@@ -59,7 +59,7 @@ int built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
 	return (0);
 }
 
-void built_in(t_pipeline *pipeline, t_list **env)
+void	built_in(t_pipeline *pipeline, t_list **env)
 {
 	if (match_str(pipeline->command[0], "cd") == 0)
 		cd_command(pipeline->command[1], *env);
@@ -77,22 +77,23 @@ void built_in(t_pipeline *pipeline, t_list **env)
 		unset_command(env, pipeline);
 }
 
-void line_(char *line, t_list **env)
+void	line_(char *line, t_list **env)
 {
-	t_list *lst;
-	t_list *pipe_lst;
-	t_pipeline *pipeline;
+	t_list		*lst;
+	t_list		*pipe_lst;
+	t_pipeline	*pipeline;
 
 	lst = tokenize_input(line);
 	if (!validate_grammer(lst))
-		return;
+		return ;
 	pipe_lst = create_parse_list(lst);
 	check_dolar(pipe_lst, *env);
 	if (pipe_lst)
 		pipeline = pipe_lst->content;
 	else
 		return ;
-	if (built_in_and_infile_check(pipeline, pipe_lst))
+	printf("[%s]\n", pipeline->command[0]);
+	if (built_in_and_infile_check(pipeline))
 		infile_and_built_in(pipeline, *env);
 	else if (check_built_in_file(pipeline))
 		built_in(pipeline, env);

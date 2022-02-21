@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/18 23:41:18 by tevfik        ########   odam.nl         */
+/*   Updated: 2022/02/21 15:40:05 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include "../../incl/minishell.h"
 #include "../parser/parser_data_structs.h"
 
-void del_lst(void *lst)
+void	del_lst(void *lst)
 {
 	free(lst);
 }
-void here_doc(t_pipeline *pipline)
+
+void	here_doc(t_pipeline *pipline)
 {
 	t_list	*lst;
 	char	*read_txt;
@@ -27,13 +28,15 @@ void here_doc(t_pipeline *pipline)
 
 	redirection = pipline->redirection->content;
 	lst = NULL;
-	read_txt = readline(">");
+	read_txt = readline("burda>");
 	while (match_str(redirection->file, read_txt) != 0){
 		ft_lstadd_back(&lst, ft_lstnew(read_txt));
-		read_txt = readline(">");
+		read_txt = readline("burda>");
 	}
+	printf("cikti\n");
 	while(lst)
 	{
+		printf("%s\n", lst->content);
 		lst = lst->next;
 	}
 	ft_lstclear(&lst, del_lst);
@@ -51,6 +54,7 @@ int	read_infile(t_pipeline *pipe_line)
 	else
 	{
 		here_doc(pipe_line);
+		printf("here doc finished\n");
 		exit(1);
 	}
 

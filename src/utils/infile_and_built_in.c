@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 13:23:11 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/16 15:13:16 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 15:38:58 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	infile_and_built_in(t_pipeline *pipeline, t_list *env)
 	id = fork();
 	if (id == 0)
 	{
+		printf("infile built in\n");
 		fork_file(pipeline);
 		wait_and_get_last_exit_status(id);
 		built_in(pipeline, &env);

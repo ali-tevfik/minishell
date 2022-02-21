@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   create_envp.c                                      :+:    :+:            */
+/*   create_lst_envp.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:24:40 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:24:50 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:48:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_list	*add_envp(char *envp[])
 	while (envp[i])
 	{
 		env = ft_calloc(2, sizeof(*env));
+		if (!env)
+			exit(-1);
 		argument = ft_split(ft_strdup(envp[i]), '=');
 		if (!argument)
 			exit(0);

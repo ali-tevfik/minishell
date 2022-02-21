@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 20:16:20 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:29:42 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:48:24 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**create_envp(t_list *env_lst)
 	lst_size = ft_lstsize(env_lst);
 	envp = (char **)malloc(sizeof(envp) * (lst_size + 1));
 	if (!envp)
-		exit(1);
+		exit(-1);
 	i = 0;
 	while (env_lst)
 	{

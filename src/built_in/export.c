@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/16 15:07:08 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:40:52 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	add_new_export(t_list **envp, char *s1, char *s2)
 	t_env	*env;
 
 	env = ft_calloc(2, sizeof(env));
+	if (!env)
+		exit(-1);
 	env->key = s1;
 	if (s2)
 		env->value = s2;
