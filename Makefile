@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/19 01:33:05 by tevfik        ########   odam.nl          #
+#    Updated: 2022/02/21 14:31:34 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ SRC_FILES = minishell.c \
 			src/envp/delete_envp.c \
 			src/utils/infile_and_built_in.c \
 			test_offline.c \
-			src/utils/convert_dolar.c
+			src/utils/convert_dolar.c\
+			src/built_in/exit.c
 
 
 TEST_FILES = 	unity/src/unity.c \

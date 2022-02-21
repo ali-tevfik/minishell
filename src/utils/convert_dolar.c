@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/19 01:31:44 by tevfik        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:28:29 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ char *convert_dolar(char *command, t_list *env)
 	new_txt = NULL;
 	while (parse_txt[i])
 	{
-		if (!new_txt)
-			new_txt = ft_strdup(expander(parse_txt[i], env));
-		else
-			new_txt = ft_strjoin(new_txt, expander(parse_txt[i], env));
-		if (!new_txt)
-			exit(-1);
+		if (expander(parse_txt[i], env))
+		{
+			if (!new_txt)
+				new_txt = ft_strdup(expander(parse_txt[i], env));
+			else
+				new_txt = ft_strjoin(new_txt, expander(parse_txt[i], env));
+			if (!new_txt)
+				exit(-1);
+		}
 		i++;
 	}
 	free(command);
@@ -40,7 +43,8 @@ char *convert_dolar(char *command, t_list *env)
 		free(parse_txt[i]);
 		i++;
 	}
-	free(parse_txt);
+	if (parse_txt)
+		free(parse_txt);
 
 	return (new_txt);
 }

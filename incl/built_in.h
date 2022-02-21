@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:19:32 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:36:44 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:34:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 		char *envp[], int *lastid);
 void	built_in(t_pipeline *pipeline, t_list **env);
 int		write_outfile(t_pipeline *pipe_line);
+void exit_command(char *value);
 typedef struct s_env
 {
 	char		*key;

@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/17 19:04:59 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:29:35 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("Minishell> ");
 		if ('-' == line[0] && '1' == line[1])
 			break ;
-		if (ft_strncmp(line, "", 1) != 0)
+		if (match_str(line, "") != 0)
 		{
 			add_history(line);
 			line_(line, &env);

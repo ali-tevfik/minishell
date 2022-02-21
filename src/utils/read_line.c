@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/19 01:31:06 by tevfik        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:32:56 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int check_built_in_file(t_pipeline *pipeline)
 	return (i);
 }
 
-int built_in_and_infile_check(t_pipeline *pipeline)
+int built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
 {
-	if (pipeline->redirection)
+	if (pipeline->redirection || pipe_lst->next)
 	{
 		if (check_built_in_file(pipeline))
 			return (1);
@@ -66,7 +66,7 @@ void built_in(t_pipeline *pipeline, t_list **env)
 	else if (match_str(pipeline->command[0], "pwd") == 0)
 		pwd_command(pipeline);
 	else if (match_str(pipeline->command[0], "exit") == 0)
-		exit(0);
+		exit_command(pipeline->command[1]);
 	else if (match_str(pipeline->command[0], "echo") == 0)
 		echo_command(pipeline);
 	else if (match_str(pipeline->command[0], "env") == 0)
@@ -92,7 +92,7 @@ void line_(char *line, t_list **env)
 		pipeline = pipe_lst->content;
 	else
 		return ;
-	if (built_in_and_infile_check(pipeline))
+	if (built_in_and_infile_check(pipeline, pipe_lst))
 		infile_and_built_in(pipeline, *env);
 	else if (check_built_in_file(pipeline))
 		built_in(pipeline, env);

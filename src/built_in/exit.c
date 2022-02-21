@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
+/*   exit.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/16 11:27:16 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:24:16 by adoner        ########   odam.nl         */
+/*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/21 14:35:03 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include "../../incl/built_in.h"
+#include "../../incl/minishell.h"
+#include <stdio.h>
 
-char	*ft_strdup(const char *s1)
+void	exit_command(char *value)
 {
-	int		i;
-	char	*s2;
+	int	return_value;
 
-	i = 0;
-	s2 = malloc(sizeof(char) * (ft_strlen(s1) + 1));
-	if (s2 == NULL)
-		return (0);
-	while (*(s1 + i) != '\0')
+	if (value)
 	{
-		*(s2 + i) = *(s1 + i);
-		i++;
+		return_value = ft_atoi(value);
+		exit(return_value);
 	}
-	*(s2 + i) = '\0';
-	return (s2);
+	exit(1);
 }
