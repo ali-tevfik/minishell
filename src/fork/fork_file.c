@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 15:40:05 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/22 17:37:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	write_outfile(t_pipeline *pipe_line)
 	t_redirection	*redirection;
 
 	redirection = pipe_line->redirection->content;
-	if (redirection->redir_type == OUT)
+	if (redirection->redir_type == WRITE)
 		id = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	else
 		id = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0666);

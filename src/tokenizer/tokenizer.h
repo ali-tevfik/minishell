@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/12 11:29:14 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/22 17:36:25 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 # include "iterator_api.h"
 # include "tokenize_word.h"
 # include "tokenize_pipe.h"
-# include "tokenize_quotes.h"
-# include "tokenize_dquotes.h"
 # include "tokenize_redirection.h"
 
 /* Macros */

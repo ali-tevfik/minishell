@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:57:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 21:06:09 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/22 17:49:26 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ static void	run_all_tests(void)
 	RUN_TEST_GROUP(IteratorAPI);
 	RUN_TEST_GROUP(TokenizePipe);
 	RUN_TEST_GROUP(TokenizeRedirection);
-	RUN_TEST_GROUP(TokenizeQuotes);
 	RUN_TEST_GROUP(TokenizeWord);
 	RUN_TEST_GROUP(Tokenizer);
 	RUN_TEST_GROUP(CheckGrammer);
 	RUN_TEST_GROUP(CreateSimpleCommand);
 	RUN_TEST_GROUP(CreateParseList);
-	RUN_TEST_GROUP(ExpandSingleVariable);
+	// RUN_TEST_GROUP(ExpandSingleVariable);
 	// RUN_TEST_GROUP(FindCommand);
 	// // RUN_TEST_GROUP(ExportBuiltin);
 	// RUN_TEST_GROUP(UnsetBuiltin);

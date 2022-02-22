@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/22 17:32:57 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/22 17:48:25 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,13 @@ SRC_FILES = minishell.c \
 			built_in/env.c \
 			built_in/unset.c \
 			built_in/export.c \
+			built_in/exit.c \
 			utils/read_line.c \
+			utils/match_str.c \
+			expander/convert_expander.c \
+			expander/expander.c \
+			utils/infile_and_built_in.c \
+			utils/file_name_check.c \
 			tokenizer/iterator_api.c \
 			tokenizer/tokenize_pipe.c \
 			tokenizer/tokenize_redirection.c \
@@ -50,19 +56,14 @@ SRC_FILES = minishell.c \
 			parser/create_simple_command.c \
 			parser/parser_utils.c \
 			fork/fork.c \
-			src/executor/find_command.c\
-			src/fork/waiting_last_child.c\
-			src/fork/fork_file.c \
-			src/utils/match_str.c\
-			src/envp/create_envp.c \
-			src/envp/find_envp.c \
-			src/utils/file_name_check.c \
-			src/envp/create_lst_envp.c \
-			src/envp/delete_envp.c \
-			src/utils/infile_and_built_in.c \
-			test_offline.c \
-			src/utils/convert_expander.c\
-			src/built_in/exit.c
+			executor/find_command.c\
+			fork/waiting_last_child.c\
+			fork/fork_file.c \
+			envp/create_envp.c \
+			envp/find_envp.c \
+			envp/create_lst_envp.c \
+			envp/delete_envp.c \
+			test_offline.c
 
 
 TEST_FILES = 	unity/src/unity.c \
@@ -77,8 +78,6 @@ TEST_FILES = 	unity/src/unity.c \
 				src/tokenizer/tokenize_pipe.c \
 				test/test_tokenize_redirection.c \
 				src/tokenizer/tokenize_redirection.c \
-				test/test_tokenize_quotes.c \
-				src/tokenizer/tokenize_quotes.c \
 				test/test_tokenize_word.c \
 				src/tokenizer/tokenize_word.c \
 				test/test_tokenizer.c \
@@ -90,11 +89,11 @@ TEST_FILES = 	unity/src/unity.c \
 				src/parser/parser_utils.c \
 				test/test_create_parse_list.c \
 				src/parser/create_parse_list.c \
-				test/test_expand_single_variable.c \
-				src/expander/expand_single_variable.c \
 				src/utils/match_str.c \
 				src/envp/create_lst_envp.c
-				
+			
+# test/test_expand_single_variable.c
+# src/expander/expand_single_variable.c 
 # test/test_find_command.c
 # src/executor/find_command.c
 # src/built_in/env.c

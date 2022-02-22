@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 13:29:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/22 17:50:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,6 @@ TEST_GROUP_RUNNER(TokenizeRedirection)
 	RUN_TEST_CASE(TokenizeRedirection, TakeRedirLeftOnce);
 	RUN_TEST_CASE(TokenizeRedirection, TakeRedirLeftTwice);
 	RUN_TEST_CASE(TokenizeRedirection, TakeRedirLeftRight);
-}
-
-
-TEST_GROUP_RUNNER(TokenizeQuotes)
-{
-	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesSimple0);
-	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesSimple1);
-	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesHard0);
-	RUN_TEST_CASE(TokenizeQuotes, TakeSingleQuotesHard1);
-	RUN_TEST_CASE(TokenizeQuotes, TakeDoubleQuotesSimple0);
-	RUN_TEST_CASE(TokenizeQuotes, TakeDoubleQuotesSimple1);
-	RUN_TEST_CASE(TokenizeQuotes, TakeDoubleQuotesHard0);
-	RUN_TEST_CASE(TokenizeQuotes, TakeDoubleQuotesHard1);
-	RUN_TEST_CASE(TokenizeQuotes, NoClosingSingleQuote);
-	RUN_TEST_CASE(TokenizeQuotes, NoClosingDoubleQuote);
 }
 
 TEST_GROUP_RUNNER(TokenizeWord)
@@ -163,24 +148,24 @@ TEST_GROUP_RUNNER(CreateParseList)
 
 /* Expander */
 
-TEST_GROUP_RUNNER(ExpandSingleVariable)
-{
-	RUN_TEST_CASE(ExpandSingleVariable, Existing0);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing1);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing2);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing3);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing4);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing5);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing6);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing7);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing8);
-	RUN_TEST_CASE(ExpandSingleVariable, Existing9);
-	RUN_TEST_CASE(ExpandSingleVariable, NonExisting0);
-	RUN_TEST_CASE(ExpandSingleVariable, NonExisting1);
-	RUN_TEST_CASE(ExpandSingleVariable, NonExisting2);
-	RUN_TEST_CASE(ExpandSingleVariable, NonExisting3);
-	RUN_TEST_CASE(ExpandSingleVariable, NonExisting4);
-}
+// TEST_GROUP_RUNNER(ExpandSingleVariable)
+// {
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing0);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing1);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing2);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing3);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing4);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing5);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing6);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing7);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing8);
+// 	RUN_TEST_CASE(ExpandSingleVariable, Existing9);
+// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting0);
+// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting1);
+// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting2);
+// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting3);
+// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting4);
+// }
 
 // TEST_GROUP_RUNNER(FindCommand)
 // {

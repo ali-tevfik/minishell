@@ -3,28 +3,25 @@
 /*                                                        ::::::::            */
 /*   expander.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
+/*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/18 20:55:49 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/22 17:24:45 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/22 17:43:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander.h"
+#include "../../incl/built_in.h"
 
-int	expander(t_list *token_list, t_list *env_list)
+char	*expander(char *txt, t_list *lst)
 {
-	char	*word;
-	t_token	*token;
+	t_env	*env;
 
-	while (token_list != NULL)
+	while (lst)
 	{
-		token = token_list->content;
-		if (token->type == WORD)
-		{
-			// expand if needed.
-
-		}
-		token_list = token_list->next;
+		env = lst->content;
+		if (match_str(env->key, txt) == 0)
+			return (env->value);
+		lst = lst->next;
 	}
+	return (NULL);
 }
