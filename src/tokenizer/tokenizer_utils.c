@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/02 11:29:27 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/21 13:26:09 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	is_char_a_delimiter(char c)
 {
 	int			i;
-	const char	*delimiters = "|<>\'\"\n \t\0";
+	const char	*delimiters = "|<>;&\n \t\0";
 
 	i = 0;
 	while (i < 9)
@@ -27,7 +27,7 @@ bool	is_char_a_delimiter(char c)
 	return (false);
 }
 
-t_token	*create_token(char *content, size_t len_content, t_token_type type)
+t_token	*create_token(char *content, t_token_type type)
 {
 	t_token	*token;
 
@@ -38,14 +38,17 @@ t_token	*create_token(char *content, size_t len_content, t_token_type type)
 		return (NULL);
 	}
 	token->content = content;
-	token->len_content = len_content;
 	token->type = type;
 	return (token);
 }
 
 void	free_token(void *token)
 {
-	free((t_token *)token);
+	t_token	*casted_token;
+
+	casted_token = token;
+	free(casted_token->content);
+	free(casted_token);
 }
 
 int	ft_isspace(int c)
@@ -66,7 +69,6 @@ void	print_token_list(t_list *token_list)
 	while (1)
 	{
 		printf("content     = %s\n", ((t_token *)(head->content))->content);
-		printf("len_content = %zu\n", ((t_token *)(head->content))->len_content);
 		printf("type        = %d\n", ((t_token *)(head->content))->type);
 		printf("\n");
 		if (head->next == NULL)

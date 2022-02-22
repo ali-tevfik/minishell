@@ -6,11 +6,57 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 13:39:17 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 19:13:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+
+/*
+** Compare token lists.
+*/
+
+void	compare_token_lists(t_list *expected_list, t_list *actual_list)
+{
+	t_token	*expected_token;
+	t_token	*actual_token;
+
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(expected_list), ft_lstsize(actual_list));
+
+	while (expected_list != NULL)
+	{
+		expected_token = expected_list->content;
+		actual_token = actual_list->content;
+		TEST_ASSERT_EQUAL_STRING(expected_token->content, actual_token->content);
+		TEST_ASSERT_EQUAL_INT(expected_token->type, actual_token->type);
+		expected_list = expected_list->next;
+		actual_list = actual_list->next;
+	}
+}
+
+/*
+** Create a command from the inputs.
+**
+*/
+
+char	**create_command(size_t len_command, ...)
+{
+	char		**command;
+	va_list		ap;
+	size_t		i;
+
+	i = 0;
+	command = ft_calloc(len_command + 1, sizeof(char *));
+	va_start(ap, len_command);
+	while (i < len_command)
+	{
+		command[i] = ft_strdup(va_arg(ap, char *));
+		i++;
+	}
+	command[i] = NULL;
+	va_end(ap);
+	return (command);
+}
 
 /*
 ** Give va_args as pairs like: 
@@ -42,25 +88,6 @@ t_list	*create_redirection_list(size_t total_redir_operators_plus_filenames, ...
 	}
 	va_end(ap);
 	return (redirection_list);
-}
-
-char	**create_command(size_t len_command, ...)
-{
-	char		**command;
-	va_list		ap;
-	size_t		i;
-
-	i = 0;
-	command = ft_calloc(len_command + 1, sizeof(char *));
-	va_start(ap, len_command);
-	while (i < len_command)
-	{
-		command[i] = ft_strdup(va_arg(ap, char *));
-		i++;
-	}
-	command[i] = NULL;
-	va_end(ap);
-	return (command);
 }
 
 t_pipeline	*create_pipeline_element(char **command, t_list *redirection)

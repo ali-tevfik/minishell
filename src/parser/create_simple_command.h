@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 16:11:04 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/07 12:49:24 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 19:02:56 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 /* User defined header */
 # include "../libft/libft.h"
 # include "../tokenizer/tokenizer_data_structs.h"
+# include "../tokenizer/validate_grammer.h"
 # include "parser_data_structs.h"
 # include "parser_utils.h"
 

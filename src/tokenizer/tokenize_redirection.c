@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:45:51 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:16:15 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 19:00:27 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 
 t_token	*take_redirection(t_char_iter *itr)
 {
-	int		len;
 	size_t	type;
-	char	*start_token;
 	t_token	*token;
 
-	len = 1;
-	type = REDIRECTION;
-	start_token = *itr;
+	if (**itr == '<')
+		type = READ;
+	else
+		type = WRITE;
 	next(itr);
-	if ((*start_token == '>' && peek(*itr) == '>') || \
-		(*start_token == '<' && peek(*itr) == '<'))
+	if (type == READ && peek(*itr) == '<')
 	{
-		len++;
-		type = REDIRECTION;
+		type = HERE_DOC;
 		next(itr);
 	}
-	token = create_token(start_token, len, type);
+	else if (type == WRITE && peek(*itr) == '>')
+	{
+		type = APPEND;
+		next(itr);
+	}
+	token = create_token(NULL, type);
 	return (token);
 }

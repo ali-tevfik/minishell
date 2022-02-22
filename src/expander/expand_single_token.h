@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test_tokenizer_utils.c                             :+:    :+:            */
+/*   expand_single_token.h                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/18 14:53:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:31:00 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/02/21 16:53:44 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/02/21 16:54:17 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "unity_fixture.h"
-// #include "../src/tokenizer/tokenizer_utils.h"
+#ifndef EXPAND_SINGLE_TOKEN_H
+# define EXPAND_SINGLE_TOKEN_H
 
-// #include <stdlib.h>
+/* System headers */
 
-// t_token		*actual_token;
-// t_token		*expected_token;
+/* User defined header */
+# include "../libft/libft.h"
+# include "../tokenizer/tokenizer_data_structs.h"
+# include "../expander/expand_single_variable.h"
 
-// TEST_GROUP(TokenizerUtils);
+/* Macros */
 
-// TEST_SETUP(TokenizerUtils)
-// {
-// 	actual_token = NULL;
-// 	expected_token = calloc(1, sizeof(t_token));
-// }
+/* Data structures */
 
-// TEST_TEAR_DOWN(TokenizerUtils)
-// {
-// 	free(expected_token);
-// 	free(actual_token);
-// }
+/* Function prototypes */
+
+#endif

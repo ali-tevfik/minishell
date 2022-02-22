@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   tokenize_dquotes.c                                 :+:    :+:            */
+/*   expander.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/20 17:06:06 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/24 11:42:30 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/02/18 20:55:49 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/02/22 17:24:45 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenize_dquotes.h"
+#include "expander.h"
 
-t_token	*take_double_quotes(t_char_iter *itr)
+int	expander(t_list *token_list, t_list *env_list)
 {
-	size_t	len;
-	char	*start_input;
+	char	*word;
 	t_token	*token;
 
-	len = 1;
-	start_input = *itr;
-	next(itr);
-	while (has_next(*itr))
+	while (token_list != NULL)
 	{
-		if (peek(*itr) == '\"')
+		token = token_list->content;
+		if (token->type == WORD)
 		{
-			len++;
-			next(itr);
-			token = create_token(start_input, len, DQUOTE);
-			return (token);
+			// expand if needed.
+
 		}
-		len++;
-		next(itr);
+		token_list = token_list->next;
 	}
-	token = create_token(start_input, len, ERROR);
-	return (token);
 }

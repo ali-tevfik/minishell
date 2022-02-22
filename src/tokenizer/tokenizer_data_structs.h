@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:26:35 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/22 18:00:12 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 11:36:47 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@ typedef enum e_token_type
 	ERROR = -1,
 	WORD,
 	PIPE,
-	REDIRECTION,
+	WRITE,
+	APPEND,
+	READ,
+	HERE_DOC,
 	QUOTE,
-	DQUOTE
+	DQUOTE,
+	AMPERSAND,
+	SEMICOLON,
 }				t_token_type;
 
 typedef struct s_token
 {
 	char			*content;
-	size_t			len_content;
 	t_token_type	type;
 }				t_token;
 

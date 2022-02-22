@@ -1,78 +1,151 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   test_expander.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/15 15:42:32 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/02/21 14:27:21 by hyilmaz       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* Unity unit-tester */
 #include "unity_fixture.h"
-#include "../incl/built_in.h"
-#include "../incl/minishell.h"
+
+/* File to test */
+#include "../src/expander/expander.h"
+
+/* User defined headers */
 #include "../src/libft/libft.h"
+#include "../src/tokenizer/tokenizer_data_structs.h"
+#include "../src/tokenizer/tokenizer.h"
+#include "../src/parser/parser_data_structs.h"
+#include "../src/parser/create_parse_list.h"
+#include "utils.h"
 
+/* Variables */
+static t_list	*expected_token_list;
+static t_list	*actual_token_list;
+static t_list	*env_list;
+static char		*env[] = {	"SHELL=/bin/zsh",
+							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
+							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
+							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
+							"LOGNAME=hyilmaz",
+							"HOME=/home/hilmi",
+							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
+							"a=b",
+							"hilmi_8=bro",
+							"codam_=",
+							"test=hilmi yilmaz",
+							"hilmi=ho -n",
+							NULL,
+						};
 
-t_list	*input_list;
-t_env *env;
-TEST_GROUP(expander);
+TEST_GROUP(Expander);
 
-TEST_SETUP(expander)
+TEST_SETUP(Expander)
 {
-
-	/* Input list */
-	env = ft_calloc(2,sizeof(env));
-	env->key = "COLORFGBG";
-	env->value = "7;0";
-	ft_lstadd_back(&input_list, ft_lstnew(env));
-
-	env = ft_calloc(2,sizeof(env));
-	env->key = "TERM_PROGRAM";
-	env->value = "vscode";
-	ft_lstadd_back(&input_list, ft_lstnew(env));
-
-	env = ft_calloc(2,sizeof(env));
-	env->key = "PWD";
-	env->value = "/Users/adoner/Desktop/minishell/orginal";
-	ft_lstadd_back(&input_list, ft_lstnew(env));
-
-	env = ft_calloc(2,sizeof(env));
-	env->key = "_";
-	env->value = "/usr/bin/env";
-	ft_lstadd_back(&input_list, ft_lstnew(env));
-
-	env = ft_calloc(2,sizeof(env));
-	env->key = "PATH";
-	env->value = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki";
-	ft_lstadd_back(&input_list, ft_lstnew(env));
+	env_list = add_envp(env);
+	expected_token_list = NULL;
+	actual_token_list = NULL;
 }
 
-TEST_TEAR_DOWN(expander)
+TEST_TEAR_DOWN(Expander)
 {
+	ft_lstclear(&env_list, free_env_variable);
+	ft_lstclear(&actual_token_list, free_token);
+	ft_lstclear(&expected_token_list, free_token);
 }
 
-TEST(expander, expander_find_second)
+TEST(Expander, ExpandSimple0)
 {
-	char *result = expander("TERM_PROGRAM", input_list);
-	// printf("result = %s\n",result);
-	TEST_ASSERT_EQUAL_STRING(result, "vscode");
+	char	*input = "cat -c $hilmi_8";
+
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
+
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(ft_strdup("cat"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("-c"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("bro"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list); 
 }
 
-TEST(expander, expander_find_last)
+TEST(Expander, ExpandHard0)
 {
-	char *result = expander("PATH", input_list);
-	// printf("result = %s\n",result);
-	TEST_ASSERT_EQUAL_STRING(result, "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
+	char	*input = "echo $test";
+
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
+
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(ft_strdup("echo"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("hilmi"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("yilmaz"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list);
 }
 
-TEST(expander, expander_find_middle)
+TEST(Expander, ExpandHard1)
 {
-	char *result = expander("PWD", input_list);
-	// printf("result = %s\n",result);
-	TEST_ASSERT_EQUAL_STRING(result, "/Users/adoner/Desktop/minishell/orginal");
+	char	*input = "ec$hilmi $test";
+
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
+
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(ft_strdup("echo"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	t_token	*token = create_token(ft_strdup("-n"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("hilmi"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("yilmaz"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list);
 }
 
-TEST(expander, expander_find_first)
+TEST(Expander, ExpandHard2)
 {
-	char *result = expander("COLORFGBG", input_list);
-	// printf("result = %s\n",result);
-	TEST_ASSERT_EQUAL_STRING(result, "7;0");
-}
-TEST(expander, expander_dont_find)
-{
-	char *result = expander("deneme", input_list);
-	// printf("result = %s\n",result);
-	TEST_ASSERT_EQUAL_STRING(result, NULL);
-}
+	char	*input = "ec\"$hilmi\" $test";
 
+	/* Tokenize and expand */
+	actual_token_list = tokenize_input(input);
+	int res = expander(actual_token_list, env_list);
+
+	/* Expected tokens after expansion */
+	t_token	*token = create_token(ft_strdup("echo -n"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("hilmi"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("yilmaz"), WORD);
+	ft_lstadd_back(&expected_token_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_token_list, actual_token_list);
+}

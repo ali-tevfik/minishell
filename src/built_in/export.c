@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/22 17:19:55 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/22 17:25:51 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	add_new_export(t_list **envp, char *s1, char *s2)
 	if (s2)
 		env->value = s2;
 	else
-		env->value = "";
+		env->value = ft_strdup("");
 	ft_lstadd_back(envp, ft_lstnew(env));
 }
 

@@ -6,43 +6,11 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 16:10:49 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/07 14:53:19 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 19:20:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "create_simple_command.h"
-
-/*
-** Get the filenames belonging to the redirection.
-*/
-
-static bool	get_filenames(t_redirection *redirection, t_list **element,
-							t_token *current_tkn)
-{
-	if (*(current_tkn->content) == '<')
-	{
-		redirection->file = ft_substr(
-				((t_token *)((*element)->content))->content, \
-				0, ((t_token *)((*element)->content))->len_content);
-		if (redirection->file == NULL)
-		{
-			perror("Error with malloc");
-			return (false);
-		}
-	}
-	else if (*(current_tkn->content) == '>')
-	{
-		redirection->file = ft_substr(
-				((t_token *)((*element)->content))->content, \
-				0, ((t_token *)((*element)->content))->len_content);
-		if (redirection->file == NULL)
-		{
-			perror("Error with malloc");
-			return (false);
-		}
-	}
-	return (true);
-}
 
 /*
 ** Get the command. Helper function for 
@@ -52,14 +20,7 @@ static bool	get_filenames(t_redirection *redirection, t_list **element,
 static bool	get_command(char **command, t_list **element, size_t i,
 						size_t *location)
 {
-	command[i] = ft_substr(
-			((t_token *)((*element)->content))->content, 0, \
-			((t_token *)((*element)->content))->len_content);
-	if (command[i] == NULL)
-	{
-		perror("Error with malloc:");
-		return (false);
-	}
+	command[i] = ((t_token *)((*element)->content))->content;
 	*element = (*element)->next;
 	*location += 1;
 	return (true);
@@ -81,17 +42,9 @@ static bool	handle_redirection_tokens(t_list **redirection_list, \
 	redirection = ft_calloc(1, sizeof(*redirection));
 	if (redirection == NULL)
 		return (false);
-	if (*(current_tkn->content) == '>' && current_tkn->len_content == 1)
-		redirection->redir_type = OUT;
-	else if (*(current_tkn->content) == '>' && current_tkn->len_content == 2)
-		redirection->redir_type = APPEND;
-	else if (*(current_tkn->content) == '<' && current_tkn->len_content == 1)
-		redirection->redir_type = READ;
-	else
-		redirection->redir_type = HERE_DOC;
+	redirection->redir_type = current_tkn->type;
 	*element = (*element)->next;
-	if (!get_filenames(redirection, element, current_tkn))
-		return (false);
+	redirection->file = ((t_token *)((*element)->content))->content;
 	redir_element = ft_lstnew(redirection);
 	if (redir_element == NULL)
 		return (false);
@@ -123,7 +76,7 @@ t_pipeline	*create_simple_pipeline_up_until_pipe_token(t_list *token_list, \
 	i = 0;
 	while (element != NULL && ((t_token *)(element->content))->type != PIPE)
 	{
-		if (((t_token *)(element->content))->type == REDIRECTION)
+		if (is_redirection(((t_token *)(element->content))->type))
 		{
 			if (!handle_redirection_tokens(&pipeline->redirection, \
 											&element, location))

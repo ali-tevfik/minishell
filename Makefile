@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/21 19:23:14 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/22 17:32:57 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ YELLOW = \033[1;33m
 
 # Compiler settings
 GCC = gcc
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror
 DBG_FLAGS = -g -fsanitize=address
 
 # Unity tester requirements
@@ -39,11 +39,8 @@ SRC_FILES = minishell.c \
 			built_in/unset.c \
 			built_in/export.c \
 			utils/read_line.c \
-			src/utils/expander.c \
 			tokenizer/iterator_api.c \
-			tokenizer/tokenize_dquotes.c \
 			tokenizer/tokenize_pipe.c \
-			tokenizer/tokenize_quotes.c \
 			tokenizer/tokenize_redirection.c \
 			tokenizer/tokenize_word.c \
 			tokenizer/tokenizer_utils.c \
@@ -72,29 +69,20 @@ TEST_FILES = 	unity/src/unity.c \
 				unity/extras/fixture/src/unity_fixture.c \
 				test/main/all_tests.c \
 				test/main/all_tests_runner.c \
-				test/test_unset.c \
-				src/built_in/unset.c \
-				src/built_in/export.c \
-				test/test_export.c \
-				test/test_expander.c \
-				src/utils/expander.c \
 				test/utils.c \
-				test/test_tokenizer.c \
-				src/tokenizer/tokenizer.c \
+				src/tokenizer/tokenizer_utils.c \
 				test/test_iterator_api.c \
 				src/tokenizer/iterator_api.c \
-				test/test_tokenizer_utils.c \
-				src/tokenizer/tokenizer_utils.c \
 				test/test_tokenize_pipe.c \
 				src/tokenizer/tokenize_pipe.c \
-				test/test_tokenize_word.c \
-				src/tokenizer/tokenize_word.c \
 				test/test_tokenize_redirection.c \
 				src/tokenizer/tokenize_redirection.c \
-				test/test_tokenize_dquotes.c \
-				src/tokenizer/tokenize_dquotes.c \
 				test/test_tokenize_quotes.c \
 				src/tokenizer/tokenize_quotes.c \
+				test/test_tokenize_word.c \
+				src/tokenizer/tokenize_word.c \
+				test/test_tokenizer.c \
+				src/tokenizer/tokenizer.c \
 				test/test_validate_grammer.c \
 				src/tokenizer/validate_grammer.c \
 				test/test_create_simple_command.c \
@@ -102,15 +90,24 @@ TEST_FILES = 	unity/src/unity.c \
 				src/parser/parser_utils.c \
 				test/test_create_parse_list.c \
 				src/parser/create_parse_list.c \
-				test/test_find_command.c \
-				src/executor/find_command.c \
-				src/built_in/env.c \
+				test/test_expand_single_variable.c \
+				src/expander/expand_single_variable.c \
 				src/utils/match_str.c \
-				src/envp/delete_envp.c \
-				src/envp/create_envp.c \
-				src/envp/find_envp.c \
-				src/utils/file_name_check.c \
-				src/envp/create_lst_envp.c \
+				src/envp/create_lst_envp.c
+				
+# test/test_find_command.c
+# src/executor/find_command.c
+# src/built_in/env.c
+
+# src/built_in/delete_envp.c
+# src/create_envp.c
+# src/built_in/find_envp.c
+# src/built_in/file_name_check.c
+
+# test/test_unset.c
+# src/built_in/unset.c
+# src/built_in/export.c
+# test/test_export.c
 
 HEADER_FILES = 	incl/minishell.h
 
@@ -178,15 +175,15 @@ test_run: test
 	@./$(TEST_NAME) -v
 
 $(TEST_OBJ_DIR):
-	@mkdir -p $@
+	mkdir -p $@
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
-	@$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
+	$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
 	@echo "$(GREEN) Created debug file.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
-	@mkdir -p $(@D)
-	@$(GCC) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
+	mkdir -p $(@D)
+	$(GCC) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
 
 clean:
 	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:04:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/02 11:55:35 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/16 20:23:31 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,24 @@ TEST(CheckGrammer, NoClosingDQuote)
 TEST(CheckGrammer, NoClosingQuote)
 {
 	char	*input = "echo \'$HOME";
+	actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, SingleDoubleSingleDoubleQuotesSequence)
+{
+	char	*input = "echo \'\"\'\"";
+	actual_list = tokenize_input(input);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, DoubleSingleDoubleSingleQuotesSequence)
+{
+	char	*input = "echo \"\'\"\'";
 	actual_list = tokenize_input(input);
 
 	bool	result = validate_grammer(actual_list);

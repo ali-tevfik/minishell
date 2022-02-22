@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   tokenize_dquotes.h                                 :+:    :+:            */
+/*   expander.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/20 17:06:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:08:33 by hyilmaz       ########   odam.nl         */
+/*   Created: 2022/02/18 20:55:52 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/02/21 14:37:32 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZE_DQUOTES_H
-# define TOKENIZE_DQUOTES_H
+#ifndef EXPANDER_H
+# define EXPANDER_H
 
 /* System headers */
 
 /* User defined header */
-# include "tokenizer_data_structs.h"
-# include "iterator_api.h"
-# include "tokenizer_utils.h"
+# include "../libft/libft.h"
+# include "../tokenizer/tokenizer_data_structs.h"
+# include "../expander/expand_single_variable.h"
 
 /* Macros */
 
 /* Data structures */
 
 /* Function prototypes */
-t_token	*take_double_quotes(t_char_iter *itr);
 
 #endif

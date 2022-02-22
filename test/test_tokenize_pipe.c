@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:25:42 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/01/20 17:30:44 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/19 14:40:21 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ TEST(TokenizePipe, TakePipeSimple)
 
 	itr = input;
 	actual_token = take_pipe(&itr);
-	expected_token->content = input;
-	expected_token->len_content = 1;
+	expected_token->content = NULL;
 	expected_token->type = PIPE;
 
 	/* Compare structs */

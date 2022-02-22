@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 18:28:21 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 14:36:08 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/20 11:43:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 /* User defined header */
 # include "../src/libft/libft.h"
-# include "../src/parser/parser_data_structs.h"
+// # include "../src/parser/parser_data_structs.h"
 # include "../src/tokenizer/tokenizer_data_structs.h"
 #include "../incl/built_in.h"
 
@@ -33,6 +33,7 @@
 /* Data structures */
 
 /* Function prototypes */
+void			compare_token_lists(t_list *expected_list, t_list *actual_list);
 char			**create_command(size_t len_command, ...);
 t_list			*create_redirection_list(size_t total_redir_operators_plus_filenames, ...);
 t_pipeline		*create_pipeline_element(char **command, t_list *redirection);
