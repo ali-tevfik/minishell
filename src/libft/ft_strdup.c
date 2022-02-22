@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/16 11:27:16 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:24:16 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 19:05:05 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(const char *s1)
 	char	*s2;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	s2 = malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (s2 == NULL)
 		return (0);

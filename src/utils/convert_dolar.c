@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:28:29 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 18:13:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ char *convert_dolar(char *command, t_list *env)
 	char *new_txt;
 	i = 0;
 	parse_txt = ft_split(command, '$');
+	printf("parse[0] %s parse[1] %s\n",parse_txt[0],parse_txt[1]);
 	new_txt = NULL;
 	while (parse_txt[i])
 	{
 		if (expander(parse_txt[i], env))
 		{
+			printf("insede expender[%s]!\n",parse_txt[i]);
 			if (!new_txt)
 				new_txt = ft_strdup(expander(parse_txt[i], env));
 			else
@@ -34,6 +36,8 @@ char *convert_dolar(char *command, t_list *env)
 			if (!new_txt)
 				exit(-1);
 		}
+		else
+			new_txt = ft_strdup(parse_txt[i]);
 		i++;
 	}
 	free(command);
@@ -45,7 +49,7 @@ char *convert_dolar(char *command, t_list *env)
 	}
 	if (parse_txt)
 		free(parse_txt);
-
+	printf("return value convert = %s\n", new_txt);
 	return (new_txt);
 }
 

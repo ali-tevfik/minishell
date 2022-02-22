@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/16 11:27:08 by adoner        #+#    #+#                 */
-/*   Updated: 2020/11/16 11:27:09 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/21 18:28:43 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 	int	s_len;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	s_len = ft_strlen(s);
 	while (i < s_len + 1)

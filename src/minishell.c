@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:37:38 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/22 17:04:25 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (match_str(line, "") != 0)
 		{
 			add_history(line);
+			line = check_expander(line, env);
 			line_(line, &env);
 		}
 		free(line);

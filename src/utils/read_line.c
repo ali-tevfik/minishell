@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 17:43:00 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/22 16:51:13 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,10 @@ void	line_(char *line, t_list **env)
 	if (!validate_grammer(lst))
 		return ;
 	pipe_lst = create_parse_list(lst);
-	check_dolar(pipe_lst, *env);
 	if (pipe_lst)
 		pipeline = pipe_lst->content;
 	else
 		return ;
-	printf("[%s]\n", pipeline->command[0]);
 	if (built_in_and_infile_check(pipeline))
 		infile_and_built_in(pipeline, *env);
 	else if (check_built_in_file(pipeline))
