@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/23 10:05:49 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/23 20:15:33 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			add_history(line);
 			line = check_expander(line, env);
+			printf("retrun line %s\n", line);
 			line_(line, &env);
 		}
 		free(line);

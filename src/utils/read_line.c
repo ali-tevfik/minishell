@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/23 20:01:33 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 20:13:59 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "../../incl/fork.h"
 #include "../parser/create_parse_list.h"
 #include "../tokenizer/validate_grammer.h"
+#include "../tokenizer/remove_quotes_from_all_tokens.h"
 
 void	work_execve(t_list *pipe_lst, t_list **env)
 {
@@ -86,6 +87,7 @@ void	line_(char *line, t_list **env)
 	lst = tokenize_input(line);
 	if (!validate_grammer(lst))
 		return ;
+	remove_quotes_from_all_tokens(lst);
 	pipe_lst = create_parse_list(lst);
 	if (pipe_lst)
 		pipeline = pipe_lst->content;

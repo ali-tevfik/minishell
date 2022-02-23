@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 11:20:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 19:58:30 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 20:50:55 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,17 +211,17 @@ TEST(ExpandInputString, SingleVariableExisting10)
 
 TEST(ExpandInputString, SingleVariableExisting11)
 {
-	TEST_IGNORE();
-	// char	*input = "\'$hilmi_8-\'";
+	// TEST_IGNORE();
+	char	*input = "\'$hilmi_8-\'";
 
-	// /* Actual expansion */
-	// actual_expansion = check_expander(input, env_list);
+	/* Actual expansion */
+	actual_expansion = check_expander(input, env_list);
 
-	// /* Expected expansion */
-	// expected_expansion = ft_strdup("\'$hilmi_8-\'");
+	/* Expected expansion */
+	expected_expansion = ft_strdup("\'$hilmi_8-\'");
 
-	// /* Compare outputs */
-	// TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\'$hilmi_8-\'\"");
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\'$hilmi_8-\'\"");
 }
 
 TEST(ExpandInputString, SingleVariableNonExisting0)
@@ -330,7 +330,7 @@ TEST(ExpandInputString, SingleVariableNonExisting7)
 	actual_expansion = check_expander(input, env_list);
 
 	/* Expected expansion */
-	expected_expansion = ft_strdup("\"LOGNAME\"");
+	expected_expansion = ft_strdup("$\"LOGNAME\"");
 
 	/* Compare outputs */
 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\"LOGNAME\"\"");
@@ -338,17 +338,17 @@ TEST(ExpandInputString, SingleVariableNonExisting7)
 
 TEST(ExpandInputString, SingleVariableNonExisting8)
 {
-	TEST_IGNORE();
-	// char	*input = "$\'LOGNAME\'";
+	// TEST_IGNORE();
+	char	*input = "$\'LOGNAME\'";
 
-	// /* Actual expansion */
-	// actual_expansion = check_expander(input, env_list);
+	/* Actual expansion */
+	actual_expansion = check_expander(input, env_list);
 
-	// /* Expected expansion */
-	// expected_expansion = ft_strdup("\'LOGNAME\'");
+	/* Expected expansion */
+	expected_expansion = ft_strdup("$\'LOGNAME\'");
 
-	// /* Compare outputs */
-	// TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\'LOGNAME\'\"");
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\'LOGNAME\'\"");
 }
 
 TEST(ExpandInputString, SingleVariableNonExisting9)
@@ -423,17 +423,17 @@ TEST(ExpandInputString, MultipleVariables3)
 
 TEST(ExpandInputString, MultipleVariables4)
 {
-	TEST_IGNORE();
-	// char	*input = "ec\'$hilmi\' $test";
+	// TEST_IGNORE();
+	char	*input = "ec\'$hilmi\' $test";
 
-	// /* Actual expansion */
-	// actual_expansion = check_expander(input, env_list);
+	/* Actual expansion */
+	actual_expansion = check_expander(input, env_list);
 
-	// /* Expected expansion */
-	// expected_expansion = ft_strdup("ec\'$hilmi\' hilmi yilmaz");
+	/* Expected expansion */
+	expected_expansion = ft_strdup("ec\'$hilmi\' hilmi yilmaz");
 
-	// /* Compare outputs */
-	// TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec\'$hilmi\' $test\"");
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec\'$hilmi\' $test\"");
 }
 
 TEST(ExpandInputString, MultipleVariables5)

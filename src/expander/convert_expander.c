@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/23 19:53:46 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 20:49:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ char *check_expander(char *line, t_list *env)
 {
 	char *next_dolar;
 	int start;
+	int simple_quotes;
 
 	while (check_dolar_waar(line, '$') != -1)
 	{
@@ -162,14 +163,18 @@ char *check_expander(char *line, t_list *env)
 			line = convert_expander(line, env);
 			if (check_emtpy_dolar(line))
 			{
+				printf("burda\n");
 				start = check_dolar_waar(line, '$');
 				next_dolar = check_expander(line + start + 1, env);
 				return (ft_strjoin(ft_substr(line, 0, start + 1), next_dolar));
 			}
-				return (line);
 		}
 		else
-			break ;
+		{
+			simple_quotes = check_dolar_waar(line, '\'');
+			next_dolar = check_expander(line + simple_quotes + 1, env);
+			return (ft_strjoin(ft_substr(line, 0, simple_quotes + 1), next_dolar));
+		}
 	}
 	return (line);
 }

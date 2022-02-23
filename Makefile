@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/23 18:50:03 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/23 20:13:08 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,8 @@ SRC_FILES = minishell.c \
 			envp/find_envp.c \
 			envp/create_lst_envp.c \
 			envp/delete_envp.c \
-			test_offline.c
+			test_offline.c \
+			tokenizer/remove_quotes_from_all_tokens.c
 
 
 TEST_FILES = 	unity/src/unity.c \
