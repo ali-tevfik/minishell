@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/23 19:35:09 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 20:01:22 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	echo_command(t_pipeline *pipe_line)
 	int	x;
 	int	i;
 
-	printf("echo insaa\n");
 	new_line = 0;
 	if (match_str(pipe_line->command[1], "-n") == 0)
 		new_line = 1;

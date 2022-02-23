@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/23 19:25:26 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 20:01:33 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	work_execve(t_list *pipe_lst, t_list **env)
 {
 	int	last_id;
 
-	printf("work exece working!\n");
 	last_id = 0;
 	fork_func(pipe_lst, *env, &last_id);
 	wait_and_get_last_exit_status(last_id);
@@ -97,9 +96,6 @@ void	line_(char *line, t_list **env)
 	else if (check_built_in_file(pipeline))
 		built_in(pipeline, env);
 	else
-	{
-		printf("line_ else working!\n");
 
 		work_execve(pipe_lst, env);
-		}
 }
