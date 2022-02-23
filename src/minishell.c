@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/22 17:04:25 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 10:05:49 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_list	*env;
 
 	env = add_envp(envp);
-	argc = 1;
+	(void)argc;
 	if (match_str(argv[1], "-c") == 0)
 		test_working(argv, &env);
 	while (1)

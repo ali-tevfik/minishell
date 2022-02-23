@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 17:54:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/23 10:03:52 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,10 @@ t_token	*take_word(t_char_iter *itr)
 	int		len;
 	int		error;
 	char	*start_token;
-	t_token	*token;
 
 	len = 0;
 	error = 0;
 	start_token = *itr;
-	token = NULL;
 	while (has_next(*itr))
 	{
 		if (is_char_a_delimiter(peek(*itr)) == true)

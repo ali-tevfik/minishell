@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/22 17:50:40 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/23 11:08:21 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,16 @@ TEST_GROUP_RUNNER(Tokenizer)
 	RUN_TEST_CASE(Tokenizer, CommandPlusUnclosedQuotes);
 	RUN_TEST_CASE(Tokenizer, MultiplePipesBackToBack);
 	RUN_TEST_CASE(Tokenizer, WeirdSpacing);
+}
+
+TEST_GROUP_RUNNER(RemoveQuotesFromTokens)
+{
+	RUN_TEST_CASE(RemoveQuotesFromTokens, NoQuotes);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, DoubleQuotesPresent);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, SingleQuotesPresent);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, MultipleMixedQuotesPresent);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, WordAppendWithDoubleQuotes);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, WordAppendWithSingleQuotes);
 }
 
 TEST_GROUP_RUNNER(CheckGrammer)

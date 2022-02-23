@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   remove_quotes_from_all_tokens.h                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/23 10:22:00 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2022/02/23 10:23:03 by hyilmaz       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef REMOVE_QUOTES_FROM_ALL_TOKENS_H
+# define REMOVE_QUOTES_FROM_ALL_TOKENS_H
+
+/* System headers */
+
+/* User defined header */
+# include "tokenizer_data_structs.h"
+# include "iterator_api.h"
+# include "tokenizer_utils.h"
+
+/* Macros */
+
+/* Data structures */
+
+/* Function prototypes */
+void	remove_quotes_from_all_tokens(t_list *token_list);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/22 17:37:12 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/23 10:13:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	here_doc(t_pipeline *pipline)
 	printf("cikti\n");
 	while(lst)
 	{
-		printf("%s\n", lst->content);
+		printf("%s\n", (char *)(lst->content));
 		lst = lst->next;
 	}
 	ft_lstclear(&lst, del_lst);
