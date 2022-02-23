@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 19:01:20 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 19:23:28 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 		char *envp[], int *lastid)
 {
 	*lastid = fork();
+	printf("one argument\n");
 	if (*lastid == 0)
 	{
 		find_command(pip_line->command, env);
@@ -103,6 +104,7 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 	while (pipe_lst)
 	{
 		// check_dolar(pipe_lst, env);
+		printf("fork func called \n");
 		pip_line = pipe_lst->content;
 		if (pipe_lst->next)
 		{

@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/22 17:18:30 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/23 19:53:46 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ char *create_expander_deel(char *line, t_list *env)
 
 	start_expander_index = check_dolar_waar(line, '$');
 	end_expander_index = finished_expander((line + start_expander_index + 1));
+	//eger $ dan sonra + vs varsa end_index 0 donuyor($+LOGNAME)
+	if (end_expander_index == 0)
+		return (ft_strdup("$"));
 	txt = ft_substr(line, start_expander_index + 1, end_expander_index);
-	// printf("create_expander_deel  %s index %d\n", txt, end_expander_index);
 	return_expander = expander(txt, env);
 	if (txt)
 		free(txt);
-
-	// printf("create_expander_deel find expander %s \n", return_expander);
 	return (return_expander);
 }
 
@@ -137,12 +137,37 @@ char *convert_expander(char *line, t_list *env)
 	return (all_txt);
 }
 
+int check_emtpy_dolar(char *line)
+{
+	int start;
+	int end;
+
+	start = check_dolar_waar(line, '$');
+	end = finished_expander((line + start + 1));
+	if (end == 0)
+		return(1);
+	else
+		return (0);
+}
+
 char *check_expander(char *line, t_list *env)
 {
+	char *next_dolar;
+	int start;
+
 	while (check_dolar_waar(line, '$') != -1)
 	{
 		if (check_quotes(line,'\'') == 0)
+		{
 			line = convert_expander(line, env);
+			if (check_emtpy_dolar(line))
+			{
+				start = check_dolar_waar(line, '$');
+				next_dolar = check_expander(line + start + 1, env);
+				return (ft_strjoin(ft_substr(line, 0, start + 1), next_dolar));
+			}
+				return (line);
+		}
 		else
 			break ;
 	}

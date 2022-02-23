@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/23 11:35:13 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/23 18:50:03 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,9 +96,9 @@ TEST_FILES = 	unity/src/unity.c \
 				src/expander/convert_expander.c \
 				src/expander/expander.c \
 				test/test_expand_input_string.c
-			
+
 # test/test_expand_single_variable.c
-# src/expander/expand_single_variable.c 
+# src/expander/expand_single_variable.c
 # test/test_find_command.c
 # src/executor/find_command.c
 # src/built_in/env.c
@@ -186,8 +186,8 @@ $(TEST_NAME): $(TEST_OBJ_FILES)
 	@echo "$(GREEN) Created debug file.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
-	mkdir -p $(@D)
-	$(GCC) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
+	@mkdir -p $(@D)
+	@$(GCC) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
 
 clean:
 	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR)
