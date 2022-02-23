@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 11:08:21 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/23 12:36:54 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 // 	RUN_TEST_CASE(ExportBuiltin, ExportCaseSensitivity);
 // 	RUN_TEST_CASE(ExportBuiltin, ExportInvalidOption);
 // 	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
+	// RUN_TEST_CASE(ExportBuiltin, ExportUnderScoreAsKey);
 // }
 
 /* Tokenizer */
@@ -157,6 +158,42 @@ TEST_GROUP_RUNNER(CreateParseList)
 }
 
 /* Expander */
+
+TEST_GROUP_RUNNER(ExpandInputString)
+{
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting0);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting1);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting2);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting3);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting4);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting5);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting6);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting7);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting8);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting9);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting10);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableExisting11);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting0);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting1);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting2);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting3);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting4);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting5);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting6);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting7);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting8);
+	RUN_TEST_CASE(ExpandInputString, SingleVariableNonExisting9);
+	RUN_TEST_CASE(ExpandInputString, MultipleVariables0);
+	RUN_TEST_CASE(ExpandInputString, MultipleVariables1);
+	RUN_TEST_CASE(ExpandInputString, MultipleVariables2);
+	RUN_TEST_CASE(ExpandInputString, MultipleVariables3);
+	RUN_TEST_CASE(ExpandInputString, MultipleVariables4);
+	RUN_TEST_CASE(ExpandInputString, MultipleVariables5);
+
+
+
+	
+}
 
 // TEST_GROUP_RUNNER(ExpandSingleVariable)
 // {

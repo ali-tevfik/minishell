@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 14:34:13 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/23 12:04:52 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -487,6 +487,33 @@ TEST(ExportBuiltin, ExportSpaceInValue)
 	expected_env = copy_environment_linked_list(env_list);
 
 	env_variable = create_env_variable("helloworld", "ali doner codam");
+	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
+
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(ExportBuiltin, ExportUnderScoreAsKey)
+{
+	char	*input = "export _=ali";
+
+	/* Tokenize and parse */
+	token_list = tokenize_input(input);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
+
+	env_variable = create_env_variable("_", "ali");
 	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
 
 	/* Actual environment list */

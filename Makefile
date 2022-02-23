@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/23 11:02:31 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/02/23 11:35:13 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,10 @@ TEST_FILES = 	unity/src/unity.c \
 				src/utils/match_str.c \
 				src/envp/create_lst_envp.c \
 				src/tokenizer/remove_quotes_from_all_tokens.c \
-				test/test_remove_quotes_from_all_tokens.c
+				test/test_remove_quotes_from_all_tokens.c \
+				src/expander/convert_expander.c \
+				src/expander/expander.c \
+				test/test_expand_input_string.c
 			
 # test/test_expand_single_variable.c
 # src/expander/expand_single_variable.c 
