@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 12:04:52 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/24 15:03:09 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "../src/tokenizer/tokenizer.h"
 #include "../src/parser/parser_data_structs.h"
 #include "../src/parser/create_parse_list.h"
+#include "../src/tokenizer/remove_quotes_from_all_tokens.h"
 #include "utils.h"
 
 /* Variables */
@@ -64,6 +65,7 @@ TEST(ExportBuiltin, ExportOneVariable)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -91,6 +93,7 @@ TEST(ExportBuiltin, ExportTwoVariables)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -121,6 +124,7 @@ TEST(ExportBuiltin, ExportThreeVariables)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -154,6 +158,7 @@ TEST(ExportBuiltin, ExportSameVariableAssignment0)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -181,6 +186,7 @@ TEST(ExportBuiltin, ExportSameVariableAssignment1)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -211,6 +217,7 @@ TEST(ExportBuiltin, ExportNoInput)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -235,6 +242,7 @@ TEST(ExportBuiltin, ExportAssignEmpty0)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -262,6 +270,7 @@ TEST(ExportBuiltin, ExportAssignEmpty1)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -289,6 +298,7 @@ TEST(ExportBuiltin, ExportVariableNameStartsWithUnderscore)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -316,26 +326,18 @@ TEST(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
 	expected_env = copy_environment_linked_list(env_list);
 
-	// printf("\nCurrent Environment:\n");
-	// env_commands(expected_env);
-
 	env_variable = create_env_variable("_ali", "_yoo");
 	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
-
-	// printf("\nExpected Environment:\n");
-	// env_commands(expected_env);
 
 	/* Actual environment list */
 	actual_env = env_list;
 	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
-
-	// printf("\nActual Environment:\n");
-	// env_commands(actual_env);
 
 	/* Compare length linked lists */
 	int	len_expected_list = ft_lstsize(expected_env);
@@ -352,6 +354,7 @@ TEST(ExportBuiltin, ExportAssignWithSpaceBeforeEqualSign)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -376,6 +379,7 @@ TEST(ExportBuiltin, ExportAssignWithSpaceAfterEqualSign)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -403,6 +407,7 @@ TEST(ExportBuiltin, ExportAssignWithSpaceBeforeAndAfterEqualSign)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -427,6 +432,7 @@ TEST(ExportBuiltin, ExportCaseSensitivity)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -457,6 +463,7 @@ TEST(ExportBuiltin, ExportInvalidOption)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -481,6 +488,7 @@ TEST(ExportBuiltin, ExportSpaceInValue)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -508,6 +516,7 @@ TEST(ExportBuiltin, ExportUnderScoreAsKey)
 
 	/* Tokenize and parse */
 	token_list = tokenize_input(input);
+	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -527,4 +536,35 @@ TEST(ExportBuiltin, ExportUnderScoreAsKey)
 
 	/* Compare elements of linked list */
 	compare_environment_lists(expected_env, actual_env);
+}
+
+TEST(ExportBuiltin, ExportWithExpansion0)
+{
+	char	*input = "export hilmi=ali$LOGNAME";
+
+	/* Tokenize and parse */
+	char	*expanded_input = check_expander(input, env_list);
+	token_list = tokenize_input(expanded_input);
+	remove_quotes_from_all_tokens(token_list);
+	parse_list = create_parse_list(token_list);
+
+	/* Expected environment list */
+	expected_env = copy_environment_linked_list(env_list);
+
+	env_variable = create_env_variable("hilmi", "alihyilmaz");
+	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
+
+	/* Actual environment list */
+	actual_env = env_list;
+	export_command(&actual_env, ((t_pipeline *)(parse_list->content)));
+
+	/* Compare length linked lists */
+	int	len_expected_list = ft_lstsize(expected_env);
+	int	len_actual_list = ft_lstsize(actual_env);
+	TEST_ASSERT_EQUAL_INT(len_expected_list, len_actual_list);
+
+	/* Compare elements of linked list */
+	compare_environment_lists(expected_env, actual_env);
+	
+	free(expanded_input);
 }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/12 17:49:25 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 14:33:47 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/24 15:05:31 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,6 @@ TEST_SETUP(UnsetBuiltin)
 TEST_TEAR_DOWN(UnsetBuiltin)
 {
 }
-
-// delete from middle
-// delete first
-// delete last
-// delete all
-// delete non existing
-// delete all and extra
-// codam=hilmi --> unset codamm
 
 TEST(UnsetBuiltin, DeleteFromMiddle)
 {

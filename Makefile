@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/23 20:13:08 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/24 15:04:39 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,14 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_remove_quotes_from_all_tokens.c \
 				src/expander/convert_expander.c \
 				src/expander/expander.c \
-				test/test_expand_input_string.c
+				test/test_expand_input_string.c \
+				src/built_in/export.c \
+				test/test_export.c \
+				src/utils/file_name_check.c \
+				src/envp/find_envp.c \
+				src/envp/delete_envp.c \
+				test/test_unset.c \
+				src/built_in/unset.c
 
 # test/test_expand_single_variable.c
 # src/expander/expand_single_variable.c
@@ -108,11 +115,6 @@ TEST_FILES = 	unity/src/unity.c \
 # src/create_envp.c
 # src/built_in/find_envp.c
 # src/built_in/file_name_check.c
-
-# test/test_unset.c
-# src/built_in/unset.c
-# src/built_in/export.c
-# test/test_export.c
 
 HEADER_FILES = 	incl/minishell.h
 

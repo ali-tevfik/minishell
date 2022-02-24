@@ -6,45 +6,46 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 12:36:54 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/24 15:03:49 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity_fixture.h"
 
-// TEST_GROUP_RUNNER(UnsetBuiltin)
-// {
-// 	RUN_TEST_CASE(UnsetBuiltin, DeleteFromMiddle);
-// 	RUN_TEST_CASE(UnsetBuiltin, DeleteLast);
-// 	RUN_TEST_CASE(UnsetBuiltin, DeleteFirst);
-// 	RUN_TEST_CASE(UnsetBuiltin, DeleteAll);
-// 	RUN_TEST_CASE(UnsetBuiltin, DeleteAllAndExtra);
-// 	RUN_TEST_CASE(UnsetBuiltin, NonExisting0);
-// 	RUN_TEST_CASE(UnsetBuiltin, NonExisting1);
-// 	RUN_TEST_CASE(UnsetBuiltin, NoArgument);
-// 	RUN_TEST_CASE(UnsetBuiltin, WrongArgument);
-// }
+TEST_GROUP_RUNNER(UnsetBuiltin)
+{
+	RUN_TEST_CASE(UnsetBuiltin, DeleteFromMiddle);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteLast);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteFirst);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteAll);
+	RUN_TEST_CASE(UnsetBuiltin, DeleteAllAndExtra);
+	RUN_TEST_CASE(UnsetBuiltin, NonExisting0);
+	RUN_TEST_CASE(UnsetBuiltin, NonExisting1);
+	RUN_TEST_CASE(UnsetBuiltin, NoArgument);
+	RUN_TEST_CASE(UnsetBuiltin, WrongArgument);
+}
 
-// TEST_GROUP_RUNNER(ExportBuiltin)
-// {
-// 	RUN_TEST_CASE(ExportBuiltin, ExportOneVariable);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportTwoVariables);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportThreeVariables);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment0);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment1);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportNoInput);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty0);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty1);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameStartsWithUnderscore);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeEqualSign);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceAfterEqualSign);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeAndAfterEqualSign);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportCaseSensitivity);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportInvalidOption);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
-	// RUN_TEST_CASE(ExportBuiltin, ExportUnderScoreAsKey);
-// }
+ TEST_GROUP_RUNNER(ExportBuiltin)
+{
+	RUN_TEST_CASE(ExportBuiltin, ExportOneVariable);
+	RUN_TEST_CASE(ExportBuiltin, ExportTwoVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportThreeVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment0);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment1);
+	RUN_TEST_CASE(ExportBuiltin, ExportNoInput);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty0);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty1);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameStartsWithUnderscore);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceAfterEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeAndAfterEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportCaseSensitivity);
+	RUN_TEST_CASE(ExportBuiltin, ExportInvalidOption);
+	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
+ 	RUN_TEST_CASE(ExportBuiltin, ExportUnderScoreAsKey);
+	RUN_TEST_CASE(ExportBuiltin, ExportWithExpansion0);
+}
 
 /* Tokenizer */
 
@@ -111,6 +112,7 @@ TEST_GROUP_RUNNER(RemoveQuotesFromTokens)
 	RUN_TEST_CASE(RemoveQuotesFromTokens, MultipleMixedQuotesPresent);
 	RUN_TEST_CASE(RemoveQuotesFromTokens, WordAppendWithDoubleQuotes);
 	RUN_TEST_CASE(RemoveQuotesFromTokens, WordAppendWithSingleQuotes);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, PipesAndRedirectionOperatorsPresent);
 }
 
 TEST_GROUP_RUNNER(CheckGrammer)
