@@ -6,14 +6,15 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 13:56:04 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/25 16:53:43 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/fork.h"
-#include "../../incl/built_in.h"
-#include "../../incl/minishell.h"
-#include "../parser/parser_data_structs.h"
+#include "../../../incl/fork.h"
+#include "../../../incl/built_in.h"
+#include "../../../incl/minishell.h"
+#include "../../parser/parser_data_structs.h"
+#include "../../../incl/protect.h"
 
 void	del_lst(void *lst)
 {
@@ -66,7 +67,7 @@ int	read_infile(t_pipeline *pipe_line)
 		here_doc(pipe_line);
 		redirection->redir_type = READ;
 		free(redirection->file);
-		redirection->file = ft_strdup("here_doc");
+		redirection->file = strdup_protect("here_doc");
 		id = read_infile(pipe_line);
 		remove("here_doc");
 	}

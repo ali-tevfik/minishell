@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 20:16:20 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:48:24 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/25 16:50:34 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../executor/find_command.h"
 #include "../../incl/fork.h"
 #include "../parser/parser_data_structs.h"
+#include "../../incl/protect.h"
 
 char	**create_envp(t_list *env_lst)
 {
@@ -33,12 +34,8 @@ char	**create_envp(t_list *env_lst)
 	while (env_lst)
 	{
 		env = env_lst->content;
-		small_envp = ft_strjoin(env->key, "=");
-		if (!small_envp)
-			exit(1);
-		envp[i] = ft_strjoin(small_envp, env->value);
-		if (!envp[i])
-			exit(1);
+		small_envp = join_protect(env->key, "=");
+		envp[i] = join_protect(small_envp, env->value);
 		i++;
 		env_lst = env_lst->next;
 	}

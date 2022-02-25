@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
+/*   expander.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:49:38 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/25 15:45:41 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/25 15:46:32 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/built_in.h"
+#ifndef EXPANDER_H
+#define EXPANDER_H
 
-char	*expander(char *txt, t_list *lst)
-{
-	t_env	*env;
-
-	while (lst)
-	{
-		env = lst->content;
-		if (match_str(env->key, txt) == 0)
-			return (env->value);
-		lst = lst->next;
-	}
-	return (NULL);
-}
+int	check_dolar_waar(char *str, int chr);
+int	finished_expander(char *txt);
+int	check_quotes(char *line, char ch);
+int	check_emtpy_dolar(char *line);
+#endif

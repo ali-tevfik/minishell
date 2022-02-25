@@ -6,13 +6,14 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:36:22 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/25 16:50:14 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/built_in.h"
 #include "../../incl/minishell.h"
 #include "../parser/parser_data_structs.h"
+#include "../../incl/protect.h"
 
 void	add_new_export(t_list **envp, char *s1, char *s2)
 {
@@ -25,7 +26,7 @@ void	add_new_export(t_list **envp, char *s1, char *s2)
 	if (s2)
 		env->value = s2;
 	else
-		env->value = ft_strdup("");
+		env->value = strdup_protect("");
 	ft_lstadd_back(envp, ft_lstnew(env));
 }
 
@@ -41,9 +42,9 @@ void	write_export_env(t_list *env_lst)
 	}
 }
 
-void free_double_chr(char **s1)
+void	free_double_chr(char **s1)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i])
@@ -65,9 +66,7 @@ void	export_command(t_list **env, t_pipeline *pipe_line)
 	while (pipe_line->command[i + 1])
 	{
 		i++;
-		argument = ft_split(pipe_line->command[i], '=');
-		if (!argument)
-			exit(0);
+		argument = split_protect(pipe_line->command[i], '=');
 		if (!(ft_isname(argument[0])) || pipe_line->command[i][0] == '=')
 		{
 			free_double_chr(argument);

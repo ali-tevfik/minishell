@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
+/*   protect.h                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/02 13:15:03 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:49:38 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/25 16:47:21 by adoner        #+#    #+#                 */
+/*   Updated: 2022/02/25 16:53:17 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/built_in.h"
+#ifndef PROTECT_H
+#define PROTECT_H
 
-char	*expander(char *txt, t_list *lst)
-{
-	t_env	*env;
+#include "../src/libft/libft.h"
 
-	while (lst)
-	{
-		env = lst->content;
-		if (match_str(env->key, txt) == 0)
-			return (env->value);
-		lst = lst->next;
-	}
-	return (NULL);
-}
+char	**split_protect(char *txt, char ch);
+char	*join_protect(char *s1, char *s2);
+char	*strdup_protect(char *s1);
+char	*substr_protect(char *s1, int start, int finish);
+char	*substr_protect(char *s1, int start, int finish);
+void	*calloc_protect(size_t count, size_t size);
+#endif

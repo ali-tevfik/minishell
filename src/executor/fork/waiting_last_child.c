@@ -6,16 +6,16 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:45:43 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:35:52 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/25 16:12:35 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser/create_parse_list.h"
-#include "../../incl/minishell.h"
-#include "../../incl/built_in.h"
-#include "../executor/find_command.h"
-#include "../../incl/fork.h"
-#include "../parser/parser_data_structs.h"
+#include "../../parser/create_parse_list.h"
+#include "../../../incl/minishell.h"
+#include "../../../incl/built_in.h"
+#include "../../executor/find_command.h"
+#include "../../../incl/fork.h"
+#include "../../parser/parser_data_structs.h"
 
 #include <sys/wait.h>
 

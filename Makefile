@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/25 14:02:01 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/25 16:57:12 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC_FILES = minishell.c \
 			utils/read_line.c \
 			utils/match_str.c \
 			expander/convert_expander.c \
+			expander/expander_utils.c \
 			expander/expander.c \
 			utils/file_name_check.c \
 			tokenizer/iterator_api.c \
@@ -54,16 +55,17 @@ SRC_FILES = minishell.c \
 			parser/create_parse_list.c \
 			parser/create_simple_command.c \
 			parser/parser_utils.c \
-			fork/fork.c \
+			executor/fork/fork.c \
 			executor/find_command.c\
-			fork/waiting_last_child.c\
-			fork/fork_file.c \
+			executor/fork/waiting_last_child.c\
+			executor/fork/fork_file.c \
 			envp/create_envp.c \
 			envp/find_envp.c \
 			envp/create_lst_envp.c \
 			envp/delete_envp.c \
 			test_offline.c \
-			tokenizer/remove_quotes_from_all_tokens.c
+			tokenizer/remove_quotes_from_all_tokens.c \
+			protect_malloc/protect.c
 
 
 TEST_FILES = 	unity/src/unity.c \
@@ -102,7 +104,9 @@ TEST_FILES = 	unity/src/unity.c \
 				src/envp/find_envp.c \
 				src/envp/delete_envp.c \
 				test/test_unset.c \
-				src/built_in/unset.c
+				src/built_in/unset.c \
+				src/expander/expander_utils.c \
+				protect_malloc/protect.c
 
 # test/test_expand_single_variable.c
 # src/expander/expand_single_variable.c

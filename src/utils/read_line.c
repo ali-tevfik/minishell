@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/24 15:26:15 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/25 15:50:27 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void	line_(char *line, t_list **env)
 		return ;
 	remove_quotes_from_all_tokens(lst);
 	pipe_lst = create_parse_list(lst);
-	if (pipe_lst){
-		pipeline = pipe_lst->content;}
+	if (pipe_lst)
+		pipeline = pipe_lst->content;
 	else
 		return ;
 	if (built_in_and_infile_check(pipeline, pipe_lst))

@@ -6,16 +6,16 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 13:53:04 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/25 16:12:14 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser/create_parse_list.h"
-#include "../../incl/minishell.h"
-#include "../../incl/built_in.h"
-#include "../executor/find_command.h"
-#include "../../incl/fork.h"
-#include "../parser/parser_data_structs.h"
+#include "../../parser/create_parse_list.h"
+#include "../../../incl/minishell.h"
+#include "../../../incl/built_in.h"
+#include "../../executor/find_command.h"
+#include "../../../incl/fork.h"
+#include "../../parser/parser_data_structs.h"
 
 void execve_func(t_pipeline *pip_line, char **envp, t_list *env)
 {
