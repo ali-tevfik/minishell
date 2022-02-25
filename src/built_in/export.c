@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/22 17:25:51 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/25 15:36:22 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ void	write_export_env(t_list *env_lst)
 	}
 }
 
+void free_double_chr(char **s1)
+{
+	int i;
+
+	i = 0;
+	while (s1[i])
+	{
+		free(s1[i]);
+		i++;
+	}
+	free(s1);
+}
+
 void	export_command(t_list **env, t_pipeline *pipe_line)
 {
 	char	**argument;
@@ -55,8 +68,9 @@ void	export_command(t_list **env, t_pipeline *pipe_line)
 		argument = ft_split(pipe_line->command[i], '=');
 		if (!argument)
 			exit(0);
-		if (!(ft_isname(argument[0])))
+		if (!(ft_isname(argument[0])) || pipe_line->command[i][0] == '=')
 		{
+			free_double_chr(argument);
 			printf("export: `%s': not a valid identifier\n",
 				pipe_line->command[i]);
 			continue ;
