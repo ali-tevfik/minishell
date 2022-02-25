@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:19:32 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:34:19 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/24 15:31:04 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int		match_str(char *s1, char *s2);
 void	cd_command(char *where, t_list *env);
 int		ft_isname(char *txt);
 void	add_new_export(t_list **envp, char *s1, char *s2);
-void	infile_and_built_in(t_pipeline *pipeline, t_list *env);
 void	one_argument(t_pipeline *pip_line, t_list *env,
 		char *envp[], int *lastid);
 void	built_in(t_pipeline *pipeline, t_list **env);
+int	check_built_in_file(t_pipeline *pipeline);
 int		write_outfile(t_pipeline *pipe_line);
 void exit_command(char *value);
 typedef struct s_env

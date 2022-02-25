@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:21:40 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 11:13:46 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/24 14:06:33 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	remove_quotes_single_token(t_token *token)
 	removed_quotes_content = NULL;
 	while (token->content[i])
 	{
-		if (token->content[i] == '\"' || token->content[i] == '\'')
+		if (token->content[i] && (token->content[i] == '\"' || token->content[i] == '\''))
 		{
 			i++;
 			continue ;
@@ -71,9 +71,10 @@ static void	remove_quotes_single_token(t_token *token)
 
 void	remove_quotes_from_all_tokens(t_list *token_list)
 {
-	while (token_list != NULL)
+	while (token_list)
 	{
-		remove_quotes_single_token(token_list->content);
+		if (((t_token *)(token_list->content))->type == WORD)
+			remove_quotes_single_token(token_list->content);
 		token_list = token_list->next;
 	}
 }

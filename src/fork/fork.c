@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/23 19:23:28 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/25 13:53:04 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 #include "../../incl/fork.h"
 #include "../parser/parser_data_structs.h"
 
+void execve_func(t_pipeline *pip_line, char **envp, t_list *env)
+{
+	find_command(pip_line->command, env);
+	execve(pip_line->command[0], pip_line->command, envp);
+	perror("Error with execve");
+	exit(1);
+}
+
 void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 {
 	int	id;
@@ -24,15 +32,16 @@ void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 	id = fork();
 	if (id == 0)
 	{
-		find_command(pip_line->command, env);
 		if (pip_line-> redirection)
 			fork_file(pip_line);
 		close(fd[0]);
 		dup2 (fd[1], 1);
 		close(fd[1]);
-		execve(pip_line->command[0], pip_line->command, envp);
-		perror("Error with execve");
-		exit(1);
+		if (check_built_in_file(pip_line))
+			built_in(pip_line, &env);
+		else
+			execve_func(pip_line, envp, env);
+		exit(0);
 	}
 }
 
@@ -49,10 +58,11 @@ void	middle_child(t_pipeline *pip_line, t_list *env,
 		close(fd[0]);
 		close(fd[1]);
 		close(endfile);
-		find_command(pip_line->command, env);
-		execve(pip_line->command[0], pip_line->command, envp);
-		perror("Error with execve");
-		exit(1);
+		if (check_built_in_file(pip_line))
+			built_in(pip_line, &env);
+		else
+			execve_func(pip_line, envp, env);
+		exit(0);
 	}
 }
 
@@ -60,17 +70,20 @@ void	last_child(t_pipeline *pip_line, t_list *env,
 		char **envp, int fd[2], int *lastid)
 {
 	*lastid = fork();
+
 	if (*lastid == 0)
 	{
-		find_command(pip_line->command, env);
 		if (pip_line-> redirection)
 			fd[1] = fork_file(pip_line);
 		close(fd[1]);
 		dup2 (fd[0], 0);
 		close(fd[0]);
-		execve(pip_line->command[0], pip_line->command, envp);
-		perror("Error with execve");
-		exit(1);
+
+		if (check_built_in_file(pip_line))
+			built_in(pip_line, &env);
+		else
+			execve_func(pip_line, envp, env);
+		exit(0);
 	}
 }
 
@@ -78,16 +91,17 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 		char *envp[], int *lastid)
 {
 	*lastid = fork();
-	printf("one argument\n");
 	if (*lastid == 0)
 	{
-		find_command(pip_line->command, env);
 		if (pip_line-> redirection)
 			fork_file(pip_line);
-		execve(pip_line->command[0], pip_line->command, envp);
-		perror("Error with execve");
-		exit(1);
+		if (check_built_in_file(pip_line))
+			built_in(pip_line, &env);
+		else
+			execve_func(pip_line, envp, env);
+		exit(0);
 	}
+
 }
 
 void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
@@ -103,8 +117,6 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 	end_file = -1;
 	while (pipe_lst)
 	{
-		// check_dolar(pipe_lst, env);
-		printf("fork func called \n");
 		pip_line = pipe_lst->content;
 		if (pipe_lst->next)
 		{

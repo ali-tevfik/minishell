@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/23 20:01:22 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/24 15:45:15 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	echo_command(t_pipeline *pipe_line)
 		{
 			if (pipe_line->command[i][x] != '"')
 				ft_putchar_fd(pipe_line->command[i][x], 1);
+			else if (pipe_line->command[i][x] == '\"' && pipe_line->command[i][x + 1] == '\"')
+				ft_putchar_fd(' ', 1);
 			x++;
 		}
 		if (pipe_line->command[i + 1])

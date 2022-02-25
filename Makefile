@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/23 20:13:08 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/24 15:31:09 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,6 @@ SRC_FILES = minishell.c \
 			utils/match_str.c \
 			expander/convert_expander.c \
 			expander/expander.c \
-			utils/infile_and_built_in.c \
 			utils/file_name_check.c \
 			tokenizer/iterator_api.c \
 			tokenizer/tokenize_pipe.c \

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/23 20:13:59 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/24 15:26:15 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	check_built_in_file(t_pipeline *pipeline)
 	return (i);
 }
 
-int	built_in_and_infile_check(t_pipeline *pipeline)
+int	built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
 {
-	if (pipeline->redirection)
+	if (pipeline->redirection || pipe_lst->next)
 	{
 		if (check_built_in_file(pipeline))
 			return (1);
@@ -89,15 +89,14 @@ void	line_(char *line, t_list **env)
 		return ;
 	remove_quotes_from_all_tokens(lst);
 	pipe_lst = create_parse_list(lst);
-	if (pipe_lst)
-		pipeline = pipe_lst->content;
+	if (pipe_lst){
+		pipeline = pipe_lst->content;}
 	else
 		return ;
-	if (built_in_and_infile_check(pipeline))
-		infile_and_built_in(pipeline, *env);
+	if (built_in_and_infile_check(pipeline, pipe_lst))
+		work_execve(pipe_lst, env);
 	else if (check_built_in_file(pipeline))
 		built_in(pipeline, env);
 	else
-
 		work_execve(pipe_lst, env);
 }
