@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:23:19 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 11:09:51 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/02/24 14:36:14 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,4 +162,45 @@ TEST(RemoveQuotesFromTokens, WordAppendWithSingleQuotes)
 
 	/* Compare token lists */
 	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(RemoveQuotesFromTokens, PipesAndRedirectionOperatorsPresent)
+{
+	TEST_IGNORE();
+//	char	*input = "< infile grep codam | wc -l >> outfile";
+
+//	/* Actual token list */
+//	actual_list = tokenize_input(input);
+//	remove_quotes_from_all_tokens(actual_list);
+//
+//	/* Expected token list */
+//	token = create_token(NULL, READ);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//
+//	token = create_token(ft_strdup("infile"), WORD);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//	
+//	token = create_token(ft_strdup("grep"), WORD);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//	
+//	token = create_token(ft_strdup("codam"), WORD);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//
+//	token = create_token(NULL, PIPE);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//
+//	token = create_token(ft_strdup("wc"), WORD);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//
+//	token = create_token(ft_strdup("-l"), WORD);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//
+//	token = create_token(NULL, APPEND);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//	
+//	token = create_token(ft_strdup("outfile"), WORD);
+//	ft_lstadd_back(&expected_list, ft_lstnew(token));
+//	
+//	/* Compare token lists */
+//	compare_token_lists(expected_list, actual_list);
 }
