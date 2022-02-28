@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:50:27 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/28 17:11:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "../parser/create_parse_list.h"
 #include "../tokenizer/validate_grammer.h"
 #include "../tokenizer/remove_quotes_from_all_tokens.h"
+#include <stdbool.h>
 
 void	work_execve(t_list *pipe_lst, t_list **env)
 {
@@ -50,14 +51,17 @@ int	check_built_in_file(t_pipeline *pipeline)
 	return (i);
 }
 
-int	built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
+static bool built_in_and_infile_check(t_list *pipe_lst)
 {
+	t_pipeline	*pipeline;
+
+	pipeline = pipe_lst->content;
 	if (pipeline->redirection || pipe_lst->next)
 	{
 		if (check_built_in_file(pipeline))
-			return (1);
+			return (true);
 	}
-	return (0);
+	return (false);
 }
 
 void	built_in(t_pipeline *pipeline, t_list **env)
@@ -80,23 +84,18 @@ void	built_in(t_pipeline *pipeline, t_list **env)
 
 void	line_(char *line, t_list **env)
 {
-	t_list		*lst;
-	t_list		*pipe_lst;
-	t_pipeline	*pipeline;
+	t_list		*token_list;
+	t_list		*pipe_list;
 
-	lst = tokenize_input(line);
-	if (!validate_grammer(lst))
+	token_list = tokenize_input(line);
+	if (!validate_grammer(token_list))
 		return ;
-	remove_quotes_from_all_tokens(lst);
-	pipe_lst = create_parse_list(lst);
-	if (pipe_lst)
-		pipeline = pipe_lst->content;
+	remove_quotes_from_all_tokens(token_list);
+	pipe_list = create_parse_list(token_list);
+	if (built_in_and_infile_check(pipe_list))		/* If builtin command or redirection present */
+		work_execve(pipe_list, env);
+	else if (check_built_in_file(pipe_list->content))
+		built_in(pipe_list->content, env);
 	else
-		return ;
-	if (built_in_and_infile_check(pipeline, pipe_lst))
-		work_execve(pipe_lst, env);
-	else if (check_built_in_file(pipeline))
-		built_in(pipeline, env);
-	else
-		work_execve(pipe_lst, env);
+		work_execve(pipe_list, env);
 }

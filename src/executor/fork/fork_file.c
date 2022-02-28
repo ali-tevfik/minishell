@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:53:43 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/28 17:20:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,20 @@ int	read_infile(t_pipeline *pipe_line)
 	}
 	else
 	{
-		dup2(id, 0);
+		dup2(id, STDIN_FILENO);
 		close(id);
 	}
 	return (id);
 }
 
-int	write_outfile(t_pipeline *pipe_line)
+static int	write_outfile(t_redirection *redirection)
 {
 	int				id;
-	t_redirection	*redirection;
 
-	redirection = pipe_line->redirection->content;
 	if (redirection->redir_type == WRITE)
-		id = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		id = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
-		id = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0666);
+		id = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (id < 0)
 	{
 		printf("outfile write error!\n");
@@ -102,7 +100,7 @@ int	write_outfile(t_pipeline *pipe_line)
 	}
 	else
 	{
-		dup2(id, 1);
+		dup2(id, STDOUT_FILENO);
 		close(id);
 	}
 	return (id);
@@ -120,7 +118,7 @@ int	fork_file(t_pipeline *pipe_line)
 			|| redirection->redir_type == HERE_DOC)
 			id = read_infile(pipe_line);
 		else
-			id = write_outfile(pipe_line);
+			id = write_outfile(redirection);
 		pipe_line->redirection = pipe_line->redirection->next;
 	}
 	return (id);

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:12:14 by adoner        ########   odam.nl         */
+/*   Updated: 2022/02/28 17:22:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 	*lastid = fork();
 	if (*lastid == 0)
 	{
-		if (pip_line-> redirection)
+		if (pip_line->redirection)
 			fork_file(pip_line);
 		if (check_built_in_file(pip_line))
 			built_in(pip_line, &env);
@@ -101,7 +101,6 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 			execve_func(pip_line, envp, env);
 		exit(0);
 	}
-
 }
 
 void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)

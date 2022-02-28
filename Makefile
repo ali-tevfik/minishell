@@ -6,9 +6,12 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/25 16:57:12 by adoner        ########   odam.nl          #
+#    Updated: 2022/02/28 15:53:18 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+# USER
+USER = hyilmaz
 
 # Colors
 GREEN = \033[38;5;2m
@@ -157,12 +160,12 @@ $(OBJ_DIR):
 	@mkdir -p $@
 
 $(NAME): $(OBJ)
-	$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT) -lreadline
+	$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT) -L/Users/hyilmaz/.brew/opt/readline/lib -lreadline
 	@echo "$(GREEN) Created minishell executable.$(NORMAL)"
 
 $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@mkdir -p $(@D)
-	@$(GCC) $(FLAGS) -c $< -o $@
+	@$(GCC) $(FLAGS) -I/Users/hyilmaz/.brew/opt/readline/include/ -c $< -o $@
 
 # Build debug
 debug: $(DBG_OBJ_DIR) $(LIBFT) $(DBG_NAME)
@@ -171,7 +174,7 @@ $(DBG_OBJ_DIR):
 	@mkdir -p $@
 
 $(DBG_NAME): $(DBG_OBJ)
-	@$(GCC) $(FLAGS) $(DBG_FLAGS) $^ -o $@ -lreadline $(LIBFT_DIR)/$(LIBFT)
+	@$(GCC) $(FLAGS) -I/Users/$(USER)/.brew/opt/readline/include $(DBG_FLAGS) $^ -o $@ -L/Users/$(USER)/.brew/opt/readline/lib $(LIBFT_DIR)/$(LIBFT)
 	@echo "$(GREEN) Created minishell debug executable.$(NORMAL)"
 
 $(DBG_OBJ): $(DBG_OBJ_DIR)/%.o : %.c $(HEADER_FILES)
