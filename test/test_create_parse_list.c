@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 12:58:27 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 15:01:29 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/01 11:55:03 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "../src/parser/parser_data_structs.h"
 #include "../src/tokenizer/tokenizer.h"
 #include "../src/tokenizer/tokenizer_utils.h"
+#include "../src/tokenizer/remove_quotes_from_all_tokens.h"
 #include "utils.h"
 
 /* System headers */
@@ -34,19 +35,20 @@ t_list			*redirection_list;
 t_list			*expected_pipeline_list;
 t_list			*actual_pipeline_list;
 
-// static t_list	*env_list;
-// static char		*env[] = {	"SHELL=/bin/zsh",
-// 							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
-// 							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
-// 							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
-// 							"LOGNAME=hyilmaz",
-// 							"HOME=/home/hilmi",
-// 							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
-// 							"ali=s -l",
-// 							"hilmi=ep",
-// 							"codam_=",
-// 							NULL,
-// 						};
+static t_list	*env_list;
+static char		*env[] = {	"SHELL=/bin/zsh",
+							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
+							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
+							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
+							"LOGNAME=hyilmaz",
+							"HOME=/home/hilmi",
+							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
+							"ali=s -l",
+							"hilmi=ep",
+							"hilmi1=ep -i",
+							"codam_=",
+							NULL,
+						};
 
 TEST_GROUP(CreateParseList);
 
@@ -227,7 +229,7 @@ TEST(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder)
 	}
 }
 
-TEST(CreateParseList, SimplePipelineNoPipeWithExpansion)
+TEST(CreateParseList, PipelineWithExpansion0)
 {
 	/* 
 	** ali="s -l" 
@@ -236,13 +238,16 @@ TEST(CreateParseList, SimplePipelineNoPipeWithExpansion)
 	char	*input = "l\"$ali\" | gr$hilmi uni | wc -l";
 
 	/* Environment */
-	// env_list = add_envp(env);
-
-	/* Generated token list */
-	token_list = tokenize_input(input);
+	env_list = add_envp(env);
 
 	/* Expander */
+	char	*expanded_input = check_expander(input, env_list);
 
+	/* Generated token list */
+	token_list = tokenize_input(expanded_input);
+
+	/* Remove quotes from all tokens */
+	remove_quotes_from_all_tokens(token_list);
 
 	/* Expected pipeline list */
 	command = create_command(1, "ls -l");
@@ -273,4 +278,61 @@ TEST(CreateParseList, SimplePipelineNoPipeWithExpansion)
 		head_expected = head_expected->next;
 		head_actual = head_actual->next;
 	}
+
+	free(expanded_input);
+	ft_lstclear(&env_list, free_env_variable);
+}
+
+TEST(CreateParseList, PipelineWithExpansion1)
+{
+	/* 
+	** ali="s -l" 
+	** hilmi1="ep -i"
+	*/
+	char	*input = "l\'$ali\' | gr$hilmi1 uni$LOGNAME | wc -l";
+
+	/* Environment */
+	env_list = add_envp(env);
+
+	/* Expander */
+	char	*expanded_input = check_expander(input, env_list);
+
+	/* Generated token list */
+	token_list = tokenize_input(expanded_input);
+
+	/* Remove quotes from all tokens */
+	remove_quotes_from_all_tokens(token_list);
+
+	/* Expected pipeline list */
+	command = create_command(1, "l$ali");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(3, "grep", "-i", "unihyilmaz");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+
+	command = create_command(2, "wc", "-l");
+	redirection_list = create_redirection_list(0);
+	pipeline_element = create_pipeline_element(command, redirection_list);
+	ft_lstadd_back(&expected_pipeline_list, ft_lstnew(pipeline_element));
+	
+	/* Actual pipeline list */
+	actual_pipeline_list = create_parse_list(token_list);
+
+	/* Compare pipelines */
+	t_list	*head_expected = expected_pipeline_list;
+	t_list	*head_actual = actual_pipeline_list;
+	TEST_ASSERT_EQUAL_size_t(ft_lstsize(head_expected), ft_lstsize(head_actual));
+	while (head_expected != NULL)
+	{
+		compare_pipelines((t_pipeline *)head_expected->content, (t_pipeline *)head_actual->content);
+		head_expected = head_expected->next;
+		head_actual = head_actual->next;
+	}
+
+	free(expanded_input);
+	ft_lstclear(&env_list, free_env_variable);
 }

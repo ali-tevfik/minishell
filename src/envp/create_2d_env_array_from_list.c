@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   create_envp.c                                      :+:    :+:            */
+/*   create_2d_env_array_from_list.c                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 20:16:20 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:50:34 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/01 13:19:14 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,27 @@
 #include "../parser/parser_data_structs.h"
 #include "../../incl/protect.h"
 
-char	**create_envp(t_list *env_lst)
+char	**create_2d_env_array_from_list(t_list *env_list)
 {
 	int		i;
 	int		lst_size;
 	char	**envp;
-	char	*small_envp;
+	char	*key_plus_equal_sign;
 	t_env	*env;
 
-	lst_size = ft_lstsize(env_lst);
-	envp = (char **)malloc(sizeof(envp) * (lst_size + 1));
+	lst_size = ft_lstsize(env_list);
+	envp = ft_calloc(lst_size + 1, sizeof(*envp));
 	if (!envp)
 		exit(-1);
 	i = 0;
-	while (env_lst)
+	while (env_list)
 	{
-		env = env_lst->content;
-		small_envp = join_protect(env->key, "=");
-		envp[i] = join_protect(small_envp, env->value);
+		env = env_list->content;
+		key_plus_equal_sign = join_protect(env->key, "=");
+		envp[i] = join_protect(key_plus_equal_sign, env->value);
+		//free(key_plus_equal_sign);
+		env_list = env_list->next;
 		i++;
-		env_lst = env_lst->next;
 	}
 	envp[i] = NULL;
 	return (envp);

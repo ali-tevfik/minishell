@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/28 15:53:18 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/03/01 13:11:40 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ YELLOW = \033[1;33m
 # Compiler settings
 GCC = gcc
 FLAGS = -Wall -Wextra -Werror
-DBG_FLAGS = -g -fsanitize=address
+DBG_FLAGS = -g
 
 # Unity tester requirements
 UNITY_HEADERS = -Iunity/extras/fixture/src/ \
@@ -62,7 +62,7 @@ SRC_FILES = minishell.c \
 			executor/find_command.c\
 			executor/fork/waiting_last_child.c\
 			executor/fork/fork_file.c \
-			envp/create_envp.c \
+			envp/create_2d_env_array_from_list.c \
 			envp/find_envp.c \
 			envp/create_lst_envp.c \
 			envp/delete_envp.c \
@@ -118,7 +118,6 @@ TEST_FILES = 	unity/src/unity.c \
 # src/built_in/env.c
 
 # src/built_in/delete_envp.c
-# src/create_envp.c
 # src/built_in/find_envp.c
 # src/built_in/file_name_check.c
 
@@ -174,12 +173,12 @@ $(DBG_OBJ_DIR):
 	@mkdir -p $@
 
 $(DBG_NAME): $(DBG_OBJ)
-	@$(GCC) $(FLAGS) -I/Users/$(USER)/.brew/opt/readline/include $(DBG_FLAGS) $^ -o $@ -L/Users/$(USER)/.brew/opt/readline/lib $(LIBFT_DIR)/$(LIBFT)
+	@$(GCC) $(FLAGS) $(DBG_FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT) -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 	@echo "$(GREEN) Created minishell debug executable.$(NORMAL)"
 
 $(DBG_OBJ): $(DBG_OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@mkdir -p $(@D)
-	@$(GCC) $(FLAGS) $(DBG_FLAGS) -c $< -o $@
+	@$(GCC) $(FLAGS) $(DBG_FLAGS) -I/Users/hyilmaz/.brew/opt/readline/include/ -c $< -o $@
 
 # Build test
 test: $(TEST_OBJ_DIR) $(LIBFT) $(TEST_NAME)

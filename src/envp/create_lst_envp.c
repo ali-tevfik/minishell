@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:24:40 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:50:18 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/01 13:06:48 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,39 @@
 #include "../../incl/minishell.h"
 #include "../../incl/protect.h"
 
+// static void	free_2d_string_array(char **string_array)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (string_array[i] != NULL)
+// 	{
+// 		free(string_array[i]);
+// 		i++;
+// 	}
+// 	free(string_array);
+// }
+
 t_list	*add_envp(char *envp[])
 {
-	t_list	*envp_;
-	t_env	*env;
 	int		i;
-	char	**argument;
+	char	**key_value_string;
+	t_env	*env;
+	t_list	*env_list;
 
 	i = 0;
-	envp_ = NULL;
+	env_list = NULL;
 	while (envp[i])
 	{
-		env = calloc_protect(2, sizeof(*env));
+		env = calloc_protect(1, sizeof(*env));
 		if (!env)
 			exit(-1);
-		argument = split_protect(strdup_protect(envp[i]), '=');
-		env->key = argument[0];
-		env->value = argument[1];
-		ft_lstadd_back(&envp_, ft_lstnew(env));
+		key_value_string = split_protect(envp[i], '=');
+		env->key = key_value_string[0];
+		env->value = key_value_string[1];
+		free(key_value_string);
+		ft_lstadd_back(&env_list, ft_lstnew(env));
 		i++;
 	}
-	return (envp_);
+	return (env_list);
 }

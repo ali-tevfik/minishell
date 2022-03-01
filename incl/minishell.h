@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/28 15:52:51 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/01 12:35:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <fcntl.h>
 
 void	line_(char *line, t_list **env);
-char	**create_envp(t_list *env_lst);
+char	**create_2d_env_array_from_list(t_list *env_lst);
 void test_working(char *argv[], t_list **env);
 char *check_expander(char *line, t_list *env);
 #endif

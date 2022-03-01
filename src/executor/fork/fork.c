@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/28 17:22:46 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/01 18:18:38 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 	id = fork();
 	if (id == 0)
 	{
-		if (pip_line-> redirection)
-			fork_file(pip_line);
-		close(fd[0]);
-		dup2 (fd[1], 1);
-		close(fd[1]);
-		if (check_built_in_file(pip_line))
-			built_in(pip_line, &env);
+		if (pip_line->redirection)
+			fork_file(pip_line);	/* no assigning return value , can we write to file from here */
+		close(fd[0]);		/* no protection for close */
+		dup2 (fd[1], 1);	/* no protections for dup */
+		close(fd[1]);		/* pipe dup after redirection to file?, first always do pipe dups, than if files present, dup files */
+		if (check_built_in_file(pip_line))	/* change function name to is_builtin, easier to read */
+			built_in(pip_line, &env);		/* change name to execute_builtin */
 		else
-			execve_func(pip_line, envp, env);
+			execve_func(pip_line, envp, env);	/* change name to execute_binary */
 		exit(0);
 	}
 }
@@ -54,7 +54,7 @@ void	middle_child(t_pipeline *pip_line, t_list *env,
 	if (id == 0)
 	{
 		dup2 (fd[1], 1);
-		dup2 (endfile, 0);
+		dup2 (endfile, 0);		/* no redirection for files here? */
 		close(fd[0]);
 		close(fd[1]);
 		close(endfile);
@@ -73,12 +73,11 @@ void	last_child(t_pipeline *pip_line, t_list *env,
 
 	if (*lastid == 0)
 	{
-		if (pip_line-> redirection)
+		if (pip_line->redirection)
 			fd[1] = fork_file(pip_line);
-		close(fd[1]);
+		close(fd[1]);						/* closing what is just created? */
 		dup2 (fd[0], 0);
 		close(fd[0]);
-
 		if (check_built_in_file(pip_line))
 			built_in(pip_line, &env);
 		else
@@ -111,7 +110,9 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 	t_pipeline	*pip_line;
 	char		**envp;
 
-	envp = create_envp(env);
+	printf("inside fork func\n");
+	envp = create_2d_env_array_from_list(env);
+	printf("inside fork func1\n");
 	i = 0;
 	end_file = -1;
 	while (pipe_lst)

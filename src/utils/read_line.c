@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/28 17:11:37 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/01 14:20:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	built_in(t_pipeline *pipeline, t_list **env)
 {
 	if (match_str(pipeline->command[0], "cd") == 0)
 		cd_command(pipeline->command[1], *env);
-	else if (match_str(pipeline->command[0], "pwd") == 0)
+	else if (match_str(pipeline->command[0], "pwd") == 0) 	/* prints data */
 		pwd_command(pipeline);
 	else if (match_str(pipeline->command[0], "exit") == 0)
 		exit_command(pipeline->command[1]);
-	else if (match_str(pipeline->command[0], "echo") == 0)
+	else if (match_str(pipeline->command[0], "echo") == 0) 	/* prints data */
 		echo_command(pipeline);
-	else if (match_str(pipeline->command[0], "env") == 0)
+	else if (match_str(pipeline->command[0], "env") == 0) 	/* prints data */
 		env_commands(*env);
 	else if (match_str(pipeline->command[0], "export") == 0)
 		export_command(env, pipeline);
@@ -92,7 +92,7 @@ void	line_(char *line, t_list **env)
 		return ;
 	remove_quotes_from_all_tokens(token_list);
 	pipe_list = create_parse_list(token_list);
-	if (built_in_and_infile_check(pipe_list))		/* If builtin command or redirection present */
+	if (built_in_and_infile_check(pipe_list))		/* If list more than 1 element or redirection present */
 		work_execve(pipe_list, env);
 	else if (check_built_in_file(pipe_list->content))
 		built_in(pipe_list->content, env);
