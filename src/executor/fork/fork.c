@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:12:14 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/01 17:51:39 by tevfik        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	middle_child(t_pipeline *pip_line, t_list *env,
 		close(fd[0]);
 		close(fd[1]);
 		close(endfile);
+		if (pip_line-> redirection)
+			fork_file(pip_line);
 		if (check_built_in_file(pip_line))
 			built_in(pip_line, &env);
 		else

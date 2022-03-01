@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:39:28 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/01 17:55:27 by tevfik        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	echo_command(t_pipeline *pipe_line)
 	new_line = 0;
 	if (match_str(pipe_line->command[1], "-n") == 0)
 		new_line = 1;
-	i = 1;
+	i = 2;
 	while (pipe_line->command[i])
 	{
 		x = 0;
