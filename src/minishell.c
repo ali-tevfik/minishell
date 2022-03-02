@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/28 16:30:13 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/02 17:04:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 #include "tokenizer/tokenizer.h"
 #include <signal.h>
 
-int	g_pid;
+int	g_interactive = 1;
 
 void	sig_handler(int signum)
 {
-	if (signum == SIGINT)
+	(void)signum;
+
+	rl_replace_line("", 0);
+	ft_putchar_fd('\n', 2);
+	if (g_interactive)
 	{
-		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -35,6 +38,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_list	*env;
 
 	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	env = add_envp(envp);
 	(void)argc;
 	if (match_str(argv[1], "-c") == 0)
@@ -44,7 +48,8 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("Minishell> ");
 		if (line == NULL)
 		{
-			return (1);
+			printf("exit\n");
+			return (0);
 		}
 		if (match_str(line, "") != 0)
 		{

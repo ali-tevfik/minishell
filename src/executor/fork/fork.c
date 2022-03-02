@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/01 18:18:38 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/02 17:00:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../../executor/find_command.h"
 #include "../../../incl/fork.h"
 #include "../../parser/parser_data_structs.h"
+
+extern int g_interactive;
 
 void execve_func(t_pipeline *pip_line, char **envp, t_list *env)
 {
@@ -110,9 +112,7 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 	t_pipeline	*pip_line;
 	char		**envp;
 
-	printf("inside fork func\n");
 	envp = create_2d_env_array_from_list(env);
-	printf("inside fork func1\n");
 	i = 0;
 	end_file = -1;
 	while (pipe_lst)
@@ -123,6 +123,7 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 			if (pipe(fd) == -1)
 				exit(0);
 		}
+		g_interactive = 0;
 		if (i == 0 && !pipe_lst->next)
 			one_argument(pip_line, env, envp, last_id);
 		else if (i == 0)
