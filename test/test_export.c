@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/24 15:03:09 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:56 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ TEST_SETUP(ExportBuiltin)
 {
 	token_list = NULL;
 	parse_list = NULL;
-	env_list = add_envp(env);
+	env_list = create_env_list(env);
 }
 
 TEST_TEAR_DOWN(ExportBuiltin)

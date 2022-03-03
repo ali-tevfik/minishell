@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:24:40 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/02 17:46:10 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:08 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,23 @@
 #include "../../incl/minishell.h"
 #include "../../incl/protect.h"
 
-t_list	*add_envp(char *envp[])
+t_list	*create_env_list(char *envp[])
 {
-	t_list	*envp_;
-	t_env	*env;
 	int		i;
+	t_list	*env_list;
+	t_env	*env;
 	char	**argument;
 
 	i = 0;
-	envp_ = NULL;
+	env_list = NULL;
 	while (envp[i])
 	{
 		env = calloc_protect(1, sizeof(*env));
-		if (!env)
-			exit(-1);
 		argument = split_protect(strdup_protect(envp[i]), '=');
 		env->key = argument[0];
 		env->value = argument[1];
-		ft_lstadd_back(&envp_, ft_lstnew(env));
+		ft_lstadd_back(&env_list, ft_lstnew(env));
 		i++;
 	}
-	return (envp_);
+	return (env_list);
 }

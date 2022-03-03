@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:27:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 14:33:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ TEST_SETUP(FindCommand)
 {
 	uname(&uname_data);
 	command_array = NULL;
-	env_list = add_envp(env);
+	env_list = create_env_list(env);
 }
 
 TEST_TEAR_DOWN(FindCommand)

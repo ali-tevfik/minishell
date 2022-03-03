@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 16:55:24 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 17:17:10 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:45 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ TEST_GROUP(ExpandSingleToken);
 
 TEST_SETUP(ExpandSingleToken)
 {
-	env_list = add_envp(env);
+	env_list = create_env_list(env);
 	expected_token_list = NULL;
 	actual_token_list = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 11:20:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 20:50:55 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ TEST_GROUP(ExpandInputString);
 
 TEST_SETUP(ExpandInputString)
 {
-	env_list = add_envp(env);
+	env_list = create_env_list(env);
 	actual_expansion = NULL;
 	expected_expansion = NULL;
 }

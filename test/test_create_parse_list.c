@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 12:58:27 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 15:01:29 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/03 13:35:07 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ TEST(CreateParseList, SimplePipelineNoPipeWithExpansion)
 	char	*input = "l\"$ali\" | gr$hilmi uni | wc -l";
 
 	/* Environment */
-	// env_list = add_envp(env);
+	// env_list = create_env_list(env);
 
 	/* Generated token list */
 	token_list = tokenize_input(input);

@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/03 13:27:47 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:30 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_list	*init_shell(int argc, char *argv[], char *envp[])
 	set_signals();
 	(void)argc;
 	(void)argv;
-	env_list = add_envp(envp);
+	env_list = create_env_list(envp);
 	return (env_list);
 }
 
