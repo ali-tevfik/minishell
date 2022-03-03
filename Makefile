@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/02/25 16:57:12 by adoner        ########   odam.nl          #
+#    Updated: 2022/03/03 13:17:54 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,9 @@ SRC_FILES = minishell.c \
 			envp/delete_envp.c \
 			test_offline.c \
 			tokenizer/remove_quotes_from_all_tokens.c \
-			protect_malloc/protect.c
+			protect_malloc/protect.c \
+			signals/set_signals.c \
+			signals/signal_handler.c
 
 
 TEST_FILES = 	unity/src/unity.c \

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:50:27 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/03 13:15:36 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include "../tokenizer/validate_grammer.h"
 #include "../tokenizer/remove_quotes_from_all_tokens.h"
 
+extern int g_interactive;
+
 void	work_execve(t_list *pipe_lst, t_list **env)
 {
 	int	last_id;
@@ -26,6 +28,7 @@ void	work_execve(t_list *pipe_lst, t_list **env)
 	last_id = 0;
 	fork_func(pipe_lst, *env, &last_id);
 	wait_and_get_last_exit_status(last_id);
+	g_interactive = 1;
 }
 
 int	check_built_in_file(t_pipeline *pipeline)

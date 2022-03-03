@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:24:40 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:50:18 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/02 17:46:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list	*add_envp(char *envp[])
 	envp_ = NULL;
 	while (envp[i])
 	{
-		env = calloc_protect(2, sizeof(*env));
+		env = calloc_protect(1, sizeof(*env));
 		if (!env)
 			exit(-1);
 		argument = split_protect(strdup_protect(envp[i]), '=');
