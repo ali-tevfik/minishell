@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/03 13:23:37 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/03 13:27:47 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 ** Makes sure that signal is handled by either child or parent process, 
 ** not both.
 */
+
 int	g_interactive = 1;
 
 /*
