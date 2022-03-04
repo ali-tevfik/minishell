@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/03 13:15:52 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/04 12:41:26 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 		close(fd[0]);
 		dup2 (fd[1], 1);
 		close(fd[1]);
-		if (check_built_in_file(pip_line))
-			built_in(pip_line, &env);
+		if (is_builtin(pip_line))
+			execute_builtin(pip_line, &env);
 		else
 			execve_func(pip_line, envp, env);
 		exit(0);
@@ -62,8 +62,8 @@ void	middle_child(t_pipeline *pip_line, t_list *env,
 		close(endfile);
 		if (pip_line-> redirection)
 			fork_file(pip_line);
-		if (check_built_in_file(pip_line))
-			built_in(pip_line, &env);
+		if (is_builtin(pip_line))
+			execute_builtin(pip_line, &env);
 		else
 			execve_func(pip_line, envp, env);
 		exit(0);
@@ -83,8 +83,8 @@ void	last_child(t_pipeline *pip_line, t_list *env,
 		dup2 (fd[0], 0);
 		close(fd[0]);
 
-		if (check_built_in_file(pip_line))
-			built_in(pip_line, &env);
+		if (is_builtin(pip_line))
+			execute_builtin(pip_line, &env);
 		else
 			execve_func(pip_line, envp, env);
 		exit(0);
@@ -99,8 +99,8 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 	{
 		if (pip_line-> redirection)
 			fork_file(pip_line);
-		if (check_built_in_file(pip_line))
-			built_in(pip_line, &env);
+		if (is_builtin(pip_line))
+			execute_builtin(pip_line, &env);
 		else
 			execve_func(pip_line, envp, env);
 		exit(0);

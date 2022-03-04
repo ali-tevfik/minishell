@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 11:20:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/03 13:34:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/04 12:19:45 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ TEST(ExpandInputString, SingleVariableExisting0)
 	char	*input = "$HOME";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("/home/hilmi");
@@ -74,7 +74,7 @@ TEST(ExpandInputString, SingleVariableExisting1)
 	char	*input = "$LOGNAME";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("hyilmaz");
@@ -88,7 +88,7 @@ TEST(ExpandInputString, SingleVariableExisting2)
 	char	*input = "$DISPLAY";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0");
@@ -102,7 +102,7 @@ TEST(ExpandInputString, SingleVariableExisting3)
 	char	*input = "$LOGNAME+";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("hyilmaz+");
@@ -116,7 +116,7 @@ TEST(ExpandInputString, SingleVariableExisting4)
 	char	*input = "$a";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("b");
@@ -130,7 +130,7 @@ TEST(ExpandInputString, SingleVariableExisting5)
 	char	*input = "$a  ";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("b  ");
@@ -144,7 +144,7 @@ TEST(ExpandInputString, SingleVariableExisting6)
 	char	*input = "$a!";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("b!");
@@ -158,7 +158,7 @@ TEST(ExpandInputString, SingleVariableExisting7)
 	char	*input = "$hilmi_8";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("bro");
@@ -172,7 +172,7 @@ TEST(ExpandInputString, SingleVariableExisting8)
 	char	*input = "$codam_";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("");
@@ -186,7 +186,7 @@ TEST(ExpandInputString, SingleVariableExisting9)
 	char	*input = "$codam_-";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("-");
@@ -200,7 +200,7 @@ TEST(ExpandInputString, SingleVariableExisting10)
 	char	*input = "\"$hilmi_8-\"";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("\"bro-\"");
@@ -215,7 +215,7 @@ TEST(ExpandInputString, SingleVariableExisting11)
 	char	*input = "\'$hilmi_8-\'";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("\'$hilmi_8-\'");
@@ -229,7 +229,7 @@ TEST(ExpandInputString, SingleVariableNonExisting0)
 	char	*input = "$DISPLAYY";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("");
@@ -243,7 +243,7 @@ TEST(ExpandInputString, SingleVariableNonExisting1)
 	char	*input = "$hahahahah";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("");
@@ -257,7 +257,7 @@ TEST(ExpandInputString, SingleVariableNonExisting2)
 	char	*input = "$hahahahah&";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("&");
@@ -271,7 +271,7 @@ TEST(ExpandInputString, SingleVariableNonExisting3)
 	char	*input = "$+LOGNAME";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("$+LOGNAME");
@@ -285,7 +285,7 @@ TEST(ExpandInputString, SingleVariableNonExisting4)
 	char	*input = "$ LOGNAME";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("$ LOGNAME");
@@ -299,7 +299,7 @@ TEST(ExpandInputString, SingleVariableNonExisting5)
 	char	*input = "$";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("$");
@@ -313,7 +313,7 @@ TEST(ExpandInputString, SingleVariableNonExisting6)
 	char	*input = "$$";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("$$");
@@ -327,7 +327,7 @@ TEST(ExpandInputString, SingleVariableNonExisting7)
 	char	*input = "$\"LOGNAME\"";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("$\"LOGNAME\"");
@@ -342,7 +342,7 @@ TEST(ExpandInputString, SingleVariableNonExisting8)
 	char	*input = "$\'LOGNAME\'";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("$\'LOGNAME\'");
@@ -356,7 +356,7 @@ TEST(ExpandInputString, SingleVariableNonExisting9)
 	char	*input = "\"\"$HO\"ME\"";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("\"\"\"ME\"");
@@ -370,7 +370,7 @@ TEST(ExpandInputString, MultipleVariables0)
 	char	*input = "cat -c $hilmi_8";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("cat -c bro");
@@ -384,7 +384,7 @@ TEST(ExpandInputString, MultipleVariables1)
 	char	*input = "echo $test";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("echo hilmi yilmaz");
@@ -398,7 +398,7 @@ TEST(ExpandInputString, MultipleVariables2)
 	char	*input = "ec$hilmi $test";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("echo -n hilmi yilmaz");
@@ -412,7 +412,7 @@ TEST(ExpandInputString, MultipleVariables3)
 	char	*input = "ec\"$hilmi\" $test";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("ec\"ho -n\" hilmi yilmaz");
@@ -427,7 +427,7 @@ TEST(ExpandInputString, MultipleVariables4)
 	char	*input = "ec\'$hilmi\' $test";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("ec\'$hilmi\' hilmi yilmaz");
@@ -441,7 +441,7 @@ TEST(ExpandInputString, MultipleVariables5)
 	char	*input = "ec$hilmi$test $LOGNAME\"$HOME\"";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("echo -nhilmi yilmaz hyilmaz\"/home/hilmi\"");
@@ -455,7 +455,7 @@ TEST(ExpandInputString, MultipleVariables6)
 	char	*input = "\"\"$HO\"ME\"";
 
 	/* Actual expansion */
-	actual_expansion = check_expander(input, env_list);
+	actual_expansion = expand_input_string(input, env_list);
 
 	/* Expected expansion */
 	expected_expansion = ft_strdup("echo -nhilmi yilmaz hyilmaz\"/home/hilmi\"");

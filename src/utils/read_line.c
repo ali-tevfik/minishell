@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/03 13:15:36 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/04 12:43:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,67 +21,98 @@
 
 extern int g_interactive;
 
-void	work_execve(t_list *pipe_lst, t_list **env)
+int	work_execve(t_list *pipe_lst, t_list **env)
 {
 	int	last_id;
+	int	last_process_exit_status;
 
 	last_id = 0;
 	fork_func(pipe_lst, *env, &last_id);
-	wait_and_get_last_exit_status(last_id);
+	last_process_exit_status = wait_and_get_last_exit_status(last_id);
 	g_interactive = 1;
+	return (last_process_exit_status);
 }
 
-int	check_built_in_file(t_pipeline *pipeline)
+bool	is_builtin(t_pipeline *pipeline)
 {
-	int	i;
+	bool	is_builtin;
 
-	i = 0;
-	if (match_str(pipeline->command[0], "cd") == 0)
-		i = 1;
-	else if (match_str(pipeline->command[0], "pwd") == 0)
-		i = 1;
-	else if (match_str(pipeline->command[0], "exit") == 0)
-		i = 1;
-	else if (match_str(pipeline->command[0], "echo") == 0)
-		i = 1;
-	else if (match_str(pipeline->command[0], "env") == 0)
-		i = 1;
-	else if (match_str(pipeline->command[0], "export") == 0)
-		i = 1;
-	else if (match_str(pipeline->command[0], "unset") == 0)
-		i = 1;
-	return (i);
+	is_builtin = false;
+	// if (match_str(pipeline->command[0], "cd") == 0)
+	// 	i = 1;
+	// else if (match_str(pipeline->command[0], "pwd") == 0)
+	// 	i = 1;
+	// else if (match_str(pipeline->command[0], "exit") == 0)
+	// 	i = 1;
+	// else if (match_str(pipeline->command[0], "echo") == 0)
+	// 	i = 1;
+	// else if (match_str(pipeline->command[0], "env") == 0)
+	// 	i = 1;
+	// else if (match_str(pipeline->command[0], "export") == 0)
+	// 	i = 1;
+	// else if (match_str(pipeline->command[0], "unset") == 0)
+	// 	i = 1;
+	if (strings_are_equal(pipeline->command[0], "cd"))
+		is_builtin = true;
+	else if (strings_are_equal(pipeline->command[0], "pwd"))
+		is_builtin = true;
+	else if (strings_are_equal(pipeline->command[0], "exit"))
+		is_builtin = true;
+	else if (strings_are_equal(pipeline->command[0], "echo"))
+		is_builtin = true;
+	else if (strings_are_equal(pipeline->command[0], "env"))
+		is_builtin = true;
+	else if (strings_are_equal(pipeline->command[0], "export"))
+		is_builtin = true;
+	else if (strings_are_equal(pipeline->command[0], "unset"))
+		is_builtin = true;
+	return (is_builtin);
 }
 
 int	built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
 {
 	if (pipeline->redirection || pipe_lst->next)
 	{
-		if (check_built_in_file(pipeline))
+		if (is_builtin(pipeline))
 			return (1);
 	}
 	return (0);
 }
 
-void	built_in(t_pipeline *pipeline, t_list **env)
+int	execute_builtin(t_pipeline *pipeline, t_list **env)
 {
-	if (match_str(pipeline->command[0], "cd") == 0)
+	// if (match_str(pipeline->command[0], "cd") == 0)
+	// 	cd_command(pipeline->command[1], *env);
+	// else if (match_str(pipeline->command[0], "pwd") == 0)
+	// 	pwd_command(pipeline);
+	// else if (match_str(pipeline->command[0], "exit") == 0)
+	// 	exit_command(pipeline->command[1]);
+	// else if (match_str(pipeline->command[0], "echo") == 0)
+	// 	echo_command(pipeline);
+	// else if (match_str(pipeline->command[0], "env") == 0)
+	// 	env_command(*env);
+	// else if (match_str(pipeline->command[0], "export") == 0)
+	// 	export_command(env, pipeline);
+	// else if (match_str(pipeline->command[0], "unset") == 0)
+	// 	unset_command(env, pipeline);
+	if (strings_are_equal(pipeline->command[0], "cd"))
 		cd_command(pipeline->command[1], *env);
-	else if (match_str(pipeline->command[0], "pwd") == 0)
+	else if (strings_are_equal(pipeline->command[0], "pwd"))
 		pwd_command(pipeline);
-	else if (match_str(pipeline->command[0], "exit") == 0)
+	else if (strings_are_equal(pipeline->command[0], "exit"))
 		exit_command(pipeline->command[1]);
-	else if (match_str(pipeline->command[0], "echo") == 0)
+	else if (strings_are_equal(pipeline->command[0], "echo"))
 		echo_command(pipeline);
-	else if (match_str(pipeline->command[0], "env") == 0)
-		env_commands(*env);
-	else if (match_str(pipeline->command[0], "export") == 0)
+	else if (strings_are_equal(pipeline->command[0], "env"))
+		env_command(*env);
+	else if (strings_are_equal(pipeline->command[0], "export"))
 		export_command(env, pipeline);
-	else if (match_str(pipeline->command[0], "unset") == 0)
+	else if (strings_are_equal(pipeline->command[0], "unset"))
 		unset_command(env, pipeline);
+	return (0);
 }
 
-void	line_(char *line, t_list **env)
+int	tokenize_parse_execute(char *line, t_list **env)
 {
 	t_list		*lst;
 	t_list		*pipe_lst;
@@ -89,17 +120,13 @@ void	line_(char *line, t_list **env)
 
 	lst = tokenize_input(line);
 	if (!validate_grammer(lst))
-		return ;
+		return (-1);
 	remove_quotes_from_all_tokens(lst);
 	pipe_lst = create_parse_list(lst);
-	if (pipe_lst)
-		pipeline = pipe_lst->content;
-	else
-		return ;
+	pipeline = pipe_lst->content;
 	if (built_in_and_infile_check(pipeline, pipe_lst))
-		work_execve(pipe_lst, env);
-	else if (check_built_in_file(pipeline))
-		built_in(pipeline, env);
-	else
-		work_execve(pipe_lst, env);
+		return (work_execve(pipe_lst, env));
+	else if (is_builtin(pipeline))
+		return (execute_builtin(pipeline, env));
+	return (work_execve(pipe_lst, env));
 }

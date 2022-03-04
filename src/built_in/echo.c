@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/01 17:55:27 by tevfik        ########   odam.nl         */
+/*   Updated: 2022/03/04 12:27:22 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ void	echo_command(t_pipeline *pipe_line)
 	int	x;
 	int	i;
 
+	// printf("\n%s\n", pipe_line->command[1]);
 	new_line = 0;
-	if (match_str(pipe_line->command[1], "-n") == 0)
+	// if (match_str(pipe_line->command[1], "-n") == 0)
+	// 	new_line = 1;
+	if (!strings_are_equal(pipe_line->command[1], "-n"))
 		new_line = 1;
 	i = 2;
 	while (pipe_line->command[i])

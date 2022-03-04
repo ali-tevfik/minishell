@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:53:43 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/04 11:18:54 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ void	here_doc(t_pipeline *pipline)
 	redirection = pipline->redirection->content;
 	lst = NULL;
 	read_txt = readline(">");
-	while (match_str(redirection->file, read_txt) != 0){
+	// while (match_str(redirection->file, read_txt) != 0){
+	// 	ft_lstadd_back(&lst, ft_lstnew(read_txt));
+	// 	read_txt = readline(">");
+	// }
+	while (!strings_are_equal(redirection->file, read_txt))
+	{
 		ft_lstadd_back(&lst, ft_lstnew(read_txt));
 		read_txt = readline(">");
 	}

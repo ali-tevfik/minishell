@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:35:20 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/04 12:43:31 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../incl/minishell.h"
 #include <stdio.h>
 
-void	env_commands(t_list *envp)
+void	env_command(t_list *envp)
 {
 	t_env	*env;
 

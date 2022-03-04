@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 18:53:46 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:54:12 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/04 12:30:16 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void test_working(char *argv[], t_list **env)
 		i++;
 	}
 	if (txt){
-	line_(txt, env);
+	tokenize_parse_execute(txt, env);
 	free(txt);
 	}
 	free(space);

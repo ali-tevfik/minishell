@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/03 13:34:56 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/04 12:19:22 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -543,7 +543,7 @@ TEST(ExportBuiltin, ExportWithExpansion0)
 	char	*input = "export hilmi=ali$LOGNAME";
 
 	/* Tokenize and parse */
-	char	*expanded_input = check_expander(input, env_list);
+	char	*expanded_input = expand_input_string(input, env_list);
 	token_list = tokenize_input(expanded_input);
 	remove_quotes_from_all_tokens(token_list);
 	parse_list = create_parse_list(token_list);

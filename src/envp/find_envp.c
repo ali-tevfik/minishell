@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:27:10 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:27:10 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/04 11:17:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ int	match_key_env(t_list **envp, char *argument)
 	while (head != NULL)
 	{
 		env = head->content;
-		if (match_str(env->key, argument) == 0)
+		// if (match_str(env->key, argument) == 0)
+		// {
+		// 	delete_env(old_lst, envp);
+		// 	return (0);
+		// }
+		if (strings_are_equal(env->key, argument))
 		{
 			delete_env(old_lst, envp);
 			return (0);

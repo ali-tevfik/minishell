@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:50:40 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/04 12:18:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,12 @@ char	*convert_expander(char *line, t_list *env)
 	return (all_txt);
 }
 
-char	*check_expander(char *line, t_list *env)
+/*
+** Frees input line and return expanded_line.
+** Expands the variables (if any) in the line argument.
+*/
+
+char	*expand_input_string(char *line, t_list *env)
 {
 	char	*next_dolar;
 	int		start;
@@ -95,14 +100,14 @@ char	*check_expander(char *line, t_list *env)
 			if (check_emtpy_dolar(line))
 			{
 				start = check_dolar_waar(line, '$');
-				next_dolar = check_expander(line + start + 1, env);
+				next_dolar = expand_input_string(line + start + 1, env);
 				return (join_protect(substr_protect(line, 0, start + 1), next_dolar));
 			}
 		}
 		else
 		{
 			simple_quotes = check_dolar_waar(line, '\'');
-			next_dolar = check_expander(line + simple_quotes + 1, env);
+			next_dolar = expand_input_string(line + simple_quotes + 1, env);
 			return (join_protect(substr_protect(line, 0, simple_quotes + 1),
 					next_dolar));
 		}

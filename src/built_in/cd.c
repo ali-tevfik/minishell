@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:40:20 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/04 11:16:08 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void	cd_command(char *where, t_list *env)
 		exit(-1);
 	if (where == NULL)
 		where = expander("HOME", env);
-	else if (!match_str(where, "-"))
+	// else if (!match_str(where, "-"))
+	// 	result = chdir(expander("OLDPWD", env));
+	else if (strings_are_equal(where, "-"))
 		result = chdir(expander("OLDPWD", env));
 	else
 		result = chdir(where);
