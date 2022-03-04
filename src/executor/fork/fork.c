@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/04 12:41:26 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/04 12:57:34 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,18 @@ void execve_func(t_pipeline *pip_line, char **envp, t_list *env)
 {
 	find_command(pip_line->command, env);
 	execve(pip_line->command[0], pip_line->command, envp);
-	perror("Error with execve");
-	exit(1);
+	// perror("Error with execve");
+	// exit(1);
+	if (errno == ENOENT)
+	{
+		printf("minishell: %s: %s\n", pip_line->command[0], strerror(errno));
+		exit (127);
+	}
+	else if (errno == EACCES)
+	{
+		printf("minishell: %s: %s\n", pip_line->command[0], strerror(errno));
+		exit(126);
+	}
 }
 
 void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
