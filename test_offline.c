@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 18:53:46 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/04 12:30:16 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/07 15:28:52 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,18 @@
 #include "src/tokenizer/tokenizer.h"
 #include "src/libft/libft.h"
 
-void test_working(char *argv[], t_list **env)
+#include <stdlib.h>
+
+void read_commands_from_string(int argc, char **argv, t_list **env_list)
 {
-	char *txt;
-	char *small;
-	int i;
-	char *space;
-
-
-	i = 2;
-	txt = (char *)malloc(sizeof(txt) * 1);
-	space = (char *)malloc(sizeof(space) * 2);
-	if (!txt || !space)
-		exit (-1);
-	txt[0] = '\0';
-	space[0] = ' ';
-	space[1] = '\0';
-
-	while(argv[i])
+	if (argc < 3)
+		return ;
+	if (!strings_are_equal(argv[1], "-c"))
 	{
-		small = strdup_protect(argv[i]);
-		txt = join_protect(txt, space);
-		txt = join_protect(txt, small);
-		free(small);
-
-		i++;
+		printf("Error: Run as ./minishell -c \"command_to_execute\"");
+		exit (1);
 	}
-	if (txt){
-	tokenize_parse_execute(txt, env);
-	free(txt);
-	}
-	free(space);
-	exit(1);
+	char *expanded_line = expand_input_string(argv[2], *env_list);
+	int last_exit_status = tokenize_parse_execute(expanded_line, env_list);
+	exit(last_exit_status);
 }
