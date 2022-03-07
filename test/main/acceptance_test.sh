@@ -78,7 +78,7 @@ compare_files () {
 		cat "$2"
 		echo "--------------------------------------------------"
 	else
-		echo "${GREEN}SUCCES${NC}: files the same"
+		echo "${GREEN}SUCCES${NC}: "$1" and "$2" files the same"
 	fi
 }
 
@@ -212,6 +212,15 @@ echo ""
 
 # TEST 2
 command="cd .. | echo \$PWD"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+# TEST 2
+command="cat /dev/urandom | head -c10"
 test_name "$command"
 run_bash "$command" > $TEST_DIR/bash_output 2>&1
 run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
@@ -391,6 +400,17 @@ compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 compare_files "$TEST_DIR/outfile_bash_1" "$TEST_DIR/outfile_minishell_1"
 echo ""
 
+command_bash="< $file_in_1 cat > $TEST_DIR/output_bash_1 | < $file_in_1 grep codam > $TEST_DIR/output_bash_2 | wc -l < $file_in_1 > $TEST_DIR/output_bash_3"
+command_minishell="< $file_in_1 cat > $TEST_DIR/output_minishell_1 | < $file_in_1 grep codam > $TEST_DIR/output_minishell_2 | wc -l < $file_in_1 > $TEST_DIR/output_minishell_3"
+test_name "$command_bash and $command_minishell"
+run_bash "$command_bash" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command_minishell" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+compare_files "$TEST_DIR/output_bash_1" "$TEST_DIR/output_minishell_1"
+compare_files "$TEST_DIR/output_bash_2" "$TEST_DIR/output_minishell_2"
+compare_files "$TEST_DIR/output_bash_3" "$TEST_DIR/output_minishell_3"
+echo ""
 
 ###############################################################################
 #                                                                             #
@@ -446,11 +466,107 @@ compare_exit_status
 compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 
+command="echo \"\$LOGNAME\""
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo '\$LOGNAME'"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
 ###############################################################################
 #                                                                             #
 #                     Testing echo                                            #
 #                                                                             #
 ###############################################################################
+
+command="echo hilmi yilmaz"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo -n hilmi yilmaz"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo a"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo -"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo --"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo -n"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo ."
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo 9"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+command="echo asd df ds f dsf ds fds fds fds f dsf dsfds f dsf ds fds er y rth  h t gh "
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
 
 ###############################################################################
 #                                                                             #
@@ -469,6 +585,8 @@ echo ""
 #                     Wrong grammer / syntax                                  #
 #                                                                             #
 ###############################################################################
+
+
 
 ###############################################################################
 #                                                                             #
