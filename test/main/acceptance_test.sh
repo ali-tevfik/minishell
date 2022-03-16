@@ -220,7 +220,7 @@ compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 
 # TEST 2
-command="cat /dev/urandom | head -c10"
+command="cat /dev/urandom | head -c 10"
 test_name "$command"
 run_bash "$command" > $TEST_DIR/bash_output 2>&1
 run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
@@ -281,6 +281,24 @@ echo ""
 
 # TEST 2
 command="ls -l | /Users/hyilmaz/Desktop/rutger"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+# TEST 2
+command="ls -l | /Users/hyilmaz/Desktop/rutger | ls -l ~/Desktop"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+# TEST 2
+command="ls -l | ls -l ~/Desktop | /Users/hyilmaz/Desktop/rutger"
 test_name "$command"
 run_bash "$command" > $TEST_DIR/bash_output 2>&1
 run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
@@ -481,6 +499,14 @@ run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
 compare_exit_status
 compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
+
+# command="echo \$?"
+# test_name "$command"
+# run_bash "$command" > $TEST_DIR/bash_output 2>&1
+# run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+# compare_exit_status
+# compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+# echo ""
 
 ###############################################################################
 #                                                                             #

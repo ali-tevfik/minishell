@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/04 11:18:54 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/16 16:29:23 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,22 @@ void	del_lst(void *lst)
 	free(lst);
 }
 
-void write_here_doc(t_list *lst)
+/*
+** Write all the element of the list inside a temporary file in /tmp/here_doc
+*/
+
+static void write_inputs_to_here_doc(t_list *lst)
 {
 	int id;
 	char new_line;
 
 	new_line = '\n';
-	id = open("here_doc", O_CREAT | O_WRONLY | O_TRUNC, 777);
+	id = open("/tmp/here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (id < 0)
+	{
+		printf("minishell: %s: %s\n", "/tmp/here_doc", strerror(errno));
+		exit(1);
+	}
 	while(lst)
 	{
 		write(id, lst->content, ft_strlen(lst->content));
@@ -37,96 +46,98 @@ void write_here_doc(t_list *lst)
 	close(id);
 	ft_lstclear(&lst, del_lst);
 }
-void	here_doc(t_pipeline *pipline)
-{
-	t_list	*lst;
-	char	*read_txt;
-	t_redirection	*redirection;
 
-	redirection = pipline->redirection->content;
-	lst = NULL;
-	read_txt = readline(">");
-	// while (match_str(redirection->file, read_txt) != 0){
-	// 	ft_lstadd_back(&lst, ft_lstnew(read_txt));
-	// 	read_txt = readline(">");
-	// }
-	while (!strings_are_equal(redirection->file, read_txt))
+/*
+** Handles the heredocument.
+** It takes the user input and adds it to a linked list.
+** Finally, it makes a call to write_inputs_to_here_doc
+** and puts all the contents inside that file.
+*/
+
+static void	handle_here_doc(t_redirection *redirection)
+{
+	t_list			*here_doc_input_list;
+	char			*read_txt;
+
+	here_doc_input_list = NULL;
+	while (1)
 	{
-		ft_lstadd_back(&lst, ft_lstnew(read_txt));
-		read_txt = readline(">");
+		read_txt = readline("> ");
+		if (read_txt == NULL)
+			break ;
+		else if (strings_are_equal(redirection->file, read_txt))
+			break ;
+		ft_lstadd_back(&here_doc_input_list, ft_lstnew(read_txt));
 	}
-	write_here_doc(lst);
+	write_inputs_to_here_doc(here_doc_input_list);
 }
 
-int	read_infile(t_pipeline *pipe_line)
+/*
+** Handle the read (<) and here_doc (<<) operator.
+** It opens the file for reading, does dup2() and closes again.
+*/
+
+static void	read_infile(t_redirection *redirection)
 {
 	int				id;
-	t_redirection	*redirection;
 
-	redirection = pipe_line->redirection->content;
 	id = -1;
 	if (redirection->redir_type == READ)
 		id = open(redirection->file, O_RDONLY);
 	else
 	{
-		here_doc(pipe_line);
-		redirection->redir_type = READ;
-		free(redirection->file);
-		redirection->file = strdup_protect("here_doc");
-		id = read_infile(pipe_line);
-		remove("here_doc");
+		handle_here_doc(redirection);
+		id = open("/tmp/here_doc", O_RDONLY);
+		unlink("/tmp/here_doc"); // deletes the here_doc file after it is closed.
 	}
-
 	if (id < 0)
 	{
-		printf("infile read error!\n");
+		printf("minishell: %s: %s (line %d in file %s)\n", redirection->file, strerror(errno), __LINE__, __FILE__);
 		exit(1);
 	}
-	else
-	{
-		dup2(id, 0);
-		close(id);
-	}
-	return (id);
+	dup2(id, STDIN_FILENO);
+	close(id);
 }
 
-int	write_outfile(t_pipeline *pipe_line)
-{
-	int				id;
-	t_redirection	*redirection;
+/*
+** Handles the write (>) and append (>>) operator.
+** It opens the file for writing, does dup2() and closes again.
+*/
 
-	redirection = pipe_line->redirection->content;
+static void	write_outfile(t_redirection *redirection)
+{
+	int	fd;
+
 	if (redirection->redir_type == WRITE)
-		id = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		fd = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
-		id = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0666);
-	if (id < 0)
+		fd = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd < 0)
 	{
-		printf("outfile write error!\n");
+		printf("minishell: %s: %s\n", redirection->file, strerror(errno));
 		exit(1);
 	}
-	else
-	{
-		dup2(id, 1);
-		close(id);
-	}
-	return (id);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
 }
 
-int	fork_file(t_pipeline *pipe_line)
+/*
+** Loops over the redirection list for a specific command
+** and performs all necessary redirections.
+*/
+
+void	handle_redirections(t_pipeline *pipe_line)
 {
 	t_redirection	*redirection;
-	int				id;
 
 	while (pipe_line->redirection)
 	{
 		redirection = pipe_line->redirection->content;
 		if (redirection->redir_type == READ
 			|| redirection->redir_type == HERE_DOC)
-			id = read_infile(pipe_line);
+			read_infile(redirection);
 		else
-			id = write_outfile(pipe_line);
+			write_outfile(redirection);
 		pipe_line->redirection = pipe_line->redirection->next;
 	}
-	return (id);
 }

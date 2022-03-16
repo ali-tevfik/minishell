@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/04 12:57:34 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/16 16:29:36 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../../executor/find_command.h"
 #include "../../../incl/fork.h"
 #include "../../parser/parser_data_structs.h"
+
+#include <signal.h>
 
 extern int g_interactive;
 
@@ -44,11 +46,11 @@ void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 	id = fork();
 	if (id == 0)
 	{
-		if (pip_line-> redirection)
-			fork_file(pip_line);
-		close(fd[0]);
-		dup2 (fd[1], 1);
-		close(fd[1]);
+		if (pip_line->redirection)
+			handle_redirections(pip_line);
+		close(fd[0]);				// close read-end of the pipe
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);				// close write-end of the pipe
 		if (is_builtin(pip_line))
 			execute_builtin(pip_line, &env);
 		else
@@ -65,13 +67,13 @@ void	middle_child(t_pipeline *pip_line, t_list *env,
 	id = fork();
 	if (id == 0)
 	{
-		dup2 (fd[1], 1);
-		dup2 (endfile, 0);
-		close(fd[0]);
-		close(fd[1]);
-		close(endfile);
+		dup2 (fd[1], STDOUT_FILENO);	// Write to current pipe
+		dup2 (endfile, 0);				// Read from previous pipe
+		close(fd[0]);					// Close read-end current pipe
+		close(fd[1]);					// Close write-end current pipe
+		close(endfile);					// Close read-end previous pipe.
 		if (pip_line-> redirection)
-			fork_file(pip_line);
+			handle_redirections(pip_line);
 		if (is_builtin(pip_line))
 			execute_builtin(pip_line, &env);
 		else
@@ -84,14 +86,14 @@ void	last_child(t_pipeline *pip_line, t_list *env,
 		char **envp, int fd[2], int *lastid)
 {
 	*lastid = fork();
-
+	// note: using previous pipe, no pipe created in current loop because last command.
 	if (*lastid == 0)
 	{
-		if (pip_line-> redirection)
-			fd[1] = fork_file(pip_line);
-		close(fd[1]);
-		dup2 (fd[0], 0);
-		close(fd[0]);
+		if (pip_line->redirection)
+			handle_redirections(pip_line);
+		close(fd[1]);						// close write-end previous pipe (was already closed in middle child?)
+		dup2(fd[0], STDIN_FILENO);			// read from read-end previous pipe
+		close(fd[0]);						// close read-end previous pipe.
 
 		if (is_builtin(pip_line))
 			execute_builtin(pip_line, &env);
@@ -107,8 +109,8 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 	*lastid = fork();
 	if (*lastid == 0)
 	{
-		if (pip_line-> redirection)
-			fork_file(pip_line);
+		if (pip_line->redirection)
+			handle_redirections(pip_line);
 		if (is_builtin(pip_line))
 			execute_builtin(pip_line, &env);
 		else
@@ -146,7 +148,14 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 			last_child(pip_line, env, envp, fd, last_id);
 		else
 			middle_child(pip_line, env, envp, fd, end_file);
-		end_file = fd[0];
+		if (end_file != -1)			// if there is already an end_file
+		{
+			close(end_file);		// close it
+			if (pipe_lst->next)		// if we have a command coming up
+				end_file = fd[0];	// set end_file
+		}
+		else						// if no end_file, set equal to read-end current pipe
+			end_file = fd[0];
 		pipe_lst = pipe_lst->next;
 		if (pipe_lst)
 			close(fd[1]);

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:19:32 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/04 12:43:28 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/16 13:29:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 		char *envp[], int *lastid);
 int		execute_builtin(t_pipeline *pipeline, t_list **env);
 bool	is_builtin(t_pipeline *pipeline);
-int		write_outfile(t_pipeline *pipe_line);
+// int		write_outfile(t_redirection *redirection);
 void	exit_command(char *value);
 
 typedef struct s_env
