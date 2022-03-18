@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 13:26:09 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 12:25:50 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,7 @@ t_token	*create_token(char *content, t_token_type type)
 {
 	t_token	*token;
 
-	token = ft_calloc(1, sizeof(*token));
-	if (token == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
+	token = calloc_protect(1, sizeof(*token));
 	token->content = content;
 	token->type = type;
 	return (token);

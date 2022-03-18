@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 16:46:25 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/02 17:13:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 12:22:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,14 @@ void	*calloc_protect(size_t count, size_t size)
 	if (!s1)
 		exit(-1);
 	return (s1);
+}
+
+t_list	*lstnew_protect(void *content)
+{
+	t_list	*list;
+
+	list = ft_lstnew(content);
+	if (!list)
+		exit (-1);
+	return (list);
 }

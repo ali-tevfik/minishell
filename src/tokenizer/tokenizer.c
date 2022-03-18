@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 17:54:34 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 12:24:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,10 @@ static size_t	take_correct_token(t_token **single_token, t_char_iter *itr)
 	else if (**itr == '&' || **itr == ';')
 	{
 		*single_token = take_other_tokens(itr);
-		if (*single_token == NULL)
-			return (MALLOC_FAILURE);
 		next(itr);
 	}
 	else
 		*single_token = take_word(itr);
-	if (single_token == NULL)
-		return (MALLOC_FAILURE);
 	return (SUCCESS);
 }
 
@@ -75,12 +71,7 @@ t_list	*tokenize_input(char *input_string)
 			continue ;
 		else if (ret == MALLOC_FAILURE)
 			return (NULL);
-		element = ft_lstnew(single_token);
-		if (element == NULL)
-		{
-			perror("Error with malloc");
-			return (NULL);
-		}
+		element = lstnew_protect(single_token);
 		ft_lstadd_back(&token_list, element);
 	}
 	return (token_list);

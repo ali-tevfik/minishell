@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/22 17:36:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 12:23:35 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "tokenize_word.h"
 # include "tokenize_pipe.h"
 # include "tokenize_redirection.h"
+# include "../../incl/protect.h"
 
 /* Macros */
 # define SUCCESS 0

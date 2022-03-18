@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 16:47:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/25 16:53:17 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 12:23:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,6 @@ char	*strdup_protect(char *s1);
 char	*substr_protect(char *s1, int start, int finish);
 char	*substr_protect(char *s1, int start, int finish);
 void	*calloc_protect(size_t count, size_t size);
+t_list	*lstnew_protect(void *content);
+
 #endif
