@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 15:42:40 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 17:09:29 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,21 @@ static t_token	*create_content_and_get_token(char *start_token, int len,
 											int error,  t_list *env, int exitcode)
 {
 	char	*content;
+	char	*expanded_content;
 	t_token	*token;
 
 	content = substr_protect(start_token, 0, len);
-	content = expand_input_string(content, env, exitcode);
+	expanded_content = expand_input_string(content, env, exitcode);
 	if (error == 0)
-		token = create_token(content, WORD);
+	{
+		token = create_token(expanded_content, WORD);
+		free(content);
+	}
 	else
+	{
 		token = create_token(content, ERROR);
+		free(expanded_content);
+	}
 	return (token);
 }
 
@@ -62,7 +69,7 @@ static t_token	*create_content_and_get_token(char *start_token, int len,
 ** ERROR token is returned.
 */
 
-t_token	*take_word(t_char_iter *itr,  t_list *env, int exitcode)
+t_token	*take_word(t_char_iter *itr, t_list *env, int exitcode)
 {
 	int		len;
 	int		error;

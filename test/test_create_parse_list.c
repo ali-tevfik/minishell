@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 12:58:27 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/03 13:35:07 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 16:58:49 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ TEST(CreateParseList, SimplePipelineNoPipes)
 	char	*input = "ls -l";
 
 	/* Generated token list */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline list */
 	command = create_command(2, "ls", "-l");
@@ -95,7 +95,7 @@ TEST(CreateParseList, SimplePipelineOnePipe)
 	char	*input = "ls -l | grep codam > out_file";
 
 	/* Generated token list */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline list */
 	command = create_command(2, "ls", "-l");
@@ -128,7 +128,7 @@ TEST(CreateParseList, SimplePipelineTwoPipes)
 	char	*input = "ls -l | grep codam > out_file | < in_file wc -l -a > out_file_2";
 
 	/* Generated token list */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline list */
 	command = create_command(2, "ls", "-l");
@@ -166,7 +166,7 @@ TEST(CreateParseList, SimplePipelineTwoPipesChangeOrderCommandAndRedirection)
 	char	*input = "ls -l | > out_file grep codam | < in_file wc > out_file_2 -l";
 
 	/* Generated token list */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline list */
 	command = create_command(2, "ls", "-l");
@@ -204,7 +204,7 @@ TEST(CreateParseList, SimplePipelineNoPipeWeirdRedirectionOrder)
 	char	*input = "grep < infile codam >> outfile -i";
 
 	/* Generated token list */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline list */
 	command = create_command(3, "grep", "codam", "-i");
@@ -239,7 +239,7 @@ TEST(CreateParseList, SimplePipelineNoPipeWithExpansion)
 	// env_list = create_env_list(env);
 
 	/* Generated token list */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expander */
 

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 14:08:10 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 17:28:07 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,27 @@ TEST_GROUP_RUNNER(UnsetBuiltin)
 	RUN_TEST_CASE(UnsetBuiltin, WrongArgument);
 }
 
-//  TEST_GROUP_RUNNER(ExportBuiltin)
-// {
-// 	RUN_TEST_CASE(ExportBuiltin, ExportOneVariable);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportTwoVariables);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportThreeVariables);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment0);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment1);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportNoInput);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty0);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty1);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameStartsWithUnderscore);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeEqualSign);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceAfterEqualSign);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeAndAfterEqualSign);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportCaseSensitivity);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportInvalidOption);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
-//  	RUN_TEST_CASE(ExportBuiltin, ExportUnderScoreAsKey);
-// 	RUN_TEST_CASE(ExportBuiltin, ExportWithExpansion0);
-// }
+ TEST_GROUP_RUNNER(ExportBuiltin)
+{
+	RUN_TEST_CASE(ExportBuiltin, ExportOneVariable);
+	RUN_TEST_CASE(ExportBuiltin, ExportTwoVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportThreeVariables);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment0);
+	RUN_TEST_CASE(ExportBuiltin, ExportSameVariableAssignment1);
+	RUN_TEST_CASE(ExportBuiltin, ExportNoInput);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty0);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignEmpty1);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameStartsWithUnderscore);
+	RUN_TEST_CASE(ExportBuiltin, ExportVariableNameAndValueStartsWithUnderscore);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceAfterEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportAssignWithSpaceBeforeAndAfterEqualSign);
+	RUN_TEST_CASE(ExportBuiltin, ExportCaseSensitivity);
+	RUN_TEST_CASE(ExportBuiltin, ExportInvalidOption);
+	RUN_TEST_CASE(ExportBuiltin, ExportSpaceInValue);
+ 	RUN_TEST_CASE(ExportBuiltin, ExportUnderScoreAsKey);
+	RUN_TEST_CASE(ExportBuiltin, ExportWithExpansion0);
+}
 
 /* Tokenizer */
 
@@ -193,38 +193,16 @@ TEST_GROUP_RUNNER(CreateParseList)
 // 	// RUN_TEST_CASE(ExpandInputString, MultipleVariables4);
 // 	// RUN_TEST_CASE(ExpandInputString, MultipleVariables5);
 
-
-
-
 // }
 
-// TEST_GROUP_RUNNER(ExpandSingleVariable)
-// {
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing0);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing1);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing2);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing3);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing4);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing5);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing6);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing7);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing8);
-// 	RUN_TEST_CASE(ExpandSingleVariable, Existing9);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting0);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting1);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting2);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting3);
-// 	RUN_TEST_CASE(ExpandSingleVariable, NonExisting4);
-// }
-
-// TEST_GROUP_RUNNER(FindCommand)
-// {
-// 	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathLs);
-// 	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathGrep);
-// 	RUN_TEST_CASE(FindCommand, CommandExistsWithRelativePath);
-// 	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithRelativePath);
-// 	RUN_TEST_CASE(FindCommand, CommandExistsWithAbsolutePath);
-// 	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithAbsolutePath);
-// 	RUN_TEST_CASE(FindCommand, CommandDoesntExist);
-// 	// RUN_TEST_CASE(FindCommand, NoPathAvailable);
-// }
+TEST_GROUP_RUNNER(FindCommand)
+{
+	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathLs);
+	RUN_TEST_CASE(FindCommand, CommandExistsWithoutPathGrep);
+	RUN_TEST_CASE(FindCommand, CommandExistsWithRelativePath);
+	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithRelativePath);
+	RUN_TEST_CASE(FindCommand, CommandExistsWithAbsolutePath);
+	RUN_TEST_CASE(FindCommand, CommandDoesntExistsWithAbsolutePath);
+	RUN_TEST_CASE(FindCommand, CommandDoesntExist);
+	// RUN_TEST_CASE(FindCommand, NoPathAvailable);
+}

@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/16 17:29:23 by adoner        ########   odam.nl          #
+#    Updated: 2022/03/18 17:30:21 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,9 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_unset.c \
 				src/built_in/unset.c \
 				src/expander/expander_utils.c \
-				protect_malloc/protect.c
+				protect_malloc/protect.c \
+				test/test_find_command.c \
+				src/executor/find_command.c
 
 # test/test_expand_single_variable.c
 # src/expander/expand_single_variable.c
@@ -185,18 +187,20 @@ test: $(TEST_OBJ_DIR) $(LIBFT) $(TEST_NAME)
 
 test_run: test
 	@./$(TEST_NAME) -v
+
+acceptance_test: all
 	@./test/main/acceptance_test.sh
 
 $(TEST_OBJ_DIR):
 	mkdir -p $@
 
 $(TEST_NAME): $(TEST_OBJ_FILES)
-	$(GCC) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
+	$(GCC) $(DBG_FLAGS) $(FLAGS) $^ -o $@ $(LIBFT_DIR)/$(LIBFT)
 	@echo "$(GREEN) Created debug file.$(NORMAL)"
 
 $(TEST_OBJ_FILES): $(TEST_OBJ_DIR)/%.o : %.c
 	@mkdir -p $(@D)
-	@$(GCC) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
+	@$(GCC) $(DBG_FLAGS) $(FLAGS) $(UNITY_HEADERS) $(UNITY_OPTIONS) -c $< -o $@
 
 clean:
 	@rm -rdf $(OBJ_DIR) $(DBG_OBJ_DIR) $(TEST_OBJ_DIR)

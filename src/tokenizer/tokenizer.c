@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 15:41:43 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 16:56:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static size_t	take_correct_token(t_token **single_token, t_char_iter *itr, t_lis
 		next(itr);
 	}
 	else
-		*single_token = take_word(itr);
+		*single_token = take_word(itr, env, exitcode);
 	return (SUCCESS);
 }
 

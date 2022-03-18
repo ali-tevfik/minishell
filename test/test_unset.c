@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/12 17:49:25 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/03 13:35:02 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 16:59:49 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ TEST(UnsetBuiltin, DeleteFromMiddle)
 	char	*input = "unset SYSTEM";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -79,7 +79,7 @@ TEST(UnsetBuiltin, DeleteLast)
 	char	*input = "unset LOGNAME";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -103,7 +103,7 @@ TEST(UnsetBuiltin, DeleteFirst)
 	char	*input = "unset SHELL";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -127,7 +127,7 @@ TEST(UnsetBuiltin, DeleteAll)
 	char	*input = "unset SHELL SYSTEM LOGNAME";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -152,7 +152,7 @@ TEST(UnsetBuiltin, DeleteAllAndExtra)
 	char	*input = "unset SHELL SYSTEM LOGNAME HILMI";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -177,7 +177,7 @@ TEST(UnsetBuiltin, NonExisting0)
 	char	*input = "unset HILMI";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -201,7 +201,7 @@ TEST(UnsetBuiltin, NonExisting1)
 	char	*input = "unset SHELLL";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -225,7 +225,7 @@ TEST(UnsetBuiltin, NoArgument)
 	char	*input = "unset";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */
@@ -249,7 +249,7 @@ TEST(UnsetBuiltin, WrongArgument)
 	char	*input = "unset asgadg sg fhdfhdh -d fgdfg-g-df-gg";
 
 	/* Tokenize and parse */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	parse_list = create_parse_list(token_list);
 
 	/* Expected environment list */

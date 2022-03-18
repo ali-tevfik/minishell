@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:23:19 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/25 15:37:12 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 16:59:17 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ TEST(RemoveQuotesFromTokens, NoQuotes)
 	char	*input = "echo codam amsterdam";
 
 	/* Actual token list */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 	remove_quotes_from_all_tokens(actual_list);
 
 	/* Expected token list */
@@ -71,7 +71,7 @@ TEST(RemoveQuotesFromTokens, DoubleQuotesPresent)
 	char	*input = "echo \"codam\" amsterdam";
 
 	/* Actual token list */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 	remove_quotes_from_all_tokens(actual_list);
 
 	/* Expected token list */
@@ -93,7 +93,7 @@ TEST(RemoveQuotesFromTokens, SingleQuotesPresent)
 	char	*input = "echo \'codam\' amsterdam";
 
 	/* Actual token list */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 	remove_quotes_from_all_tokens(actual_list);
 
 	/* Expected token list */
@@ -115,7 +115,7 @@ TEST(RemoveQuotesFromTokens, MultipleMixedQuotesPresent)
 	char	*input = "echo \'codam\' \'amster\'dam\"ut\"recht";
 
 	/* Actual token list */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 	remove_quotes_from_all_tokens(actual_list);
 
 	/* Expected token list */
@@ -137,7 +137,7 @@ TEST(RemoveQuotesFromTokens, WordAppendWithDoubleQuotes)
 	char	*input = "ec\"ho codam\"";
 
 	/* Actual token list */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 	remove_quotes_from_all_tokens(actual_list);
 
 	/* Expected token list */
@@ -153,7 +153,7 @@ TEST(RemoveQuotesFromTokens, WordAppendWithSingleQuotes)
 	char	*input = "ec\'ho codam\'";
 
 	/* Actual token list */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 	remove_quotes_from_all_tokens(actual_list);
 
 	/* Expected token list */
@@ -170,7 +170,7 @@ TEST(RemoveQuotesFromTokens, PipesAndRedirectionOperatorsPresent)
 	char	*input = "< infile grep codam | wc -l >> outfile";
 
 	/* Actual token list */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 	remove_quotes_from_all_tokens(actual_list);
 
 	/* Expected token list */

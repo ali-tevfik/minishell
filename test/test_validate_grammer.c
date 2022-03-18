@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:04:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/16 20:23:31 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 16:57:16 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ TEST_TEAR_DOWN(CheckGrammer)
 TEST(CheckGrammer, PipesBackToBack)
 {
 	char	*input = "ls || grep codam";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -58,7 +58,7 @@ TEST(CheckGrammer, PipesBackToBack)
 TEST(CheckGrammer, RedirectionBeforePipe)
 {
 	char	*input = "grep codam > | ls -l";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -67,7 +67,7 @@ TEST(CheckGrammer, RedirectionBeforePipe)
 TEST(CheckGrammer, RedirectionAfterPipe)
 {
 	char	*input = "grep codam | > file_out ls -l";	/* Same as ls -l > file_out */
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_TRUE(result);
@@ -76,7 +76,7 @@ TEST(CheckGrammer, RedirectionAfterPipe)
 TEST(CheckGrammer, RedirectionAfterRedirection)
 {
 	char	*input = "grep codam | > >> file_out ls -l";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -85,7 +85,7 @@ TEST(CheckGrammer, RedirectionAfterRedirection)
 TEST(CheckGrammer, ErrorTokenAmpersandInList)
 {
 	char	*input = "grep codam & ls -l > file_out";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -94,7 +94,7 @@ TEST(CheckGrammer, ErrorTokenAmpersandInList)
 TEST(CheckGrammer, ErrorTokenSemiColonInList)
 {
 	char	*input = "grep codam ; ls -l > file_out";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -103,7 +103,7 @@ TEST(CheckGrammer, ErrorTokenSemiColonInList)
 TEST(CheckGrammer, OnlyPipeToken)
 {
 	char	*input = "|";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -112,7 +112,7 @@ TEST(CheckGrammer, OnlyPipeToken)
 TEST(CheckGrammer, OnlyRedirectionToken)
 {
 	char	*input = "   <   ";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -121,7 +121,7 @@ TEST(CheckGrammer, OnlyRedirectionToken)
 TEST(CheckGrammer, OnlyRedirectionToken1)
 {
 	char	*input = "   <<";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -130,7 +130,7 @@ TEST(CheckGrammer, OnlyRedirectionToken1)
 TEST(CheckGrammer, NoClosingDQuote)
 {
 	char	*input = "echo \"$HOME";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -139,7 +139,7 @@ TEST(CheckGrammer, NoClosingDQuote)
 TEST(CheckGrammer, NoClosingQuote)
 {
 	char	*input = "echo \'$HOME";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -148,7 +148,7 @@ TEST(CheckGrammer, NoClosingQuote)
 TEST(CheckGrammer, SingleDoubleSingleDoubleQuotesSequence)
 {
 	char	*input = "echo \'\"\'\"";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -157,7 +157,7 @@ TEST(CheckGrammer, SingleDoubleSingleDoubleQuotesSequence)
 TEST(CheckGrammer, DoubleSingleDoubleSingleQuotesSequence)
 {
 	char	*input = "echo \"\'\"\'";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_FALSE(result);
@@ -166,7 +166,7 @@ TEST(CheckGrammer, DoubleSingleDoubleSingleQuotesSequence)
 TEST(CheckGrammer, CorrectGrammer0)
 {
 	char	*input = "< infile ls -l > files | grep codam | wc -l > outfile";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_TRUE(result);
@@ -175,7 +175,7 @@ TEST(CheckGrammer, CorrectGrammer0)
 TEST(CheckGrammer, CorrectGrammer1)
 {
 	char	*input = "ls > ls.out -la";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_TRUE(result);
@@ -184,7 +184,7 @@ TEST(CheckGrammer, CorrectGrammer1)
 TEST(CheckGrammer, CorrectGrammer2)
 {
 	char	*input = "> ls.out ls -la";
-	actual_list = tokenize_input(input);
+	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);
 	TEST_ASSERT_TRUE(result);

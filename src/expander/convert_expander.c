@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/18 14:02:32 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 17:10:17 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,5 @@ char	*expand_input_string(char *line, t_list *env, int exit_code)
 					next_dolar));
 		}
 	}
-	return (line);
+	return (strdup_protect(line));
 }

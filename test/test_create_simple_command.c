@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 18:01:59 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 20:59:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 16:58:04 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenList)
 	char	*input = "ls -l | grep codam";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
@@ -83,7 +83,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListTakeCommandAfterPipe)
 
 	/* Tokenize input */
 	t_list	*head = token_list;
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 	head = token_list->next->next->next;
 
 	/* Expected pipeline from tokens */
@@ -107,7 +107,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFile)
 	char	*input = "ls -l > out_file | grep codam";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
@@ -130,7 +130,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithMultipleRedirectionOutFi
 	char	*input = "< in_file ls -l > out_file | grep codam";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
@@ -153,7 +153,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileBefore
 	char	*input = "> out_file ls -l | grep codam";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
@@ -176,7 +176,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithRedirectionOutFileInTheM
 	char	*input = "ls > out_file -l -a | grep codam";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(3, "ls", "-l", "-a");
@@ -199,7 +199,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithAppendOutFileInTheMiddle
 	char	*input = "ls >> append_file -l -a";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(3, "ls", "-l", "-a");
@@ -222,7 +222,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListNoPipeNoRedirection)
 	char	*input = "ls -l";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(2, "ls", "-l");
@@ -245,7 +245,7 @@ TEST(CreateSimpleCommand, CreateCommandFromTokenListWithHereDoc)
 	char	*input = "<< EOF cat > outfile";
 
 	/* Tokenize input */
-	token_list = tokenize_input(input);
+	token_list = tokenize_input(input, NULL, 0);
 
 	/* Expected pipeline from tokens */
 	expected_command = create_command(1, "cat");
