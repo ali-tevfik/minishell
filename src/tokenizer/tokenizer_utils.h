@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:39 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/19 12:09:32 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 12:13:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "../libft/libft.h"
 # include "tokenizer_data_structs.h"
 # include "iterator_api.h"
+# include "../../incl/protect.h"
 
 /* Data structures */
 

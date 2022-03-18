@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 16:44:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/19 14:55:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 15:38:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,6 @@
 /* User defined headers */
 # include "../libft/libft.h"
 # include "../tokenizer/tokenizer_data_structs.h"
-
-/* Data structures for the parser */
-/* NONE means no redirection operator */
-// typedef enum e_redir_type
-// {
-// 	OUT,
-// 	APPEND,
-// 	READ,
-// 	HERE_DOC,
-// }	t_redir_type;
 
 /* Data struct for redirection */
 typedef struct s_redirection

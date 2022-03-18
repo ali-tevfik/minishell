@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:36:13 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 14:54:32 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 15:42:06 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "iterator_api.h"
 # include "tokenizer_utils.h"
 # include "../../incl/minishell.h"
+# include "../../incl/protect.h"
 
 /* Macros */
 

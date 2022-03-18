@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 14:49:10 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 15:42:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,8 @@ static t_token	*create_content_and_get_token(char *start_token, int len,
 	char	*content;
 	t_token	*token;
 
-	content = ft_substr(start_token, 0, len);
+	content = substr_protect(start_token, 0, len);
 	content = expand_input_string(content, env, exitcode);
-	if (content == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
 	if (error == 0)
 		token = create_token(content, WORD);
 	else

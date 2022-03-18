@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:21:40 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/03 13:26:00 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 12:29:02 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@ static char	*string_is_null_handler(char c)
 {
 	char	*new_string;
 
-	new_string = ft_calloc(2, sizeof(*new_string));
-	if (new_string == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
+	new_string = calloc_protect(2, sizeof(*new_string));
 	new_string[0] = c;
 	new_string[1] = '\0';
 	return (new_string);
@@ -35,12 +30,7 @@ static char	*add_char_to_string(char *string, char c)
 	if (string == NULL)
 		return (string_is_null_handler(c));
 	len = ft_strlen(string);
-	new_string = ft_calloc(len + 2, sizeof(*new_string));
-	if (new_string == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
+	new_string = calloc_protect(len + 2, sizeof(*new_string));
 	ft_memmove(new_string, string, len);
 	new_string[len] = c;
 	new_string[len + 1] = '\0';

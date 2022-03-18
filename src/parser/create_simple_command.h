@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 16:11:04 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 19:02:56 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 12:42:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "../tokenizer/validate_grammer.h"
 # include "parser_data_structs.h"
 # include "parser_utils.h"
+# include "../../incl/protect.h"
 
 /* Macros */
 

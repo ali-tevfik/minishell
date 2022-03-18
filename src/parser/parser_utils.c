@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 14:27:46 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 15:42:51 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,9 @@ t_pipeline	*init_pipeline(t_list *token_list)
 	t_pipeline	*pipeline;
 
 	number_of_command_tokens = number_command_tokens(token_list);
-	pipeline = ft_calloc(1, sizeof(*pipeline));
-	if (pipeline == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
-	pipeline->command = ft_calloc(number_of_command_tokens + 1, \
+	pipeline = calloc_protect(1, sizeof(*pipeline));
+	pipeline->command = calloc_protect(number_of_command_tokens + 1, \
 									sizeof(*pipeline->command));
-	if (pipeline->command == NULL)
-	{
-		perror("Error with malloc");
-		return (NULL);
-	}
 	pipeline->redirection = NULL;
 	return (pipeline);
 }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 16:10:49 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 15:17:14 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 15:42:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 ** create_simple_command_up_until_pipe_token.
 */
 
-static bool	get_command(char **command, t_list **element, size_t i,
+static void	get_command(char **command, t_list **element, size_t i,
 						size_t *location)
 {
 	command[i] = ((t_token *)((*element)->content))->content;
 	*element = (*element)->next;
 	*location += 1;
-	return (true);
 }
 
 /*
@@ -31,7 +30,7 @@ static bool	get_command(char **command, t_list **element, size_t i,
 ** A command is everything up until pipe.
 */
 
-static bool	handle_redirection_tokens(t_list **redirection_list, \
+static void	handle_redirection_tokens(t_list **redirection_list, \
 										t_list **element, size_t *location)
 {
 	t_token			*current_tkn;
@@ -39,19 +38,14 @@ static bool	handle_redirection_tokens(t_list **redirection_list, \
 	t_redirection	*redirection;
 
 	current_tkn = (t_token *)((*element)->content);
-	redirection = ft_calloc(1, sizeof(*redirection));
-	if (redirection == NULL)
-		return (false);
+	redirection = calloc_protect(1, sizeof(*redirection));
 	redirection->redir_type = current_tkn->type;
 	*element = (*element)->next;
 	redirection->file = ((t_token *)((*element)->content))->content;
-	redir_element = ft_lstnew(redirection);
-	if (redir_element == NULL)
-		return (false);
+	redir_element = lstnew_protect(redirection);
 	ft_lstadd_back(redirection_list, redir_element);
 	*location += 2;
 	*element = (*element)->next;
-	return (true);
 }
 
 /*
@@ -70,21 +64,17 @@ t_pipeline	*create_simple_pipeline_up_until_pipe_token(t_list *token_list, \
 	size_t		i;
 
 	pipeline = init_pipeline(token_list);
-	if (pipeline == NULL)
-		return (NULL);
 	element = token_list;
 	i = 0;
 	while (element != NULL && ((t_token *)(element->content))->type != PIPE)
 	{
 		if (is_redirection(((t_token *)(element->content))->type))
 		{
-			if (!handle_redirection_tokens(&pipeline->redirection, \
-											&element, location))
-				return (NULL);
+			handle_redirection_tokens(&pipeline->redirection, \
+										&element, location);
 			continue ;
 		}
-		if (!get_command(pipeline->command, &element, i, location))
-			return (false);
+		get_command(pipeline->command, &element, i, location);
 		i++;
 	}
 	pipeline->command[i] = NULL;
