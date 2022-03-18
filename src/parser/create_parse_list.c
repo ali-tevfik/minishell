@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 13:00:14 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 21:16:17 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 15:35:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ t_list	*create_parse_list(t_list *token_list)
 	{
 		pipeline = create_simple_pipeline_up_until_pipe_token(location.head, \
 															&location.list_idx);
-		if (pipeline == NULL)
-			return (NULL);
-		new_list_element = ft_lstnew(pipeline);
-		if (new_list_element == NULL)
-			return (NULL);
+		new_list_element = lstnew_protect(pipeline);
 		ft_lstadd_back(&parse_list, new_list_element);
 		if (location.list_idx >= len_list)
 			break ;
