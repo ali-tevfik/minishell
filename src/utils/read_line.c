@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/07 13:56:44 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 15:16:13 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,6 @@ bool	is_builtin(t_pipeline *pipeline)
 	bool	is_builtin;
 
 	is_builtin = false;
-	// if (match_str(pipeline->command[0], "cd") == 0)
-	// 	i = 1;
-	// else if (match_str(pipeline->command[0], "pwd") == 0)
-	// 	i = 1;
-	// else if (match_str(pipeline->command[0], "exit") == 0)
-	// 	i = 1;
-	// else if (match_str(pipeline->command[0], "echo") == 0)
-	// 	i = 1;
-	// else if (match_str(pipeline->command[0], "env") == 0)
-	// 	i = 1;
-	// else if (match_str(pipeline->command[0], "export") == 0)
-	// 	i = 1;
-	// else if (match_str(pipeline->command[0], "unset") == 0)
-	// 	i = 1;
 	if (strings_are_equal(pipeline->command[0], "cd"))
 		is_builtin = true;
 	else if (strings_are_equal(pipeline->command[0], "pwd"))
@@ -66,6 +52,7 @@ bool	is_builtin(t_pipeline *pipeline)
 		is_builtin = true;
 	else if (strings_are_equal(pipeline->command[0], "unset"))
 		is_builtin = true;
+	// printf("builtin returun %d\n",is_builtin);
 	return (is_builtin);
 }
 
@@ -81,26 +68,12 @@ int	built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
 
 int	execute_builtin(t_pipeline *pipeline, t_list **env)
 {
-	// if (match_str(pipeline->command[0], "cd") == 0)
-	// 	cd_command(pipeline->command[1], *env);
-	// else if (match_str(pipeline->command[0], "pwd") == 0)
-	// 	pwd_command(pipeline);
-	// else if (match_str(pipeline->command[0], "exit") == 0)
-	// 	exit_command(pipeline->command[1]);
-	// else if (match_str(pipeline->command[0], "echo") == 0)
-	// 	echo_command(pipeline);
-	// else if (match_str(pipeline->command[0], "env") == 0)
-	// 	env_command(*env);
-	// else if (match_str(pipeline->command[0], "export") == 0)
-	// 	export_command(env, pipeline);
-	// else if (match_str(pipeline->command[0], "unset") == 0)
-	// 	unset_command(env, pipeline);
 	if (strings_are_equal(pipeline->command[0], "cd"))
 		cd_command(pipeline->command[1], *env);
 	else if (strings_are_equal(pipeline->command[0], "pwd"))
 		pwd_command(pipeline);
 	else if (strings_are_equal(pipeline->command[0], "exit"))
-		exit_command(pipeline->command[1]);
+		exit_command(pipeline);
 	else if (strings_are_equal(pipeline->command[0], "echo"))
 		echo_command(pipeline);
 	else if (strings_are_equal(pipeline->command[0], "env"))
@@ -112,13 +85,13 @@ int	execute_builtin(t_pipeline *pipeline, t_list **env)
 	return (0);
 }
 
-int	tokenize_parse_execute(char *line, t_list **env)
+int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 {
 	t_list		*lst;
 	t_list		*pipe_lst;
 	t_pipeline	*pipeline;
 
-	lst = tokenize_input(line);
+	lst = tokenize_input(line, *env, exit_code);
 	if (lst == NULL)	/* when -c option and empty string passed */
 		return (0);
 	if (!validate_grammer(lst))

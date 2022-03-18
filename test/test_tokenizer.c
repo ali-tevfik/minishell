@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/21 14:23:29 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 14:06:07 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ TEST(Tokenizer, Command)
 	expected_list = ft_lstnew(token);
 
 	/* Compare token lists */
-	compare_token_lists(expected_list, actual_list); 
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusArgument)
@@ -83,7 +83,7 @@ TEST(Tokenizer, CommandPlusArgumentStartingWithSomeSpaces)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
-	compare_token_lists(expected_list, actual_list); 
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, MultipleCommandsPlusArgumentsWithPipes)
@@ -118,7 +118,7 @@ TEST(Tokenizer, MultipleCommandsPlusArgumentsWithPipes)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
-	compare_token_lists(expected_list, actual_list); 
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusRedirection)
@@ -138,7 +138,7 @@ TEST(Tokenizer, CommandPlusRedirection)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
-	compare_token_lists(expected_list, actual_list); 
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusRedirectionPlusPipes)
@@ -179,7 +179,7 @@ TEST(Tokenizer, CommandPlusRedirectionPlusPipes)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
-	compare_token_lists(expected_list, actual_list); 
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusDquotes)
@@ -196,7 +196,7 @@ TEST(Tokenizer, CommandPlusDquotes)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
-	compare_token_lists(expected_list, actual_list); 
+	compare_token_lists(expected_list, actual_list);
 }
 
 TEST(Tokenizer, CommandPlusDquotesEmpty)
@@ -322,6 +322,26 @@ TEST(Tokenizer, WeirdSpacing)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	token = create_token(ft_strdup("codam"), WORD);			/* codam */
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(Tokenizer, hallo)
+{
+	char	*input = "echo a > ";
+	t_token	*token;
+	actual_list = tokenize_input(input);
+
+	/* Create the expected token */
+	token = create_token(ft_strdup("echo"), WORD);			/* echo */
+	expected_list = ft_lstnew(token);
+
+	token = create_token(ft_strdup("a"), WORD);				/* hilmi */
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(NULL, WRITE);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */

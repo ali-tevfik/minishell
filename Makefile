@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/03 13:17:54 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/03/16 17:29:23 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -185,6 +185,7 @@ test: $(TEST_OBJ_DIR) $(LIBFT) $(TEST_NAME)
 
 test_run: test
 	@./$(TEST_NAME) -v
+	@./test/main/acceptance_test.sh
 
 $(TEST_OBJ_DIR):
 	mkdir -p $@

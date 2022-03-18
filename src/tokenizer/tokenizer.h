@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:41:03 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/22 17:36:25 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 14:51:23 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@
 /* Data structures */
 
 /* Function prototypes */
-t_list	*tokenize_input(char *input_string);
+t_list	*tokenize_input(char *input_string, t_list *env, int exitcode);
 
 #endif

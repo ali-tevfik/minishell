@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:57:18 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/24 15:03:54 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 14:08:15 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	run_all_tests(void)
 	RUN_TEST_GROUP(CreateSimpleCommand);
 	RUN_TEST_GROUP(CreateParseList);
 	RUN_TEST_GROUP(RemoveQuotesFromTokens);
-	RUN_TEST_GROUP(ExpandInputString);
+	// RUN_TEST_GROUP(ExpandInputString);
 	// RUN_TEST_GROUP(ExpandSingleVariable);
 	// RUN_TEST_GROUP(FindCommand);
-	RUN_TEST_GROUP(ExportBuiltin);
+	// RUN_TEST_GROUP(ExportBuiltin);
 	RUN_TEST_GROUP(UnsetBuiltin);
 }
 

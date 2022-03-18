@@ -6,14 +6,14 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 16:10:49 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 19:20:40 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 15:17:14 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "create_simple_command.h"
 
 /*
-** Get the command. Helper function for 
+** Get the command. Helper function for
 ** create_simple_command_up_until_pipe_token.
 */
 
@@ -26,7 +26,7 @@ static bool	get_command(char **command, t_list **element, size_t i,
 	return (true);
 }
 
-/* 
+/*
 ** Handles the redirection operator in a command.
 ** A command is everything up until pipe.
 */

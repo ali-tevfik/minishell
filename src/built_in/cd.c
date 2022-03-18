@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/04 11:16:08 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/17 15:36:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ void	cd_command(char *where, t_list *env)
 		exit(-1);
 	if (where == NULL)
 		where = expander("HOME", env);
-	// else if (!match_str(where, "-"))
-	// 	result = chdir(expander("OLDPWD", env));
-	else if (strings_are_equal(where, "-"))
+	if (strings_are_equal(where, "-"))
 		result = chdir(expander("OLDPWD", env));
 	else
 		result = chdir(where);
 	if (result == -1)
-		printf("minishell: cd: %s: %s\n", where, strerror(errno));
+		ft_putendl_fd("deneme",1);
+		// printf("minishell: cd: %s: %s\n", where, strerror(errno));
 	else
 	{
 		match_key_env(&env, "OLDPWD");

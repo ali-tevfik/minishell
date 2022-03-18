@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/23 10:03:52 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 14:49:10 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ static void	handle_quotes(t_char_iter *itr, int *len, int *error)
 */
 
 static t_token	*create_content_and_get_token(char *start_token, int len,
-											int error)
+											int error,  t_list *env, int exitcode)
 {
 	char	*content;
 	t_token	*token;
 
 	content = ft_substr(start_token, 0, len);
+	content = expand_input_string(content, env, exitcode);
 	if (content == NULL)
 	{
 		perror("Error with malloc");
@@ -66,7 +67,7 @@ static t_token	*create_content_and_get_token(char *start_token, int len,
 ** ERROR token is returned.
 */
 
-t_token	*take_word(t_char_iter *itr)
+t_token	*take_word(t_char_iter *itr,  t_list *env, int exitcode)
 {
 	int		len;
 	int		error;
@@ -89,5 +90,5 @@ t_token	*take_word(t_char_iter *itr)
 		len++;
 		next(itr);
 	}
-	return (create_content_and_get_token(start_token, len, error));
+	return (create_content_and_get_token(start_token, len, error, env, exitcode));
 }
