@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 15:15:53 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 17:54:59 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,9 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 			execve_func(pip_line, envp, env);
 		exit(0);
 	}
-
+	else
+		if (is_builtin(pip_line))
+			execute_builtin(pip_line, &env);
 }
 
 void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
@@ -141,7 +143,6 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 				exit(0);
 		}
 		g_interactive = 0;
-		// printf("fork_func!\n");
 		if (i == 0 && !pipe_lst->next)
 			one_argument(pip_line, env, envp, last_id);
 		else if (i == 0)

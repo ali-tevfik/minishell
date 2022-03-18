@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 14:42:27 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 15:22:17 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ static void	write_outfile(t_redirection *redirection)
 	int	fd;
 
 	if (redirection->redir_type == WRITE)
-		fd = open("",  O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		// fd = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		fd = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
