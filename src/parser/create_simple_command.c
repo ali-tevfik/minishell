@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 16:10:49 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 15:34:52 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/18 15:38:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,13 @@ static void	handle_redirection_tokens(t_list **redirection_list, \
 
 	current_tkn = (t_token *)((*element)->content);
 	redirection = calloc_protect(1, sizeof(*redirection));
-	// if (redirection == NULL)
-	// 	return (false);
 	redirection->redir_type = current_tkn->type;
 	*element = (*element)->next;
 	redirection->file = ((t_token *)((*element)->content))->content;
 	redir_element = lstnew_protect(redirection);
-	// if (redir_element == NULL)
-	// 	return (false);
 	ft_lstadd_back(redirection_list, redir_element);
 	*location += 2;
 	*element = (*element)->next;
-	// return (true);
 }
 
 /*
@@ -69,8 +64,6 @@ t_pipeline	*create_simple_pipeline_up_until_pipe_token(t_list *token_list, \
 	size_t		i;
 
 	pipeline = init_pipeline(token_list);
-	// if (pipeline == NULL)
-	// 	return (NULL);
 	element = token_list;
 	i = 0;
 	while (element != NULL && ((t_token *)(element->content))->type != PIPE)
