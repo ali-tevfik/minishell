@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 17:21:00 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 12:50:54 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ void	exit_command(t_pipeline *pipeline, int *exit_code)
 	int	return_value;
 
 	if (!pipeline->command[1])
+	{
+		ft_putendl_fd("exit", 0);
 		exit(1);
+	}
+
 	else if (pipeline->command[2] && return_value_check_int(pipeline->command[1]))
 	{
 		printf("Minishell: exit: too many arguments\n");

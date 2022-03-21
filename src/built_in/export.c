@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 17:02:43 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 12:13:41 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	export_command(t_list **env, t_pipeline *pipe_line)
 	int		exit_code;
 
 	exit_code = 0;
-	i = 1;
+	i = 0;
 	if (!pipe_line->command[1])
 		write_export_env(*env);
 	while (pipe_line->command[i + 1])

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 15:22:17 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 12:46:08 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	handle_here_doc(t_redirection *redirection)
 	here_doc_input_list = NULL;
 	while (1)
 	{
+		// printf("while\n");
 		read_txt = readline("> ");
 		if (read_txt == NULL)
 			break ;

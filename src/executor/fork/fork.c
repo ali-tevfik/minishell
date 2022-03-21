@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 17:54:59 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 12:56:07 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void execve_func(t_pipeline *pip_line, char **envp, t_list *env)
 void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
 {
 	int	id;
-
 	id = fork();
 	if (id == 0)
 	{
-		if (pip_line->redirection)
-			handle_redirections(pip_line);
 		close(fd[0]);				// close read-end of the pipe
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);				// close write-end of the pipe
+		if (pip_line->redirection)
+			handle_redirections(pip_line);
+		// printf("first\n");
 		if (is_builtin(pip_line))
 			execute_builtin(pip_line, &env);
 		else
@@ -72,6 +72,7 @@ void	middle_child(t_pipeline *pip_line, t_list *env,
 		close(fd[0]);					// Close read-end current pipe
 		close(fd[1]);					// Close write-end current pipe
 		close(endfile);					// Close read-end previous pipe.
+		// printf("middle_child\n");
 		if (pip_line-> redirection)
 			handle_redirections(pip_line);
 		if (is_builtin(pip_line))
@@ -89,12 +90,22 @@ void	last_child(t_pipeline *pip_line, t_list *env,
 	// note: using previous pipe, no pipe created in current loop because last command.
 	if (*lastid == 0)
 	{
-		if (pip_line->redirection)
-			handle_redirections(pip_line);
 		close(fd[1]);						// close write-end previous pipe (was already closed in middle child?)
-		dup2(fd[0], STDIN_FILENO);			// read from read-end previous pipe
-		close(fd[0]);						// close read-end previous pipe.
 
+		if (pip_line->redirection)
+		{
+			if (((t_redirection *)pip_line->redirection->content)->redir_type != HERE_DOC)
+			{
+				dup2(fd[0], STDIN_FILENO);			// read from read-end previous pipe
+				close(fd[0]);						// close read-end previous pipe.
+			}
+			handle_redirections(pip_line);
+		}
+		else
+		{
+			dup2(fd[0], STDIN_FILENO);			// read from read-end previous pipe
+			close(fd[0]);						// close read-end previous pipe.
+		}
 		if (is_builtin(pip_line))
 			execute_builtin(pip_line, &env);
 		else
@@ -119,8 +130,13 @@ void	one_argument(t_pipeline *pip_line, t_list *env,
 		exit(0);
 	}
 	else
-		if (is_builtin(pip_line))
+		if (strings_are_equal(pip_line->command[0], "cd") ||
+			strings_are_equal(pip_line->command[0], "export")||
+			strings_are_equal(pip_line->command[0], "unset")){
+			// printf("burda\n");
 			execute_builtin(pip_line, &env);
+
+			}
 }
 
 void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
