@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 16:14:16 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 16:56:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,61 +16,61 @@
 #include "../../parser/parser_data_structs.h"
 #include "../../../incl/protect.h"
 
-void	del_lst(void *lst)
-{
-	free(lst);
-}
+// void	del_lst(void *lst)
+// {
+// 	free(lst);
+// }
 
-/*
-** Write all the element of the list inside a temporary file in /tmp/here_doc
-*/
+// /*
+// ** Write all the element of the list inside a temporary file in /tmp/here_doc
+// */
 
-static	void	write_inputs_to_here_doc(t_list *lst)
-{
-	int		id;
-	char	new_line;
+// static	void	write_inputs_to_here_doc(t_list *lst)
+// {
+// 	int		id;
+// 	char	new_line;
 
-	new_line = '\n';
-	id = open("/tmp/here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (id < 0)
-	{
-		printf("minishell: %s: %s\n", "/tmp/here_doc", strerror(errno));
-		exit(1);
-	}
-	while (lst)
-	{
-		write(id, lst->content, ft_strlen(lst->content));
-		write(id, &new_line, sizeof(new_line));
-		lst = lst->next;
-	}
-	close(id);
-	ft_lstclear(&lst, del_lst);
-}
+// 	new_line = '\n';
+// 	id = open("/tmp/here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 	if (id < 0)
+// 	{
+// 		printf("minishell: %s: %s\n", "/tmp/here_doc", strerror(errno));
+// 		exit(1);
+// 	}
+// 	while (lst)
+// 	{
+// 		write(id, lst->content, ft_strlen(lst->content));
+// 		write(id, &new_line, sizeof(new_line));
+// 		lst = lst->next;
+// 	}
+// 	close(id);
+// 	ft_lstclear(&lst, del_lst);
+// }
 
-/*
-** Handles the heredocument.
-** It takes the user input and adds it to a linked list.
-** Finally, it makes a call to write_inputs_to_here_doc
-** and puts all the contents inside that file.
-*/
+// /*
+// ** Handles the heredocument.
+// ** It takes the user input and adds it to a linked list.
+// ** Finally, it makes a call to write_inputs_to_here_doc
+// ** and puts all the contents inside that file.
+// */
 
-static	void	handle_here_doc(t_redirection *redirection)
-{
-	t_list	*here_doc_input_list;
-	char	*read_txt;
+// static	void	handle_here_doc(t_redirection *redirection)
+// {
+// 	t_list	*here_doc_input_list;
+// 	char	*read_txt;
 
-	here_doc_input_list = NULL;
-	while (1)
-	{
-		read_txt = readline("> ");
-		if (read_txt == NULL)
-			break ;
-		else if (strings_are_equal(redirection->file, read_txt))
-			break ;
-		ft_lstadd_back(&here_doc_input_list, ft_lstnew(read_txt));
-	}
-	write_inputs_to_here_doc(here_doc_input_list);
-}
+// 	here_doc_input_list = NULL;
+// 	while (1)
+// 	{
+// 		read_txt = readline("> ");
+// 		if (read_txt == NULL)
+// 			break ;
+// 		else if (strings_are_equal(redirection->file, read_txt))
+// 			break ;
+// 		ft_lstadd_back(&here_doc_input_list, ft_lstnew(read_txt));
+// 	}
+// 	write_inputs_to_here_doc(here_doc_input_list);
+// }
 
 /*
 ** Handle the read (<) and here_doc (<<) operator.
@@ -82,14 +82,14 @@ static	void	read_infile(t_redirection *redirection)
 	int	id;
 
 	id = -1;
-	if (redirection->redir_type == READ)
+	// if (redirection->redir_type == READ)
 		id = open(redirection->file, O_RDONLY);
-	else
-	{
-		handle_here_doc(redirection);
-		id = open("/tmp/here_doc", O_RDONLY);
-		unlink("/tmp/here_doc");
-	}
+	// else
+	// {
+	// 	handle_here_doc(redirection);
+	// 	// id = open("/tmp/here_doc", O_RDONLY);
+	// 	// unlink("/tmp/here_doc");
+	// }
 	if (id < 0)
 	{
 		printf("minishell: %s: %s (line %d in file %s)\n",

@@ -6,11 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/03/21 14:55:15 by adoner        ########   odam.nl         */
-=======
-/*   Updated: 2022/03/21 13:27:43 by hyilmaz       ########   odam.nl         */
->>>>>>> 4ac3fbc15ab39e5144c7c92f8e298462dfc36cb9
+/*   Updated: 2022/03/21 16:30:40 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

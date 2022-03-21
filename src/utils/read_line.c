@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 14:58:24 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 16:56:55 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "../parser/create_parse_list.h"
 #include "../tokenizer/validate_grammer.h"
 #include "../tokenizer/remove_quotes_from_all_tokens.h"
+#include "../here_doc/handle_here_doc.h"
 
 extern	int	g_interactive;
 
@@ -100,6 +101,7 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 		return (-1);
 	remove_quotes_from_all_tokens(lst);
 	pipe_lst = create_parse_list(lst);
+	read_here_doc(pipe_lst);
 	pipeline = pipe_lst->content;
 	if (built_in_and_infile_check(pipeline, pipe_lst))
 		return (work_execve(pipe_lst, env));
