@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 15:42:51 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/21 12:20:27 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static size_t	number_command_tokens(t_list *token_list)
 	while (token_list != NULL && \
 			((t_token *)(token_list->content))->type != PIPE)
 	{
-		if (is_redirection(((t_token *)(token_list->content))->type))
+		if (is_redirection_token(token_list->content))
 		{
 			token_list = token_list->next;
 			token_list = token_list->next;

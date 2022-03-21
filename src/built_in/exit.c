@@ -6,7 +6,11 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/03/21 14:55:15 by adoner        ########   odam.nl         */
+=======
+/*   Updated: 2022/03/21 13:27:43 by hyilmaz       ########   odam.nl         */
+>>>>>>> 4ac3fbc15ab39e5144c7c92f8e298462dfc36cb9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +38,8 @@ void	exit_command(t_pipeline *pipeline, int *exit_code)
 
 	if (!pipeline->command[1])
 	{
-		ft_putendl_fd("exit", 0);
-		exit(1);
+		ft_putendl_fd("exit", STDIN_FILENO);
+		exit(0);
 	}
 	else if (pipeline->command[2] && return_value_check_int(pipeline->command[1]))
 	{
@@ -51,7 +55,7 @@ void	exit_command(t_pipeline *pipeline, int *exit_code)
 		}
 		return_value = ft_atoi(pipeline->command[1]);
 		*exit_code = ft_atoi(pipeline->command[1]);
-		ft_putendl_fd("exit", 0);
+		ft_putendl_fd("exit", STDIN_FILENO);
 		exit(return_value);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 17:09:29 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/21 13:16:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** It consumer the iterator up until the next character after the
 ** closing (double) quote.
 */
+
 static void	handle_quotes(t_char_iter *itr, int *len, int *error)
 {
 	char	quote_type;
@@ -39,28 +40,34 @@ static void	handle_quotes(t_char_iter *itr, int *len, int *error)
 }
 
 /*
-** Helper function that creates the content and token.
+** Create the content which is going inside of the token.
 */
 
-static t_token	*create_content_and_get_token(char *start_token, int len,
-											int error,  t_list *env, int exitcode)
+static char	*create_content(char *start_token, int len,
+							t_list *env, int exitcode)
 {
 	char	*content;
 	char	*expanded_content;
-	t_token	*token;
 
 	content = substr_protect(start_token, 0, len);
 	expanded_content = expand_input_string(content, env, exitcode);
-	if (error == 0)
-	{
-		token = create_token(expanded_content, WORD);
+	if (strings_are_equal(content, expanded_content))
 		free(content);
-	}
+	return (expanded_content);
+}
+
+/*
+** Create token with content inside of it.
+*/
+
+static t_token	*create_word_token(char *content, int error)
+{
+	t_token	*token;
+
+	if (error == 0)
+		token = create_token(content, WORD);
 	else
-	{
 		token = create_token(content, ERROR);
-		free(expanded_content);
-	}
 	return (token);
 }
 
@@ -74,6 +81,7 @@ t_token	*take_word(t_char_iter *itr, t_list *env, int exitcode)
 	int		len;
 	int		error;
 	char	*start_token;
+	char	*content;
 
 	len = 0;
 	error = 0;
@@ -92,5 +100,6 @@ t_token	*take_word(t_char_iter *itr, t_list *env, int exitcode)
 		len++;
 		next(itr);
 	}
-	return (create_content_and_get_token(start_token, len, error, env, exitcode));
+	content = create_content(start_token, len, env, exitcode);
+	return (create_word_token(content, error));
 }

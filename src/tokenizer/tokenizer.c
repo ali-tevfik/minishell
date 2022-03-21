@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 16:56:10 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/21 13:19:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static t_token	*take_other_tokens(t_char_iter *itr)
 ** Otherwise return SUCCES, or MALLOC_ERROR when an allocation failed.
 */
 
-static size_t	take_correct_token(t_token **single_token, t_char_iter *itr, t_list *env, int exitcode)
+static size_t	take_correct_token(t_token **single_token, t_char_iter *itr,
+									t_list *env, int exitcode)
 {
 	if (**itr == '|')
 		*single_token = take_pipe(itr);
@@ -69,8 +70,6 @@ t_list	*tokenize_input(char *input_string, t_list *env, int exitcode)
 		ret = take_correct_token(&single_token, &itr, env, exitcode);
 		if (ret == BLANK_SPACE)
 			continue ;
-		else if (ret == MALLOC_FAILURE)
-			return (NULL);
 		element = lstnew_protect(single_token);
 		ft_lstadd_back(&token_list, element);
 	}

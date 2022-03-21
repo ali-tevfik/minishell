@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:17:55 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/20 19:01:05 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/21 12:21:54 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,23 @@ static bool	print_unexpected_token_message(t_token *token)
 	return (false);
 }
 
-bool	is_redirection(t_token_type type)
+bool	is_redirection_token(t_token *token)
 {
+	t_token_type	type;
+
+	type = token->type;
 	if (type == READ || type == WRITE || \
 		type == HERE_DOC || type == APPEND)
+		return (true);
+	return (false);
+}
+
+bool	is_pipe_token(t_token *token)
+{
+	t_token_type	type;
+
+	type = token->type;
+	if (type == PIPE)
 		return (true);
 	return (false);
 }
@@ -51,28 +64,28 @@ bool	is_redirection(t_token_type type)
 bool	validate_grammer(t_list *token_list)
 {
 	t_list	*head;
-	int		previous_type;
+	t_list	*previous_token;
 
-	head = token_list;
-	previous_type = ((t_token *)(head->content))->type;
-	if (ft_lstsize(head) == 1 && (((t_token *)(head->content))->type == PIPE || \
-		is_redirection(((t_token *)(head->content))->type)))
-		return (print_unexpected_token_message((t_token *)(head->content)));
-	head = head->next;
+	previous_token = token_list;
+	head = token_list->next;
 	while (head)
 	{
-		if (((t_token *)(head->content))->type == PIPE && previous_type == PIPE)
+		if (is_pipe_token(head->content) && \
+			is_pipe_token(previous_token->content))
 			return (print_unexpected_token_message((t_token *)(head->content)));
-		else if ((is_redirection(((t_token *)(head->content))->type) || \
-				((t_token *)(head->content))->type == PIPE) && \
-				is_redirection(previous_type))
+		else if ((is_redirection_token(head->content) || \
+				is_pipe_token(head->content)) && \
+				is_redirection_token(previous_token->content))
 			return (print_unexpected_token_message((t_token *)(head->content)));
 		else if (((t_token *)(head->content))->type == ERROR || \
 				((t_token *)(head->content))->type == AMPERSAND || \
 				((t_token *)(head->content))->type == SEMICOLON)
 			return (print_unexpected_token_message((t_token *)(head->content)));
-		previous_type = ((t_token *)(head->content))->type;
+		previous_token = head;
 		head = head->next;
 	}
+	if (is_pipe_token(previous_token->content) || \
+		is_redirection_token(previous_token->content))
+		return (print_unexpected_token_message(previous_token->content));
 	return (true);
 }
