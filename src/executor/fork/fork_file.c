@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 14:42:27 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 12:46:08 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	handle_here_doc(t_redirection *redirection)
 	here_doc_input_list = NULL;
 	while (1)
 	{
+		// printf("while\n");
 		read_txt = readline("> ");
 		if (read_txt == NULL)
 			break ;
@@ -109,8 +110,7 @@ static void	write_outfile(t_redirection *redirection)
 	int	fd;
 
 	if (redirection->redir_type == WRITE)
-		fd = open("",  O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		// fd = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		fd = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)

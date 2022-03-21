@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/17 15:36:48 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 17:01:01 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../incl/minishell.h"
 #include "../parser/parser_data_structs.h"
 
-void	cd_command(char *where, t_list *env)
+int	cd_command(char *where, t_list *env)
 {
 	int		result;
 	char	*old_pwd;
@@ -30,11 +30,14 @@ void	cd_command(char *where, t_list *env)
 	else
 		result = chdir(where);
 	if (result == -1)
-		ft_putendl_fd("deneme",1);
-		// printf("minishell: cd: %s: %s\n", where, strerror(errno));
+	{
+		perror("Minishell:");
+		return (1);
+	}
 	else
 	{
 		match_key_env(&env, "OLDPWD");
 		add_new_export(&env, "OLDPWD", old_pwd);
 	}
+	return (0);
 }

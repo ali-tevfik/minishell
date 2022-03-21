@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 15:16:13 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 17:48:50 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,24 @@ int	built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
 
 int	execute_builtin(t_pipeline *pipeline, t_list **env)
 {
+	int	exit_code;
+
+	exit_code = 0;
 	if (strings_are_equal(pipeline->command[0], "cd"))
-		cd_command(pipeline->command[1], *env);
+		exit_code = cd_command(pipeline->command[1], *env);
 	else if (strings_are_equal(pipeline->command[0], "pwd"))
 		pwd_command(pipeline);
 	else if (strings_are_equal(pipeline->command[0], "exit"))
-		exit_command(pipeline);
+		exit_command(pipeline, &exit_code);
 	else if (strings_are_equal(pipeline->command[0], "echo"))
 		echo_command(pipeline);
 	else if (strings_are_equal(pipeline->command[0], "env"))
 		env_command(*env);
 	else if (strings_are_equal(pipeline->command[0], "export"))
-		export_command(env, pipeline);
+		exit_code = export_command(env, pipeline);
 	else if (strings_are_equal(pipeline->command[0], "unset"))
-		unset_command(env, pipeline);
-	return (0);
+		exit_code = unset_command(env, pipeline);
+	return (exit_code);
 }
 
 int	tokenize_parse_execute(char *line, t_list **env, int exit_code)

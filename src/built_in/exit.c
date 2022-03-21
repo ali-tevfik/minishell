@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/16 19:41:20 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 12:50:54 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@ bool return_value_check_int(char *c)
 	return (true);
 }
 
-void	exit_command(t_pipeline *pipeline)
+void	exit_command(t_pipeline *pipeline, int *exit_code)
 {
 	int	return_value;
 
 	if (!pipeline->command[1])
+	{
+		ft_putendl_fd("exit", 0);
 		exit(1);
+	}
+
 	else if (pipeline->command[2] && return_value_check_int(pipeline->command[1]))
 	{
 		printf("Minishell: exit: too many arguments\n");
@@ -43,10 +47,12 @@ void	exit_command(t_pipeline *pipeline)
 		if (!return_value_check_int(pipeline->command[1]))
 		{
 			printf("Minishell: exit: %s: numeric argument required\n", pipeline->command[0]);
+			*exit_code = 255;
 			exit(255);
 		}
-		return_value = ft_atoi(pipeline->command[0]);
-		printf("%d\n",return_value);
+		return_value = ft_atoi(pipeline->command[1]);
+		*exit_code = ft_atoi(pipeline->command[1]);
+		ft_putendl_fd("exit", 0);
 		exit(return_value);
 	}
 

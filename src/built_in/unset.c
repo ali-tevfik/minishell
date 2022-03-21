@@ -6,17 +6,19 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/21 17:19:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/11 19:59:34 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/18 17:05:51 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/built_in.h"
 #include "../../incl/minishell.h"
 
-void	unset_command(t_list **envp, t_pipeline *pipe_line)
+int	unset_command(t_list **envp, t_pipeline *pipe_line)
 {
 	int	i;
+	int	exit_code;
 
+	exit_code = 1;
 	i = 1;
 	while (pipe_line->command[i])
 	{
@@ -24,7 +26,11 @@ void	unset_command(t_list **envp, t_pipeline *pipe_line)
 			printf("unset: `%s': not a valid identifier\n",
 				pipe_line->command[i]);
 		else
+		{
 			match_key_env(envp, pipe_line->command[i]);
+			exit_code = 0;
+		}
 		i++;
 	}
+	return (exit_code);
 }
