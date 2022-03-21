@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:36:13 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 15:42:06 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/21 12:59:39 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@
 /* Data structures */
 
 /* Function prototypes */
-t_token	*take_word(t_char_iter *itr,  t_list *env, int exitcode);
+t_token	*take_word(t_char_iter *itr, t_list *env, int exitcode);
 
 #endif

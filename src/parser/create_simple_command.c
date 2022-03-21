@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 16:10:49 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 15:42:59 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/21 12:20:30 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_pipeline	*create_simple_pipeline_up_until_pipe_token(t_list *token_list, \
 	i = 0;
 	while (element != NULL && ((t_token *)(element->content))->type != PIPE)
 	{
-		if (is_redirection(((t_token *)(element->content))->type))
+		if (is_redirection_token(element->content))
 		{
 			handle_redirection_tokens(&pipeline->redirection, \
 										&element, location);
