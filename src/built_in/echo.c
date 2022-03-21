@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/16 19:44:59 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 13:21:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,10 @@
 #include "../../incl/minishell.h"
 #include "../parser/parser_data_structs.h"
 
-void	echo_command(t_pipeline *pipe_line)
+void	write_echo(t_pipeline *pipe_line, int i)
 {
-	int	new_line;
 	int	x;
-	int	i;
 
-	new_line = 0;
-	i = 1;
-	if (strings_are_equal(pipe_line->command[1], "-n"))
-	{
-		new_line = 1;
-		i++;
-	}
 	while (pipe_line->command[i])
 	{
 		x = 0;
@@ -43,6 +34,21 @@ void	echo_command(t_pipeline *pipe_line)
 			ft_putchar_fd(' ', 1);
 		i++;
 	}
+}
+
+void	echo_command(t_pipeline *pipe_line)
+{
+	int	new_line;
+	int	i;
+
+	new_line = 0;
+	i = 1;
+	if (strings_are_equal(pipe_line->command[1], "-n"))
+	{
+		new_line = 1;
+		i++;
+	}
+	write_echo(pipe_line, i);
 	if (new_line == 0)
 		ft_putchar_fd('\n', 1);
 }

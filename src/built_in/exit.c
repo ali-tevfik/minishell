@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 12:50:54 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 14:55:15 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "../../incl/minishell.h"
 #include "../parser/create_parse_list.h"
 
-bool return_value_check_int(char *c)
+bool	return_value_check_int(char *c)
 {
 	int	i;
 
 	i = 0;
-	while(c[i])
+	while (c[i])
 	{
 		if (!ft_isdigit(c[i]))
 			return (false);
@@ -37,7 +37,6 @@ void	exit_command(t_pipeline *pipeline, int *exit_code)
 		ft_putendl_fd("exit", 0);
 		exit(1);
 	}
-
 	else if (pipeline->command[2] && return_value_check_int(pipeline->command[1]))
 	{
 		printf("Minishell: exit: too many arguments\n");
@@ -55,5 +54,4 @@ void	exit_command(t_pipeline *pipeline, int *exit_code)
 		ft_putendl_fd("exit", 0);
 		exit(return_value);
 	}
-
 }

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 12:56:07 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 16:11:30 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 
 extern int g_interactive;
 
-void execve_func(t_pipeline *pip_line, char **envp, t_list *env)
+void	execve_func(t_pipeline *pip_line, t_list *env)
 {
+	char	**envp;
+
+	envp = create_envp(env);
 	find_command(pip_line->command, env);
 	execve(pip_line->command[0], pip_line->command, envp);
-	// perror("Error with execve");
-	// exit(1);
 	if (errno == ENOENT)
 	{
 		printf("minishell: %s: %s\n", pip_line->command[0], strerror(errno));
@@ -39,104 +40,14 @@ void execve_func(t_pipeline *pip_line, char **envp, t_list *env)
 	}
 }
 
-void	first_child(t_pipeline *pip_line, t_list *env, char **envp, int fd[2])
+void	kies_builtin_of_execve(t_pipeline *pip_line, t_list *env)
 {
-	int	id;
-	id = fork();
-	if (id == 0)
-	{
-		close(fd[0]);				// close read-end of the pipe
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);				// close write-end of the pipe
-		if (pip_line->redirection)
-			handle_redirections(pip_line);
-		// printf("first\n");
-		if (is_builtin(pip_line))
-			execute_builtin(pip_line, &env);
-		else
-			execve_func(pip_line, envp, env);
-		exit(0);
-	}
-}
-
-void	middle_child(t_pipeline *pip_line, t_list *env,
-		char **envp, int fd[2], int endfile)
-{
-	int	id;
-
-	id = fork();
-	if (id == 0)
-	{
-		dup2 (fd[1], STDOUT_FILENO);	// Write to current pipe
-		dup2 (endfile, 0);				// Read from previous pipe
-		close(fd[0]);					// Close read-end current pipe
-		close(fd[1]);					// Close write-end current pipe
-		close(endfile);					// Close read-end previous pipe.
-		// printf("middle_child\n");
-		if (pip_line-> redirection)
-			handle_redirections(pip_line);
-		if (is_builtin(pip_line))
-			execute_builtin(pip_line, &env);
-		else
-			execve_func(pip_line, envp, env);
-		exit(0);
-	}
-}
-
-void	last_child(t_pipeline *pip_line, t_list *env,
-		char **envp, int fd[2], int *lastid)
-{
-	*lastid = fork();
-	// note: using previous pipe, no pipe created in current loop because last command.
-	if (*lastid == 0)
-	{
-		close(fd[1]);						// close write-end previous pipe (was already closed in middle child?)
-
-		if (pip_line->redirection)
-		{
-			if (((t_redirection *)pip_line->redirection->content)->redir_type != HERE_DOC)
-			{
-				dup2(fd[0], STDIN_FILENO);			// read from read-end previous pipe
-				close(fd[0]);						// close read-end previous pipe.
-			}
-			handle_redirections(pip_line);
-		}
-		else
-		{
-			dup2(fd[0], STDIN_FILENO);			// read from read-end previous pipe
-			close(fd[0]);						// close read-end previous pipe.
-		}
-		if (is_builtin(pip_line))
-			execute_builtin(pip_line, &env);
-		else
-			execve_func(pip_line, envp, env);
-		exit(0);
-	}
-}
-
-void	one_argument(t_pipeline *pip_line, t_list *env,
-		char *envp[], int *lastid)
-{
-	// printf("one_argument!\n");
-	*lastid = fork();
-	if (*lastid == 0)
-	{
-		if (pip_line->redirection)
-			handle_redirections(pip_line);
-		if (is_builtin(pip_line))
-			execute_builtin(pip_line, &env);
-		else
-			execve_func(pip_line, envp, env);
-		exit(0);
-	}
+	if (pip_line->redirection)
+		handle_redirections(pip_line);
+	if (is_builtin(pip_line))
+		execute_builtin(pip_line, &env);
 	else
-		if (strings_are_equal(pip_line->command[0], "cd") ||
-			strings_are_equal(pip_line->command[0], "export")||
-			strings_are_equal(pip_line->command[0], "unset")){
-			// printf("burda\n");
-			execute_builtin(pip_line, &env);
-
-			}
+		execve_func(pip_line, env);
 }
 
 void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
@@ -145,9 +56,7 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 	int			end_file;
 	int			i;
 	t_pipeline	*pip_line;
-	char		**envp;
 
-	envp = create_envp(env);
 	i = 0;
 	end_file = -1;
 	while (pipe_lst)
@@ -160,20 +69,20 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 		}
 		g_interactive = 0;
 		if (i == 0 && !pipe_lst->next)
-			one_argument(pip_line, env, envp, last_id);
+			one_argument(pip_line, env, last_id);
 		else if (i == 0)
-			first_child(pip_line, env, envp, fd);
+			first_child(pip_line, env, fd);
 		else if (!pipe_lst->next)
-			last_child(pip_line, env, envp, fd, last_id);
+			last_child(pip_line, env, fd, last_id);
 		else
-			middle_child(pip_line, env, envp, fd, end_file);
-		if (end_file != -1)			// if there is already an end_file
+			middle_child(pip_line, env, fd, end_file);
+		if (end_file != -1)
 		{
-			close(end_file);		// close it
-			if (pipe_lst->next)		// if we have a command coming up
-				end_file = fd[0];	// set end_file
+			close(end_file);
+			if (pipe_lst->next)
+				end_file = fd[0];
 		}
-		else						// if no end_file, set equal to read-end current pipe
+		else
 			end_file = fd[0];
 		pipe_lst = pipe_lst->next;
 		if (pipe_lst)

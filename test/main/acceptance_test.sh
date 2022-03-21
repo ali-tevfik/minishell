@@ -3,7 +3,7 @@
 # Run as: ./acceptance_test.sh
 
 # Configuration parameters
-PATH_TO_MINISHELL="$HOME/Desktop/curriculum/minishell"
+PATH_TO_MINISHELL="/Users/adoner/Desktop/minishell/minishell"
 
 # Colours
 RED="\033[0;31m"
@@ -354,7 +354,7 @@ compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 compare_files "$TEST_DIR/outfile_bash_1" "$TEST_DIR/outfile_minishell_1"
 echo ""
 
-# TEST 
+# TEST
 command_bash="< $file_in_1 cat | wc -l"
 command_minishell="< $file_in_1 cat | wc -l"
 test_name "$command_bash and $command_minishell"
@@ -364,7 +364,7 @@ compare_exit_status
 compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 
-# TEST 
+# TEST
 command_bash="ls -l | < $file_in_1 cat"
 command_minishell="ls -l | < $file_in_1 cat"
 test_name "$command_bash and $command_minishell"
@@ -374,7 +374,7 @@ compare_exit_status
 compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 
-# TEST 
+# TEST
 command_bash="ls -l | < $file_in_1 cat | wc -l"
 command_minishell="ls -l | < $file_in_1 cat | wc -l"
 test_name "$command_bash and $command_minishell"
@@ -384,7 +384,7 @@ compare_exit_status
 compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 
-# TEST 
+# TEST
 command_bash="ls -l | < $file_in_1 cat > $TEST_DIR/outfile_bash_1"
 command_minishell="ls -l | < $file_in_1 cat > $TEST_DIR/outfile_minishell_1"
 test_name "$command_bash and $command_minishell"

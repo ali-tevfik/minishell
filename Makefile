@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/18 17:30:21 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/03/21 16:05:05 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC_FILES = minishell.c \
 			executor/find_command.c\
 			executor/fork/waiting_last_child.c\
 			executor/fork/fork_file.c \
+			executor/fork/fork_childeren.c \
 			envp/create_envp.c \
 			envp/find_envp.c \
 			envp/create_lst_envp.c \

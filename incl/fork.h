@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/04 13:06:56 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/16 16:29:16 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/21 16:05:46 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,9 @@
 void	fork_func(t_list *command_lst, t_list *env, int *last_id);
 int		wait_and_get_last_exit_status(int last_process_pid);
 void	handle_redirections(t_pipeline *pipe_line);
+void	kies_builtin_of_execve(t_pipeline *pip_line, t_list *env);
+void	first_child(t_pipeline *pip_line, t_list *env, int fd[2]);
+void	middle_child(t_pipeline *pip_line, t_list *env, int fd[2], int endfile);
+void	last_child(t_pipeline *pip_line, t_list *env, int fd[2], int *lastid);
+void	one_argument(t_pipeline *pip_line, t_list *env, int *lastid);
 #endif

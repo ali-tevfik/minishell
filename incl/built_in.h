@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:19:32 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 17:05:33 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 15:14:33 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ char	*get_env(t_list *lst, char *argument);
 bool	strings_are_equal(char *s1, char *s2);
 int		cd_command(char *where, t_list *env);
 int		ft_isname(char *txt);
-void	add_new_export(t_list **envp, char *s1, char *s2);
-void	one_argument(t_pipeline *pip_line, t_list *env,
-		char *envp[], int *lastid);
+void	add_new_export(t_list **envp, char *s1, char *s2, bool *exit_code);
+void	one_argument(t_pipeline *pip_line, t_list *env, int *lastid);
 int		execute_builtin(t_pipeline *pipeline, t_list **env);
 bool	is_builtin(t_pipeline *pipeline);
 void	exit_command(t_pipeline *pipeline, int *exit_code);

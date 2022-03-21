@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/21 13:15:53 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 14:56:37 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ char	*convert_expander(char *line, t_list *env)
 	return (all_txt);
 }
 
-int find_how_many_chr(char *line)
+int	find_how_many_chr(char *line)
 {
 	int	i;
 	int	x;
 
 	x = 0;
 	i = 0;
-	while(line[i])
+	while (line[i])
 	{
 		if (line[i] != ' ')
 			x++;
@@ -119,7 +119,6 @@ char	*skip_space(char *line)
 		i++;
 	}
 	new_txt[i] = '\0';
-	// free(line); NODIG?
 	return (new_txt);
 }
 

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 17:48:50 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 14:58:24 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "../tokenizer/validate_grammer.h"
 #include "../tokenizer/remove_quotes_from_all_tokens.h"
 
-extern int g_interactive;
+extern	int	g_interactive;
 
 int	work_execve(t_list *pipe_lst, t_list **env)
 {
@@ -52,7 +52,6 @@ bool	is_builtin(t_pipeline *pipeline)
 		is_builtin = true;
 	else if (strings_are_equal(pipeline->command[0], "unset"))
 		is_builtin = true;
-	// printf("builtin returun %d\n",is_builtin);
 	return (is_builtin);
 }
 

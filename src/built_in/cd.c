@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/18 17:01:01 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 14:53:00 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	cd_command(char *where, t_list *env)
 	else
 	{
 		match_key_env(&env, "OLDPWD");
-		add_new_export(&env, "OLDPWD", old_pwd);
+		add_new_export(&env, "OLDPWD", old_pwd, NULL);
 	}
 	return (0);
 }

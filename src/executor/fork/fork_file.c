@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 12:46:08 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/21 16:14:16 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	del_lst(void *lst)
 ** Write all the element of the list inside a temporary file in /tmp/here_doc
 */
 
-static void write_inputs_to_here_doc(t_list *lst)
+static	void	write_inputs_to_here_doc(t_list *lst)
 {
-	int id;
-	char new_line;
+	int		id;
+	char	new_line;
 
 	new_line = '\n';
 	id = open("/tmp/here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -37,7 +37,7 @@ static void write_inputs_to_here_doc(t_list *lst)
 		printf("minishell: %s: %s\n", "/tmp/here_doc", strerror(errno));
 		exit(1);
 	}
-	while(lst)
+	while (lst)
 	{
 		write(id, lst->content, ft_strlen(lst->content));
 		write(id, &new_line, sizeof(new_line));
@@ -54,15 +54,14 @@ static void write_inputs_to_here_doc(t_list *lst)
 ** and puts all the contents inside that file.
 */
 
-static void	handle_here_doc(t_redirection *redirection)
+static	void	handle_here_doc(t_redirection *redirection)
 {
-	t_list			*here_doc_input_list;
-	char			*read_txt;
+	t_list	*here_doc_input_list;
+	char	*read_txt;
 
 	here_doc_input_list = NULL;
 	while (1)
 	{
-		// printf("while\n");
 		read_txt = readline("> ");
 		if (read_txt == NULL)
 			break ;
@@ -78,9 +77,9 @@ static void	handle_here_doc(t_redirection *redirection)
 ** It opens the file for reading, does dup2() and closes again.
 */
 
-static void	read_infile(t_redirection *redirection)
+static	void	read_infile(t_redirection *redirection)
 {
-	int				id;
+	int	id;
 
 	id = -1;
 	if (redirection->redir_type == READ)
@@ -89,11 +88,12 @@ static void	read_infile(t_redirection *redirection)
 	{
 		handle_here_doc(redirection);
 		id = open("/tmp/here_doc", O_RDONLY);
-		unlink("/tmp/here_doc"); // deletes the here_doc file after it is closed.
+		unlink("/tmp/here_doc");
 	}
 	if (id < 0)
 	{
-		printf("minishell: %s: %s (line %d in file %s)\n", redirection->file, strerror(errno), __LINE__, __FILE__);
+		printf("minishell: %s: %s (line %d in file %s)\n",
+			redirection->file, strerror(errno), __LINE__, __FILE__);
 		exit(1);
 	}
 	dup2(id, STDIN_FILENO);
@@ -105,7 +105,7 @@ static void	read_infile(t_redirection *redirection)
 ** It opens the file for writing, does dup2() and closes again.
 */
 
-static void	write_outfile(t_redirection *redirection)
+static	void	write_outfile(t_redirection *redirection)
 {
 	int	fd;
 
