@@ -6,22 +6,17 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 13:23:18 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 16:37:15 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "handle_here_doc.h"
 
-void	del_lst(void *lst)
-{
-	free(lst);
-}
-
 /*
 ** Write all the element of the list inside a temporary file in /tmp/here_doc
 */
 
-void	write_inputs_to_here_doc(t_list *lst, t_redirection *redirection)
+static void	write_inputs_to_here_doc(t_list *lst, t_redirection *redirection)
 {
 	int		id;
 	char	new_line;
@@ -40,7 +35,7 @@ void	write_inputs_to_here_doc(t_list *lst, t_redirection *redirection)
 		lst = lst->next;
 	}
 	close(id);
-	ft_lstclear(&lst, del_lst);
+	ft_lstclear(&lst, free);
 }
 
 /*
@@ -68,48 +63,55 @@ static void	handle_here_doc(t_redirection *redirection, char *eof)
 	write_inputs_to_here_doc(here_doc_input_list, redirection);
 }
 
-void	read_here_doc(t_list *pipe_list)
+/*
+** If there are here documents present
+** create the temporary files inside of /tmp directory.
+*/
+
+static void	child_here_doc(t_list *pipe_list)
+{
+	size_t			i;
+	t_list			*redirection_list;
+	t_redirection	*redirection;
+	char			*eof;
+
+	signal(SIGINT, SIG_DFL);
+	i = 0;
+	while (pipe_list)
+	{
+		redirection_list = ((t_pipeline *)(pipe_list->content))->redirection;
+		while (redirection_list)
+		{
+			redirection = redirection_list->content;
+			if (redirection->redir_type == HERE_DOC)
+			{
+				eof = strdup_protect(redirection->file);
+				redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
+				handle_here_doc(redirection, eof);
+				i++;
+			}
+			redirection_list = redirection_list->next;
+		}
+		pipe_list = pipe_list->next;
+	}
+	exit (0);
+}
+
+/*
+** After the here document temporary files are created,
+** this function updates the parse_list.
+*/
+
+static void	set_here_doc_files(t_list *pipe_list)
 {
 	size_t			i;
 	t_redirection	*redirection;
 	t_list			*redirection_list;
-	char			*eof;
-	int exit_status;
-	
+
 	i = 0;
-	t_list *new_pipe_line = pipe_list;
-	int pid = fork();
-	if (pid == 0)
+	while (pipe_list != NULL)
 	{
-		signal(SIGINT, SIG_DFL);
-		while (pipe_list)
-		{
-			redirection_list = ((t_pipeline *)(pipe_list->content))->redirection;
-			while (redirection_list)
-			{
-				redirection = redirection_list->content;
-				if (redirection->redir_type == HERE_DOC)
-				{
-					eof = strdup_protect(redirection->file);
-					free(redirection->file);
-					redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
-					handle_here_doc(redirection, eof);
-					i++;
-				}
-				redirection_list = redirection_list->next;
-			}
-			pipe_list = pipe_list->next;
-		}
-		exit (2);
-	}
-	else
-	{
-		exit_status = wait_and_get_last_exit_status(pid);
-	}
-	// Loop over parse list again and set all filenames of here docs.
-	while (new_pipe_line != NULL)
-	{
-		redirection_list = ((t_pipeline *)(new_pipe_line->content))->redirection;
+		redirection_list = ((t_pipeline *)(pipe_list->content))->redirection;
 		while (redirection_list)
 		{
 			redirection = redirection_list->content;
@@ -121,6 +123,28 @@ void	read_here_doc(t_list *pipe_list)
 			}
 			redirection_list = redirection_list->next;
 		}
-		new_pipe_line = new_pipe_line->next;
+		pipe_list = pipe_list->next;
 	}
+}
+
+/*
+** Creates a process and loopes over all commands in the pipeline.
+** For each here document found,
+** it creates a file in the format /tmp/here_doc_{0,1,...,n}.
+** After the process is finished, 
+** loop again over the pipe_line list and change all here document
+** files to /tmp/here_doc_{0,1,...,n}.
+*/
+
+void	read_here_doc(t_list *pipe_list)
+{
+	int	pid;
+	int	exit_status;
+
+	pid = fork();
+	if (pid == 0)
+		child_here_doc(pipe_list);
+	else
+		exit_status = wait_and_get_last_exit_status(pid);
+	set_here_doc_files(pipe_list);
 }

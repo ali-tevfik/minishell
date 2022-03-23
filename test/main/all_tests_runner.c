@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 17:35:58 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 13:51:43 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,11 @@ TEST_GROUP_RUNNER(CheckGrammer)
 	RUN_TEST_CASE(CheckGrammer, CorrectGrammer2);
 	RUN_TEST_CASE(CheckGrammer, EndWithRedirToken);
 	RUN_TEST_CASE(CheckGrammer, EndWithPipeToken);
-
+	RUN_TEST_CASE(CheckGrammer, StartWithSemicolonToken);
+	RUN_TEST_CASE(CheckGrammer, StartWithAmpersandToken);
+	RUN_TEST_CASE(CheckGrammer, OnlySemicolonToken);
+	RUN_TEST_CASE(CheckGrammer, OnlyAmpersandToken);
+	
 }
 
 /* Parser */

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 12:40:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 17:11:26 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	t_list		*lst;
 	t_list		*pipe_lst;
 	t_pipeline	*pipeline;
+	int			exit_status;
 
 	lst = tokenize_input(line, *env, exit_code);
 	if (lst == NULL)	/* when -c option and empty string passed */
@@ -103,9 +104,18 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	pipe_lst = create_parse_list(lst);
 	read_here_doc(pipe_lst);
 	pipeline = pipe_lst->content;
+	// if (built_in_and_infile_check(pipeline, pipe_lst))
+	// 	return (work_execve(pipe_lst, env));
+	// else if (is_builtin(pipeline))
+	// 	return (execute_builtin(pipeline, env));
+	// return (work_execve(pipe_lst, env));
 	if (built_in_and_infile_check(pipeline, pipe_lst))
-		return (work_execve(pipe_lst, env));
+		exit_status = work_execve(pipe_lst, env);
 	else if (is_builtin(pipeline))
-		return (execute_builtin(pipeline, env));
-	return (work_execve(pipe_lst, env));
+		exit_status = execute_builtin(pipeline, env);
+	else
+		exit_status = work_execve(pipe_lst, env);
+	ft_lstclear(&pipe_lst, free_parse_list_element);
+	ft_lstclear(&lst, free_token);
+	return (exit_status);
 }

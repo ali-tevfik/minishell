@@ -3,7 +3,7 @@
 # Run as: ./acceptance_test.sh
 
 # Configuration parameters
-PATH_TO_MINISHELL="/Users/adoner/Desktop/minishell/minishell"
+PATH_TO_MINISHELL="/Users/hyilmaz/Desktop/curriculum/minishell"
 
 # Colours
 RED="\033[0;31m"
@@ -107,6 +107,24 @@ echo ""
 
 # TEST 1
 command="pwd 0"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+# TEST 1
+command="pwd -"
+test_name "$command"
+run_bash "$command" > $TEST_DIR/bash_output 2>&1
+run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
+compare_exit_status
+compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
+echo ""
+
+# TEST 1
+command="pwd --"
 test_name "$command"
 run_bash "$command" > $TEST_DIR/bash_output 2>&1
 run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
@@ -289,7 +307,7 @@ compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 
 # TEST 2
-command="ls -l | /Users/hyilmaz/Desktop/rutger | ls -l ~/Desktop"
+command="ls -l | /Users/hyilmaz/Desktop/rutger | ls -l /Users/hyilmaz/Desktop"
 test_name "$command"
 run_bash "$command" > $TEST_DIR/bash_output 2>&1
 run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
@@ -298,7 +316,7 @@ compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 
 # TEST 2
-command="ls -l | ls -l ~/Desktop | /Users/hyilmaz/Desktop/rutger"
+command="ls -l | ls -l /Users/hyilmaz/Desktop | /Users/hyilmaz/Desktop/rutger"
 test_name "$command"
 run_bash "$command" > $TEST_DIR/bash_output 2>&1
 run_minishell "$command" > $TEST_DIR/minishell_output 2>&1

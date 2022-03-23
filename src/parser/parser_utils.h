@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:45 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 12:40:11 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 16:57:54 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* System headers */
 # include <stdio.h>
+# include <stdlib.h>
 
 /* User defined header */
 # include "../libft/libft.h"
@@ -28,6 +29,7 @@
 /* Data structures */
 
 /* Function prototypes */
+void		free_parse_list_element(void *pipeline);
 t_pipeline	*init_pipeline(t_list *token_list);
 
 #endif
