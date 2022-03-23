@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:04:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 17:35:46 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 13:49:38 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,42 @@ TEST(CheckGrammer, EndWithRedirToken)
 TEST(CheckGrammer, EndWithPipeToken)
 {
 	char	*input = "echo a |";
+	actual_list = tokenize_input(input, NULL, 0);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, StartWithSemicolonToken)
+{
+	char	*input = ";s";
+	actual_list = tokenize_input(input, NULL, 0);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, StartWithAmpersandToken)
+{
+	char	*input = "&s";
+	actual_list = tokenize_input(input, NULL, 0);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, OnlySemicolonToken)
+{
+	char	*input = ";";
+	actual_list = tokenize_input(input, NULL, 0);
+
+	bool	result = validate_grammer(actual_list);
+	TEST_ASSERT_FALSE(result);
+}
+
+TEST(CheckGrammer, OnlyAmpersandToken)
+{
+	char	*input = "&";
 	actual_list = tokenize_input(input, NULL, 0);
 
 	bool	result = validate_grammer(actual_list);

@@ -6,11 +6,15 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 12:25:50 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 17:14:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer_utils.h"
+
+/*
+** Compares the char c against delimiter characters of bash.
+*/
 
 bool	is_char_a_delimiter(char c)
 {
@@ -27,6 +31,10 @@ bool	is_char_a_delimiter(char c)
 	return (false);
 }
 
+/*
+** Create a token with content and type.
+*/
+
 t_token	*create_token(char *content, t_token_type type)
 {
 	t_token	*token;
@@ -42,7 +50,7 @@ void	free_token(void *token)
 	t_token	*casted_token;
 
 	casted_token = token;
-	free(casted_token->content);
+	// free(casted_token->content);
 	free(casted_token);
 }
 
