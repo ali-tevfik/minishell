@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/21 18:23:04 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 12:44:43 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ void	read_here_doc(t_list *pipe_list)
 	t_redirection	*redirection;
 	t_list			*redirection_list;
 	char			*eof;
-
+	int exit_status;
+	
 	i = 0;
+	t_list *new_pipe_line = pipe_list;
 	int pid = fork();
 	if (pid == 0)
 	{
@@ -97,36 +99,28 @@ void	read_here_doc(t_list *pipe_list)
 			}
 			pipe_list = pipe_list->next;
 		}
+		exit (2);
 	}
 	else
 	{
-		wait_and_get_last_exit_status(pid);
+		exit_status = wait_and_get_last_exit_status(pid);
 	}
 
-
-	// i = 0;
-	// while (pipe_list)
-	// {
-	// 	redirection_list = ((t_pipeline *)(pipe_list->content))->redirection;
-	// 	while (redirection_list)
-	// 	{
-	// 		redirection = redirection_list->content;
-	// 		if (redirection->redir_type == HERE_DOC)
-	// 		{
-	// 			eof = strdup_protect(redirection->file);
-	// 			free(redirection->file);
-	// 			redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
-	// 			int pid = fork();
-	// 			if (pid == 0)
-	// 				handle_here_doc(redirection, eof);
-	// 			else
-	// 			{
-	// 				wait_and_get_last_exit_status(pid);
-	// 			}
-	// 			i++;
-	// 		}
-	// 		redirection_list = redirection_list->next;
-	// 	}
-	// 	pipe_list = pipe_list->next;
-	// }
+	// Loop over parse list again and set all filenames of here docs.
+	while (new_pipe_line != NULL)
+	{
+		redirection_list = ((t_pipeline *)(new_pipe_line->content))->redirection;
+		while (redirection_list)
+		{
+			redirection = redirection_list->content;
+			if (redirection->redir_type == HERE_DOC)
+			{
+				free(redirection->file);
+				redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
+				i++;
+			}
+			redirection_list = redirection_list->next;
+		}
+		new_pipe_line = new_pipe_line->next;
+	}
 }

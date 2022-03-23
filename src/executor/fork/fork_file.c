@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 16:56:40 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 12:42:54 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,7 @@ static	void	read_infile(t_redirection *redirection)
 {
 	int	id;
 
-	id = -1;
-	// if (redirection->redir_type == READ)
-		id = open(redirection->file, O_RDONLY);
-	// else
-	// {
-	// 	handle_here_doc(redirection);
-	// 	// id = open("/tmp/here_doc", O_RDONLY);
-	// 	// unlink("/tmp/here_doc");
-	// }
+	id = open(redirection->file, O_RDONLY);
 	if (id < 0)
 	{
 		printf("minishell: %s: %s (line %d in file %s)\n",
