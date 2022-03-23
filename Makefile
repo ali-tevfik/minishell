@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/21 16:05:05 by adoner        ########   odam.nl          #
+#    Updated: 2022/03/23 11:44:03 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRC_FILES = minishell.c \
 			tokenizer/remove_quotes_from_all_tokens.c \
 			protect_malloc/protect.c \
 			signals/set_signals.c \
-			signals/signal_handler.c
+			signals/signal_handler.c \
+			here_doc/handle_here_doc.c
 
 
 TEST_FILES = 	unity/src/unity.c \
@@ -167,7 +168,7 @@ $(NAME): $(OBJ)
 
 $(OBJ): $(OBJ_DIR)/%.o : %.c $(HEADER_FILES)
 	@mkdir -p $(@D)
-	@$(GCC) $(FLAGS) -c $< -o $@
+	$(GCC) $(FLAGS) -c $< -o $@
 
 # Build debug
 debug: $(DBG_OBJ_DIR) $(LIBFT) $(DBG_NAME)

@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/18 15:15:19 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 12:08:47 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static t_list	*init_shell(int argc, char *argv[], char *envp[],
 int	main(int argc, char *argv[], char *envp[])
 {
 	char			*line;
-	// char			*expanded_line;
 	unsigned char	last_exit_status;
 	t_list			*env_list;
 
@@ -57,22 +56,10 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("Minishell> ");
 		if (line == NULL)
 			return (0);
-		// if (match_str(line, "") != 0)
-		// {
-		// 	add_history(line);
-		// 	line = check_expander(line, env_list);
-		// 	last_exit_status = line_(line, &env_list);
-		// 	printf("last exit status = %d\n", last_exit_status);
-		// }
 		if (!strings_are_equal(line, ""))
 		{
 			add_history(line);
-			// printf("before expand!\n");
-			// expanded_line = expand_input_string(line, env_list, last_exit_status);
-			// printf("after expand! [%s]\n", expanded_line);
 			last_exit_status = tokenize_parse_execute(line, &env_list, last_exit_status);
-			// printf("after last_exit_status!\n");
-			// printf("last exit status = %d\n", last_exit_status);
 		}
 		free(line);
 	}
