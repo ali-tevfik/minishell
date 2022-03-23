@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 14:49:09 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 13:16:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	write_export_env(t_list *env_lst)
 	while (env_lst)
 	{
 		env = env_lst->content;
-		printf("declare -x %s=%s\n", env->key, env->value);
+		printf("declare -x %s=\"%s\"\n", env->key, env->value);
 		env_lst = env_lst->next;
 	}
 }
