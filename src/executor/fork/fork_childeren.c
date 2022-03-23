@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:01:43 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 12:15:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 12:48:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	one_argument(t_pipeline *pip_line, t_list *env, int *lastid)
 	*lastid = fork();
 	if (*lastid == 0)
 	{
-		printf("Forked...\n");
 		kies_builtin_of_execve(pip_line, env);
 		exit(0);
 	}
