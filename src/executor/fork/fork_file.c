@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 12:42:54 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 17:34:14 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 // 		write(id, &new_line, sizeof(new_line));
 // 		lst = lst->next;
 // 	}
-// 	close(id);
+// 	protect_close(id);
 // 	ft_lstclear(&lst, del_lst);
 // }
 
@@ -74,7 +74,7 @@
 
 /*
 ** Handle the read (<) and here_doc (<<) operator.
-** It opens the file for reading, does dup2() and closes again.
+** It opens the file for reading, does protect_dup2() and protect_closes again.
 */
 
 static	void	read_infile(t_redirection *redirection)
@@ -88,13 +88,13 @@ static	void	read_infile(t_redirection *redirection)
 			redirection->file, strerror(errno), __LINE__, __FILE__);
 		exit(1);
 	}
-	dup2(id, STDIN_FILENO);
-	close(id);
+	protect_dup2(id, STDIN_FILENO);
+	protect_close(id);
 }
 
 /*
 ** Handles the write (>) and append (>>) operator.
-** It opens the file for writing, does dup2() and closes again.
+** It opens the file for writing, does protect_dup2() and protect_closes again.
 */
 
 static	void	write_outfile(t_redirection *redirection)
@@ -110,8 +110,8 @@ static	void	write_outfile(t_redirection *redirection)
 		printf("minishell: %s: %s\n", redirection->file, strerror(errno));
 		exit(1);
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	protect_dup2(fd, STDOUT_FILENO);
+	protect_close(fd);
 }
 
 /*

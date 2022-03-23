@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 12:41:39 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 17:34:52 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include "../../executor/find_command.h"
 #include "../../../incl/fork.h"
 #include "../../parser/parser_data_structs.h"
+#include "../../../incl/protect.h"
 
 #include <signal.h>
 
-extern int g_interactive;
+extern int	g_interactive;
 
 void	execve_func(t_pipeline *pip_line, t_list *env)
 {
@@ -50,6 +51,7 @@ void	kies_builtin_of_execve(t_pipeline *pip_line, t_list *env)
 		execve_func(pip_line, env);
 }
 
+
 void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 {
 	int			fd[2];
@@ -78,7 +80,7 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 			middle_child(pip_line, env, fd, end_file);
 		if (end_file != -1)
 		{
-			close(end_file);
+			protect_close(end_file);
 			if (pipe_lst->next)
 				end_file = fd[0];
 		}
@@ -86,7 +88,7 @@ void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 			end_file = fd[0];
 		pipe_lst = pipe_lst->next;
 		if (pipe_lst)
-			close(fd[1]);
+			protect_close(fd[1]);
 		i++;
 	}
 }

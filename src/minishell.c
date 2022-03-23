@@ -6,7 +6,11 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/03/23 16:45:24 by hyilmaz       ########   odam.nl         */
+=======
+/*   Updated: 2022/03/23 14:11:32 by adoner        ########   odam.nl         */
+>>>>>>> norm_check_adoner
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +19,15 @@
 #include "tokenizer/tokenizer.h"
 #include "signals/set_signals.h"
 
-void read_commands_from_string(int argc, char **argv, t_list **env, int exit_code);
+void	read_commands_from_string(int argc, char **argv,
+			t_list **env, int exit_code);
 
 /*
 ** Makes sure that signal is handled by either child or parent process,
 ** not both.
 */
 
-int	g_interactive = 1;
+int		g_interactive = 1;
 
 /*
 ** Set signals and creates environment list.
@@ -50,7 +55,10 @@ int	main(int argc, char *argv[], char *envp[])
 
 	last_exit_status = 0;
 	env_list = init_shell(argc, argv, envp, &last_exit_status);
+<<<<<<< HEAD
 	read_commands_from_string(argc, argv, &env_list, last_exit_status);
+=======
+>>>>>>> norm_check_adoner
 	while (1)
 	{
 		line = readline("Minishell> ");
@@ -59,7 +67,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!strings_are_equal(line, ""))
 		{
 			add_history(line);
-			last_exit_status = tokenize_parse_execute(line, &env_list, last_exit_status);
+			last_exit_status = tokenize_parse_execute(line, &env_list,
+					last_exit_status);
 		}
 		free(line);
 	}

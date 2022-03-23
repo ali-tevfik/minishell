@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.h                                         :+:    :+:            */
+/*   protect_2.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/25 15:45:41 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 14:19:56 by adoner        ########   odam.nl         */
+/*   Created: 2022/02/25 16:46:25 by adoner        #+#    #+#                 */
+/*   Updated: 2022/03/23 17:41:30 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDER_H
-#define EXPANDER_H
+#include "../../incl/protect.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-int	check_dolar_waar(char *str, int chr);
-int	finished_expander(char *txt);
-int	check_quotes(char *line, char ch);
-int	check_emtpy_dolar(char *line);
-char	*crete_first_deel(char *line);
-char	*skip_space(char *line);
-int	find_how_many_chr(char *line);
-#endif
+t_list	*lstnew_protect(void *content)
+{
+	t_list	*list;
+
+	list = ft_lstnew(content);
+	if (!list)
+	{
+		perror("Malloc failed");
+		exit (-1);
+	}
+	return (list);
+}
+
+char	*protect_itoa(int i)
+{
+	char	*txt;
+
+	txt = ft_itoa(i);
+	if (!txt)
+		exit(1);
+	return (txt);
+}

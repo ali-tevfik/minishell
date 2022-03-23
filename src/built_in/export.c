@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 13:16:48 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 17:41:49 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	add_new_export(t_list **envp, char *s1, char *s2, bool *exit_code)
 {
 	t_env	*env;
 
-	env = ft_calloc(2, sizeof(*env));
+	env = calloc_protect(2, sizeof(*env));
 	if (!env)
 		exit(-1);
 	env->key = s1;

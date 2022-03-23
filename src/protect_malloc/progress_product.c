@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.h                                         :+:    :+:            */
+/*   progress_product.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/25 15:45:41 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 14:19:56 by adoner        ########   odam.nl         */
+/*   Created: 2022/03/23 15:42:38 by adoner        #+#    #+#                 */
+/*   Updated: 2022/03/23 17:28:29 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDER_H
-#define EXPANDER_H
+#include <unistd.h>
+# include <stdlib.h>
+#include <stdio.h> 
+void    protect_dup2(int fd, int i)
+{
+    int result;
 
-int	check_dolar_waar(char *str, int chr);
-int	finished_expander(char *txt);
-int	check_quotes(char *line, char ch);
-int	check_emtpy_dolar(char *line);
-char	*crete_first_deel(char *line);
-char	*skip_space(char *line);
-int	find_how_many_chr(char *line);
-#endif
+    result = dup2(fd, i);
+    if (result == -1)
+    {
+       perror("dup2 error:");
+       exit(1);
+    }
+}
+
+void    protect_close(int id)
+{
+    int result;
+
+    result = close(id);
+    if (result == -1)
+        exit(1);
+}

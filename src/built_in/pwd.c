@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:39:09 by adoner        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:41:49 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 15:19:42 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@
 ** Make path = NULL, getcwd handles the allocating itself
 */
 
-void	pwd_command(t_pipeline *pipeline)
+int	pwd_command(t_pipeline *pipeline)
 {
 	char	*ret;
+	int		exit_code;
 
-	if (pipeline->command[1])
+	exit_code = 0;
+	if (pipeline->command[1][0] == '-')
+	{
 		printf("bad option %s\n", pipeline->command[1]);
+		exit_code = 1;
+	}
 	else
 	{
 		ret = getcwd(NULL, 0);
@@ -34,9 +39,10 @@ void	pwd_command(t_pipeline *pipeline)
 			perror("Error");
 			if (errno == ENOMEM)
 				exit (1);
-			return ;
+			return (-1);
 		}
 		printf("%s\n", ret);
 		free(ret);
 	}
+	return (exit_code);
 }

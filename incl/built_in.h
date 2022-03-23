@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:19:32 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 15:14:33 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 13:55:22 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "../src/parser/parser_data_structs.h"
 
 t_list	*create_env_list(char *envp[]);
-void	pwd_command(t_pipeline *pipeline);
+int		pwd_command(t_pipeline *pipeline);
 void	echo_command(t_pipeline *pipe_line);
 void	env_command(t_list *envp);
 int		export_command(t_list **envp, t_pipeline *pipe_line);

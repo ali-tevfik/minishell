@@ -6,7 +6,11 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:40:15 by hyilmaz       #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/03/23 16:35:54 by hyilmaz       ########   odam.nl         */
+=======
+/*   Updated: 2022/03/23 14:15:18 by adoner        ########   odam.nl         */
+>>>>>>> norm_check_adoner
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +36,14 @@
 # include "../../incl/built_in.h"
 # include "../../incl/fork.h"
 
+<<<<<<< HEAD
 /* Global variables */
 extern int	g_interactive;
 
 /* Function prototypes */
+=======
+/* Data struct for redirection */
+>>>>>>> norm_check_adoner
 void	read_here_doc(t_list *pipe_list);
 
 #endif

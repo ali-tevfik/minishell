@@ -6,11 +6,12 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/02/15 16:11:19 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 17:43:43 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "find_command.h"
+#include "../../incl/protect.h"
 
 /*
 ** Checks whether the current executable is given with a path.
@@ -38,7 +39,7 @@ static bool	append_slash_suffix_to_path(char **path)
 	while (path[i] != NULL)
 	{
 		tmp = path[i];
-		path[i] = ft_strjoin(path[i], "/");
+		path[i] = join_protect(path[i], "/");
 		if (path[i] == NULL)
 		{
 			perror("Error with malloc");
@@ -59,7 +60,7 @@ static bool	append_slash_suffix_to_path(char **path)
 static bool	found_command(char *command_with_path, char **cmd, char *tmp)
 {
 	free(*cmd);
-	*cmd = ft_strdup(command_with_path);
+	*cmd = strdup_protect(command_with_path);
 	if (*cmd == NULL)
 	{
 		perror("Error with malloc");
@@ -86,7 +87,7 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 	while (path_array[i] != NULL)
 	{
 		tmp = path_array[i];
-		path_array[i] = ft_strjoin(path_array[i], *command);
+		path_array[i] = join_protect(path_array[i], *command);
 		if (path_array[i] == NULL)
 		{
 			perror("Error with malloc");
@@ -117,23 +118,23 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 **		true otherwise
 */
 
-bool    find_command(char **command_array, t_list *lst)
+bool	find_command(char **command_array, t_list *lst)
 {
-    char    *path;
-    char    **path_array;
+	char	*path;
+	char	**path_array;
 
-    path = expander("PATH", lst);
-    if (path == NULL)
-	    return (true);
-	path_array = ft_split(path, ':');
-    if (path_array == NULL)
-    {
-        perror("Error with malloc");
-        return (false);
-    }
-    if (check_given_executable_on_slashes(command_array[0]))
-        return (true);
-    if (!append_slash_suffix_to_path(path_array))
-        return (false);
-     return (get_executable_with_full_path(path_array, &command_array[0]));
+	path = expander("PATH", lst);
+	if (path == NULL)
+		return (true);
+	path_array = split_protect(path, ':');
+	if (path_array == NULL)
+	{
+		perror("Error with malloc");
+		return (false);
+	}
+	if (check_given_executable_on_slashes(command_array[0]))
+		return (true);
+	if (!append_slash_suffix_to_path(path_array))
+		return (false);
+	return (get_executable_with_full_path(path_array, &command_array[0]));
 }

@@ -6,7 +6,11 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/03/23 17:11:26 by hyilmaz       ########   odam.nl         */
+=======
+/*   Updated: 2022/03/23 14:05:06 by adoner        ########   odam.nl         */
+>>>>>>> norm_check_adoner
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +24,7 @@
 #include "../tokenizer/remove_quotes_from_all_tokens.h"
 #include "../here_doc/handle_here_doc.h"
 
-extern	int	g_interactive;
+extern int	g_interactive;
 
 int	work_execve(t_list *pipe_lst, t_list **env)
 {
@@ -74,7 +78,7 @@ int	execute_builtin(t_pipeline *pipeline, t_list **env)
 	if (strings_are_equal(pipeline->command[0], "cd"))
 		exit_code = cd_command(pipeline->command[1], *env);
 	else if (strings_are_equal(pipeline->command[0], "pwd"))
-		pwd_command(pipeline);
+		exit_code = pwd_command(pipeline);
 	else if (strings_are_equal(pipeline->command[0], "exit"))
 		exit_command(pipeline, &exit_code);
 	else if (strings_are_equal(pipeline->command[0], "echo"))
@@ -96,7 +100,7 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	int			exit_status;
 
 	lst = tokenize_input(line, *env, exit_code);
-	if (lst == NULL)	/* when -c option and empty string passed */
+	if (lst == NULL)
 		return (0);
 	if (!validate_grammer(lst))
 		return (-1);
