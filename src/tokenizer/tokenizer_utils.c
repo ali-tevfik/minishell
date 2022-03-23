@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 17:14:12 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 18:52:35 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	free_token(void *token)
 	t_token	*casted_token;
 
 	casted_token = token;
-	// free(casted_token->content);
 	free(casted_token);
 }
 

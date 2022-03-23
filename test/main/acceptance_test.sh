@@ -3,7 +3,7 @@
 # Run as: ./acceptance_test.sh
 
 # Configuration parameters
-PATH_TO_MINISHELL="/Users/hyilmaz/Desktop/curriculum/minishell"
+PATH_TO_MINISHELL="/Users/adoner/Desktop/minishell/minishell"
 
 # Colours
 RED="\033[0;31m"

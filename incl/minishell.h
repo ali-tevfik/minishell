@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 22:21:43 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 14:49:49 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 18:57:17 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@
 
 int		tokenize_parse_execute(char *line, t_list **env, int exit_code);
 char	**create_envp(t_list *env_lst);
-void test_working(char *argv[], t_list **env);
+void	test_working(char *argv[], t_list **env);
 char	*expand_input_string(char *line, t_list *env, int exit_code);
 #endif

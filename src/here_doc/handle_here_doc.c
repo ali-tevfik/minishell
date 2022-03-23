@@ -6,15 +6,16 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/03/23 16:37:15 by hyilmaz       ########   odam.nl         */
-=======
-/*   Updated: 2022/03/23 17:37:22 by adoner        ########   odam.nl         */
->>>>>>> norm_check_adoner
+/*   Updated: 2022/03/23 18:51:07 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "handle_here_doc.h"
+
+void	del_lst(void *lst)
+{
+	free(lst);
+}
 
 /*
 ** Write all the element of the list inside a temporary file in /tmp/here_doc
@@ -38,13 +39,10 @@ static void	write_inputs_to_here_doc(t_list *lst, t_redirection *redirection)
 		write(id, &new_line, sizeof(new_line));
 		lst = lst->next;
 	}
-<<<<<<< HEAD
 	close(id);
 	ft_lstclear(&lst, free);
-=======
 	protect_close(id);
 	ft_lstclear(&lst, del_lst);
->>>>>>> norm_check_adoner
 }
 
 /*
@@ -94,12 +92,10 @@ static void	child_here_doc(t_list *pipe_list)
 			redirection = redirection_list->content;
 			if (redirection->redir_type == HERE_DOC)
 			{
-<<<<<<< HEAD
 				eof = strdup_protect(redirection->file);
 				redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
 				handle_here_doc(redirection, eof);
 				i++;
-=======
 				redirection = redirection_list->content;
 				if (redirection->redir_type == HERE_DOC)
 				{
@@ -110,7 +106,6 @@ static void	child_here_doc(t_list *pipe_list)
 					i++;
 				}
 				redirection_list = redirection_list->next;
->>>>>>> norm_check_adoner
 			}
 			redirection_list = redirection_list->next;
 		}

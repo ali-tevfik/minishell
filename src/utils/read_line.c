@@ -6,11 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/03/23 17:11:26 by hyilmaz       ########   odam.nl         */
-=======
-/*   Updated: 2022/03/23 14:05:06 by adoner        ########   odam.nl         */
->>>>>>> norm_check_adoner
+/*   Updated: 2022/03/23 18:52:25 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +104,6 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	pipe_lst = create_parse_list(lst);
 	read_here_doc(pipe_lst);
 	pipeline = pipe_lst->content;
-	// if (built_in_and_infile_check(pipeline, pipe_lst))
-	// 	return (work_execve(pipe_lst, env));
-	// else if (is_builtin(pipeline))
-	// 	return (execute_builtin(pipeline, env));
-	// return (work_execve(pipe_lst, env));
 	if (built_in_and_infile_check(pipeline, pipe_lst))
 		exit_status = work_execve(pipe_lst, env);
 	else if (is_builtin(pipeline))

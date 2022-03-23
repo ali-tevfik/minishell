@@ -6,11 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/03/23 16:45:24 by hyilmaz       ########   odam.nl         */
-=======
-/*   Updated: 2022/03/23 14:11:32 by adoner        ########   odam.nl         */
->>>>>>> norm_check_adoner
+/*   Updated: 2022/03/23 18:49:26 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +51,6 @@ int	main(int argc, char *argv[], char *envp[])
 
 	last_exit_status = 0;
 	env_list = init_shell(argc, argv, envp, &last_exit_status);
-<<<<<<< HEAD
-	read_commands_from_string(argc, argv, &env_list, last_exit_status);
-=======
->>>>>>> norm_check_adoner
 	while (1)
 	{
 		line = readline("Minishell> ");

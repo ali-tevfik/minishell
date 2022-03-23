@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 17:34:52 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 18:54:29 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	kies_builtin_of_execve(t_pipeline *pip_line, t_list *env)
 	else
 		execve_func(pip_line, env);
 }
-
 
 void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
 {
