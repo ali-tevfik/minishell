@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:40:15 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/21 17:07:46 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 13:16:18 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@
 # include "../../incl/built_in.h"
 # include "../../incl/fork.h"
 
-/* Data struct for redirection */
+extern int g_interactive;
 
+/* Data struct for redirection */
 
 void	read_here_doc(t_list *pipe_list);
 

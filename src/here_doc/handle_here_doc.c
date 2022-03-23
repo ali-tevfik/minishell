@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 12:44:43 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 13:23:18 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	read_here_doc(t_list *pipe_list)
 	int pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		while (pipe_list)
 		{
 			redirection_list = ((t_pipeline *)(pipe_list->content))->redirection;
@@ -105,7 +106,6 @@ void	read_here_doc(t_list *pipe_list)
 	{
 		exit_status = wait_and_get_last_exit_status(pid);
 	}
-
 	// Loop over parse list again and set all filenames of here docs.
 	while (new_pipe_line != NULL)
 	{
