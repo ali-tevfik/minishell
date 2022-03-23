@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 18:54:20 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 19:04:41 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include "../../../incl/minishell.h"
 #include "../../parser/parser_data_structs.h"
 #include "../../../incl/protect.h"
+
+// void	del_lst(void *lst)
+// {
+	// free(lst);
+// }
 
 // /*
 // ** Write all the element of the list inside a temporary file in /tmp/here_doc
