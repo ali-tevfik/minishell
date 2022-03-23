@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:01:43 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 12:48:46 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 17:28:19 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	first_child(t_pipeline *pip_line, t_list *env, int fd[2])
 	int	id;
 
 	id = fork();
-	if (id == 0)
+	if (id == -1)
+		exit(-1);
+	else if (id == 0)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		protect_close(fd[0]);
+		protect_dup2(fd[1], STDOUT_FILENO);
+		protect_close(fd[1]);
 		kies_builtin_of_execve(pip_line, env);
 		exit(0);
 	}
@@ -38,13 +40,15 @@ void	middle_child(t_pipeline *pip_line, t_list *env, int fd[2], int endfile)
 	int		id;
 
 	id = fork();
-	if (id == 0)
+	if (id == -1)
+		exit(-1);
+	else if (id == 0)
 	{
-		dup2(fd[1], STDOUT_FILENO);
-		dup2(endfile, 0);
-		close(fd[0]);
-		close(fd[1]);
-		close(endfile);
+		protect_dup2(fd[1], STDOUT_FILENO);
+		protect_dup2(endfile, 0);
+		protect_close(fd[0]);
+		protect_close(fd[1]);
+		protect_close(endfile);
 		kies_builtin_of_execve(pip_line, env);
 		exit(0);
 	}
@@ -53,11 +57,12 @@ void	middle_child(t_pipeline *pip_line, t_list *env, int fd[2], int endfile)
 void	last_child(t_pipeline *pip_line, t_list *env, int fd[2], int *lastid)
 {
 	*lastid = fork();
-	if (*lastid == 0)
+	if (*lastid == -1)
+		exit(-1);
+	else if (*lastid == 0)
 	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
+		protect_dup2(fd[0], STDIN_FILENO);
+		protect_close(fd[0]);
 		kies_builtin_of_execve(pip_line, env);
 		exit(0);
 	}
@@ -66,7 +71,9 @@ void	last_child(t_pipeline *pip_line, t_list *env, int fd[2], int *lastid)
 void	one_argument(t_pipeline *pip_line, t_list *env, int *lastid)
 {
 	*lastid = fork();
-	if (*lastid == 0)
+	if (*lastid == -1)
+		exit(-1);
+	else if (*lastid == 0)
 	{
 		kies_builtin_of_execve(pip_line, env);
 		exit(0);

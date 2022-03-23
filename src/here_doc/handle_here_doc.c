@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 12:44:43 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 17:37:22 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	write_inputs_to_here_doc(t_list *lst, t_redirection *redirection)
 		write(id, &new_line, sizeof(new_line));
 		lst = lst->next;
 	}
-	close(id);
+	protect_close(id);
 	ft_lstclear(&lst, del_lst);
 }
 
@@ -91,7 +91,7 @@ void	read_here_doc(t_list *pipe_list)
 				{
 					eof = strdup_protect(redirection->file);
 					free(redirection->file);
-					redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
+					redirection->file = join_protect("/tmp/here_doc_", protect_itoa(i)); // protect itoa
 					handle_here_doc(redirection, eof);
 					i++;
 				}
@@ -116,7 +116,7 @@ void	read_here_doc(t_list *pipe_list)
 			if (redirection->redir_type == HERE_DOC)
 			{
 				free(redirection->file);
-				redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
+				redirection->file = join_protect("/tmp/here_doc_", protect_itoa(i)); // protect itoa
 				i++;
 			}
 			redirection_list = redirection_list->next;

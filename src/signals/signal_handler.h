@@ -6,15 +6,12 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:06:51 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/03 13:18:44 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/23 14:14:11 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNAL_HANDLER_H
 # define SIGNAL_HANDLER_H
-
-/* Global variable */
-extern int g_interactive;
 
 /* System headers */
 # include <stdio.h>
@@ -22,6 +19,9 @@ extern int g_interactive;
 
 /* User defined header */
 # include "../libft/libft.h"
+
+/* Global variable */
+extern int	g_interactive;
 
 /* Function prototypes */
 void	sig_handler(int signum);

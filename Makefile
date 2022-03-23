@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/23 11:44:03 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/03/23 15:45:03 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC_FILES = minishell.c \
 			utils/match_str.c \
 			expander/convert_expander.c \
 			expander/expander_utils.c \
+			expander/expander_utils_2.c \
 			expander/expander.c \
 			utils/file_name_check.c \
 			tokenizer/iterator_api.c \
@@ -67,6 +68,8 @@ SRC_FILES = minishell.c \
 			test_offline.c \
 			tokenizer/remove_quotes_from_all_tokens.c \
 			protect_malloc/protect.c \
+			protect_malloc/protect_2.c \
+			protect_malloc/progress_product.c \
 			signals/set_signals.c \
 			signals/signal_handler.c \
 			here_doc/handle_here_doc.c
@@ -110,7 +113,9 @@ TEST_FILES = 	unity/src/unity.c \
 				test/test_unset.c \
 				src/built_in/unset.c \
 				src/expander/expander_utils.c \
+				src/expander/expander_utils_2.c \
 				protect_malloc/protect.c \
+				protect_malloc/protect_2.c \
 				test/test_find_command.c \
 				src/executor/find_command.c
 

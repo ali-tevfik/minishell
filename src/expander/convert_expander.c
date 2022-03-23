@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/21 14:56:37 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/23 17:37:22 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 #include "../../incl/expander.h"
 #include "../../incl/protect.h"
 #include "../parser/parser_data_structs.h"
-
-char	*crete_first_deel(char *line)
-{
-	char	*first_deel;
-	int		end_index;
-
-	end_index = check_dolar_waar(line, '$');
-	first_deel = substr_protect(line, 0, end_index);
-	return (first_deel);
-}
 
 char	*create_expander_deel(char *line, t_list *env)
 {
@@ -83,43 +73,14 @@ char	*convert_expander(char *line, t_list *env)
 	return (all_txt);
 }
 
-int	find_how_many_chr(char *line)
+char	*quotes_expander(char *line, t_list *env, int exit_code)
 {
-	int	i;
-	int	x;
+	char	*next_dolar;
+	int		start;
 
-	x = 0;
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ')
-			x++;
-		i++;
-	}
-	x++;
-	return (x);
-}
-
-char	*skip_space(char *line)
-{
-	int	x;
-	int	i;
-	char	*new_txt;
-
-	x = 0;
-	new_txt = (char *)malloc(sizeof(char *) * find_how_many_chr(line));
-	i = 0;
-	while(line[i])
-	{
-		if (line[i] != ' ')
-		{
-			new_txt[x] = line[i];
-			x++;
-		}
-		i++;
-	}
-	new_txt[i] = '\0';
-	return (new_txt);
+	start = check_dolar_waar(line, '$');
+	next_dolar = expand_input_string(line + start + 1, env, exit_code);
+	return (join_protect(substr_protect(line, 0, start + 1), next_dolar));
 }
 
 /*
@@ -130,27 +91,23 @@ char	*skip_space(char *line)
 char	*expand_input_string(char *line, t_list *env, int exit_code)
 {
 	char	*next_dolar;
-	int		start;
 	int		simple_quotes;
 
 	if (strings_are_equal(skip_space(line), "$?"))
-		return (ft_itoa(exit_code));
+		return (protect_itoa(exit_code));
 	while (check_dolar_waar(line, '$') != -1)
 	{
 		if (check_quotes(line, '\'') == 0)
 		{
 			line = convert_expander(line, env);
 			if (check_emtpy_dolar(line))
-			{
-				start = check_dolar_waar(line, '$');
-				next_dolar = expand_input_string(line + start + 1, env, exit_code);
-				return (join_protect(substr_protect(line, 0, start + 1), next_dolar));
-			}
+				return (quotes_expander(line, env, exit_code));
 		}
 		else
 		{
 			simple_quotes = check_dolar_waar(line, '\'');
-			next_dolar = expand_input_string(line + simple_quotes + 1, env, exit_code);
+			next_dolar = expand_input_string(line + simple_quotes + 1,
+					env, exit_code);
 			return (join_protect(substr_protect(line, 0, simple_quotes + 1),
 					next_dolar));
 		}
