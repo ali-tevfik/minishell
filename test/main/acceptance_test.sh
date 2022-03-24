@@ -3,7 +3,11 @@
 # Run as: ./acceptance_test.sh
 
 # Configuration parameters
-PATH_TO_MINISHELL="/Users/adoner/Desktop/minishell/minishell"
+if [[ "$USER" == "hyilmaz" ]]; then
+	PATH_TO_MINISHELL="/Users/hyilmaz/Desktop/curriculum/minishell"
+else
+	PATH_TO_MINISHELL="/Users/adoner/Desktop/minishell/minishell"
+fi
 
 # Colours
 RED="\033[0;31m"

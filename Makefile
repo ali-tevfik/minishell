@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/23 19:00:55 by adoner        ########   odam.nl          #
+#    Updated: 2022/03/24 11:06:44 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ SRC_FILES = minishell.c \
 			envp/find_envp.c \
 			envp/create_lst_envp.c \
 			envp/delete_envp.c \
-			test_offline.c \
+			utils/non_interactive_mode.c \
 			tokenizer/remove_quotes_from_all_tokens.c \
 			protect_malloc/protect.c \
 			protect_malloc/protect_2.c \

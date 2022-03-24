@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 15:57:17 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 14:53:00 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/24 11:44:24 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	cd_command(char *where, t_list *env)
 		result = chdir(where);
 	if (result == -1)
 	{
-		perror("Minishell:");
+		perror("minishell");
 		return (1);
 	}
 	else

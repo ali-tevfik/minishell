@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/23 18:49:26 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/24 11:05:48 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include "parser/create_parse_list.h"
 #include "tokenizer/tokenizer.h"
 #include "signals/set_signals.h"
-
-void	read_commands_from_string(int argc, char **argv,
-			t_list **env, int exit_code);
 
 /*
 ** Makes sure that signal is handled by either child or parent process,
@@ -51,6 +48,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	last_exit_status = 0;
 	env_list = init_shell(argc, argv, envp, &last_exit_status);
+	read_commands_from_string(argc, argv, &env_list, last_exit_status);
 	while (1)
 	{
 		line = readline("Minishell> ");
