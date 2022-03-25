@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 13:46:12 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 13:59:43 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,11 @@ TEST_GROUP_RUNNER(RemoveQuotesFromTokens)
 	RUN_TEST_CASE(RemoveQuotesFromTokens, WordAppendWithDoubleQuotes);
 	RUN_TEST_CASE(RemoveQuotesFromTokens, WordAppendWithSingleQuotes);
 	RUN_TEST_CASE(RemoveQuotesFromTokens, PipesAndRedirectionOperatorsPresent);
-	RUN_TEST_CASE(RemoveQuotesFromTokens, EmptyQuote);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, EmptySingleQuote);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, EmptyDoubleQuote);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, EmptySingleAndDoubleQuote);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, EmptySingleQuoteInsideDouble);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, EmptyDoubleQuoteInsideSingle);
 	RUN_TEST_CASE(RemoveQuotesFromTokens, NestedQuotes);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:21:40 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 11:31:57 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 14:52:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,46 @@ static char	*add_char_to_string(char *string, char c)
 	return (new_string);
 }
 
+/*
+** Return the new string appended with the empty quotes.
+** Also moves i.
+** If it wasn't empty quotes, it returns NULL.
+*/
+
+bool	empty_quotes_found(char **removed_quotes_content, char *content, size_t *i)
+{
+	if (content[*i] == content[*i + 1])
+	{
+		*removed_quotes_content = add_char_to_string(*removed_quotes_content, content[*i]);
+		*i = *i + 1;
+		return (true);
+	}
+	return (false);
+}
+
 static void	remove_quotes_single_token(t_token *token)
 {
 	size_t	i;
 	char	*removed_quotes_content;
-	bool	is_part_of_empty_quote;
+	bool	dquote_active;
+	bool	squote_active;
 
 	i = 0;
 	removed_quotes_content = NULL;
-	is_part_of_empty_quote = false;
+	dquote_active = false;
+	squote_active = false;
 	while (token->content[i])
 	{
 		if (token->content[i] && (token->content[i] == '\"' || \
 			token->content[i] == '\''))
 		{
-			if (is_part_of_empty_quote == false && token->content[i + 1] != token->content[i]) // if non-empty quotes found --> remove quote from input
+			// If no empty quote found, we can skip it (not adding to content)
+			if (!empty_quotes_found(&removed_quotes_content, token->content, &i))
 			{
 				i++;
 				continue ;
 			}
-			else if (is_part_of_empty_quote == true)
-				is_part_of_empty_quote = false;
-			else
-				is_part_of_empty_quote = true;
 		}
-		// printf("adding %c to string\n", token->content[i]);
 		removed_quotes_content = add_char_to_string(removed_quotes_content,
 				token->content[i]);
 		i++;
