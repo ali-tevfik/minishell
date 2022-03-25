@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 18:52:35 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/25 16:14:57 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ t_token	*create_token(char *content, t_token_type type)
 
 void	free_token(void *token)
 {
-	t_token	*casted_token;
-
-	casted_token = token;
-	free(casted_token);
+	free(token);
 }
 
 int	ft_isspace(int c)

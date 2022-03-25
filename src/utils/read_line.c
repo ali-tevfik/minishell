@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/25 12:31:10 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/25 17:15:18 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,6 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 		exit_status = work_execve(pipe_lst, env);
 	ft_lstclear(&pipe_lst, free_parse_list_element);
 	ft_lstclear(&lst, free_token);
+	// free(line);3
 	return (exit_status);
 }

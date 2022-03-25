@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:06:25 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 14:02:32 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/25 16:10:14 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 void	sig_handler(int signum)
 {
 	(void)signum;
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	ft_putchar_fd('\n', 2);
 	if (g_interactive == 1)
 	{
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (g_interactive == 2)
 	{
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 	}
 }

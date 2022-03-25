@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 10:47:52 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 16:40:58 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ void	print_commands(t_list *parse_list)
 
 static void	free_redirection_element(void *redirection)
 {
-	t_redirection	*casted_redirection;
-
-	casted_redirection = redirection;
-	free(casted_redirection->file);
+	free(((t_redirection *)redirection)->file);
 }
 
 /*
@@ -56,19 +53,16 @@ static void	free_redirection_element(void *redirection)
 void	free_parse_list_element(void *pipeline)
 {
 	size_t		i;
-	t_pipeline	*casted_pipeline;
 
 	i = 0;
-	casted_pipeline = pipeline;
-	while (casted_pipeline->command[i] != NULL)
+	while (((t_pipeline *)(pipeline))->command[i] != NULL)
 	{
-		free(casted_pipeline->command[i]);
+		free(((t_pipeline *)(pipeline))->command[i]);
 		i++;
 	}
-	free(casted_pipeline->command);
-	ft_lstclear(&casted_pipeline->redirection, free_redirection_element);
+	free(((t_pipeline *)(pipeline))->command);
+	ft_lstclear(&((t_pipeline *)(pipeline))->redirection, free_redirection_element);
 }
-
 /*
 ** Returns the amount of command tokens in a command.
 ** The tokens are command-tokens except for the redirection operator
