@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:23:19 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 16:59:17 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 11:26:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,28 @@ TEST(RemoveQuotesFromTokens, PipesAndRedirectionOperatorsPresent)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	token = create_token(ft_strdup("outfile"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+/*
+** The empty quote should not be removed.
+*/
+TEST(RemoveQuotesFromTokens, EmptyQuote)
+{
+	char	*input = "ls \"\"";
+
+	/* Actual token list */
+	actual_list = tokenize_input(input, NULL, 0);
+	remove_quotes_from_all_tokens(actual_list);
+
+	/* Expected token list */
+	token = create_token(ft_strdup("ls"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("\"\""), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */

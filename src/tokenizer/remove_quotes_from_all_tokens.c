@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:21:40 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 12:29:02 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 11:31:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,27 @@ static void	remove_quotes_single_token(t_token *token)
 {
 	size_t	i;
 	char	*removed_quotes_content;
+	bool	is_part_of_empty_quote;
 
 	i = 0;
 	removed_quotes_content = NULL;
+	is_part_of_empty_quote = false;
 	while (token->content[i])
 	{
 		if (token->content[i] && (token->content[i] == '\"' || \
 			token->content[i] == '\''))
 		{
-			i++;
-			continue ;
+			if (is_part_of_empty_quote == false && token->content[i + 1] != token->content[i]) // if non-empty quotes found --> remove quote from input
+			{
+				i++;
+				continue ;
+			}
+			else if (is_part_of_empty_quote == true)
+				is_part_of_empty_quote = false;
+			else
+				is_part_of_empty_quote = true;
 		}
+		// printf("adding %c to string\n", token->content[i]);
 		removed_quotes_content = add_char_to_string(removed_quotes_content,
 				token->content[i]);
 		i++;

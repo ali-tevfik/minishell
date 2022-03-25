@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 18:50:13 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 17:14:43 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 12:00:11 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "unity_fixture.h"
 
 /* File to test */
-#include "../src/expander/expand_single_variable.h"
+#include "../../incl/minishell.h"
 
 /* System headers */
 #include <string.h>

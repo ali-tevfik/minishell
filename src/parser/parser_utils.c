@@ -6,11 +6,34 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 16:57:00 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 10:47:52 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_utils.h"
+
+/*
+** Print the parse list commands.
+*/
+
+void	print_commands(t_list *parse_list)
+{
+	size_t		i;
+	t_pipeline	*pipeline;
+
+	while (parse_list)
+	{
+		pipeline = parse_list->content;
+		i = 0;
+		while (pipeline->command[i] != NULL)
+		{
+			printf("%s ", pipeline->command[i]);
+			i++;
+		}
+		printf("\n");
+		parse_list = parse_list->next;
+	}
+}
 
 /*
 ** Free redirection list element.

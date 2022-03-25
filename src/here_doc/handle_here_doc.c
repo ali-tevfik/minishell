@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 19:07:10 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/25 11:51:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,15 +136,19 @@ static void	set_here_doc_files(t_list *pipe_list)
 ** files to /tmp/here_doc_{0,1,...,n}.
 */
 
-void	read_here_doc(t_list *pipe_list)
+bool	read_here_doc(t_list *pipe_list)
 {
 	int	pid;
 	int	exit_status;
 
+	g_interactive = 2;
 	pid = fork();
 	if (pid == 0)
 		child_here_doc(pipe_list);
-	else
-		exit_status = wait_and_get_last_exit_status(pid);
+	exit_status = wait_and_get_last_exit_status(pid);
+	g_interactive = 1;
+	if (exit_status == 128 + SIGINT)
+		return (false);
 	set_here_doc_files(pipe_list);
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:37:50 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 17:27:24 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 11:54:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,7 +276,7 @@ TEST(ExportBuiltin, ExportAssignEmpty1)
 	/* Expected environment list */
 	expected_env = copy_environment_linked_list(env_list);
 
-	env_variable = create_env_variable("codam", "");
+	env_variable = create_env_variable("codam", "\"\"");
 	ft_lstadd_back(&expected_env, ft_lstnew(env_variable));
 
 	/* Actual environment list */

@@ -6,460 +6,475 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 11:20:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/18 17:16:53 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 12:07:30 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-// /* Unity unit-tester */
-// #include "unity_fixture.h"
-
-// /* File to test */
-// #include "../incl/minishell.h"
-
-// /* User defined headers */
-// #include "../src/libft/libft.h"
-// #include "utils.h"
-
-// /* Variables */
-// static char	*actual_expansion;
-// static char	*expected_expansion;
-// static t_list	*env_list;
-// static char		*env[] = {	"SHELL=/bin/zsh",
-// 							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
-// 							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
-// 							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
-// 							"LOGNAME=hyilmaz",
-// 							"HOME=/home/hilmi",
-// 							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
-// 							"a=b",
-// 							"hilmi_8=bro",
-// 							"codam_=",
-// 							"test=hilmi yilmaz",
-// 							"hilmi=ho -n",
-// 							NULL,
-// 						};
-
-// TEST_GROUP(ExpandInputString);
-
-// TEST_SETUP(ExpandInputString)
-// {
-// 	env_list = create_env_list(env);
-// 	actual_expansion = NULL;
-// 	expected_expansion = NULL;
-// }
-
-// TEST_TEAR_DOWN(ExpandInputString)
-// {
-// 	ft_lstclear(&env_list, free_env_variable);
-// 	free(actual_expansion);
-// 	free(expected_expansion);
-// }
-
-// TEST(ExpandInputString, SingleVariableExisting0)
-// {
-// 	char	*input = "$HOME";
-
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
-
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("/home/hilmi");
-
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$HOME\"");
-// }
-
-// TEST(ExpandInputString, SingleVariableExisting1)
-// {
-// 	char	*input = "$LOGNAME";
-
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
-
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("hyilmaz");
+/* Unity unit-tester */
+#include "unity_fixture.h"
+
+/* File to test */
+#include "../incl/minishell.h"
+
+/* User defined headers */
+#include "../src/libft/libft.h"
+#include "utils.h"
+
+/* Variables */
+static char	*actual_expansion;
+static char	*expected_expansion;
+static t_list	*env_list;
+static char		*env[] = {	"SHELL=/bin/zsh",
+							"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.uPX6eF400O/Render",
+							"SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.qrlSCvg4Sx/Listeners",
+							"PATH=/Users/hyilmaz/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Users/hyilmaz/.brew/bin:/Users/hyilmaz/.cargo/bin",
+							"LOGNAME=hyilmaz",
+							"HOME=/home/hilmi",
+							"DISPLAY=/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0",
+							"a=b",
+							"hilmi_8=bro",
+							"codam_=",
+							"test=hilmi yilmaz",
+							"hilmi=ho -n",
+							"empty=\"\"",
+							NULL,
+						};
+
+TEST_GROUP(ExpandInputString);
+
+TEST_SETUP(ExpandInputString)
+{
+	env_list = create_env_list(env);
+	actual_expansion = NULL;
+	expected_expansion = NULL;
+}
+
+TEST_TEAR_DOWN(ExpandInputString)
+{
+	ft_lstclear(&env_list, free_env_variable);
+	free(actual_expansion);
+	free(expected_expansion);
+}
+
+TEST(ExpandInputString, SingleVariableExisting0)
+{
+	char	*input = "$HOME";
+
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
+
+	/* Expected expansion */
+	expected_expansion = ft_strdup("/home/hilmi");
+
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$HOME\"");
+}
+
+TEST(ExpandInputString, SingleVariableExisting1)
+{
+	char	*input = "$LOGNAME";
+
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
+
+	/* Expected expansion */
+	expected_expansion = ft_strdup("hyilmaz");
+
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$LOGNAME\"");
+}
+
+TEST(ExpandInputString, SingleVariableExisting2)
+{
+	char	*input = "$DISPLAY";
+
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$LOGNAME\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0");
 
-// TEST(ExpandInputString, SingleVariableExisting2)
-// {
-// 	char	*input = "$DISPLAY";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$DISPLAY\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting3)
+{
+	char	*input = "$LOGNAME+";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("/private/tmp/com.apple.launchd.eWCZ6RGiQ4/org.macosforge.xquartz:0");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$DISPLAY\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("hyilmaz+");
 
-// TEST(ExpandInputString, SingleVariableExisting3)
-// {
-// 	char	*input = "$LOGNAME+";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$LOGNAME+\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting4)
+{
+	char	*input = "$a";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("hyilmaz+");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$LOGNAME+\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("b");
 
-// TEST(ExpandInputString, SingleVariableExisting4)
-// {
-// 	char	*input = "$a";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$a\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting5)
+{
+	char	*input = "$a  ";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("b");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$a\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("b  ");
 
-// TEST(ExpandInputString, SingleVariableExisting5)
-// {
-// 	char	*input = "$a  ";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$a  \"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting6)
+{
+	char	*input = "$a!";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("b  ");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$a  \"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("b!");
 
-// TEST(ExpandInputString, SingleVariableExisting6)
-// {
-// 	char	*input = "$a!";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$a!\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting7)
+{
+	char	*input = "$hilmi_8";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("b!");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$a!\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("bro");
 
-// TEST(ExpandInputString, SingleVariableExisting7)
-// {
-// 	char	*input = "$hilmi_8";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$hilmi_8\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting8)
+{
+	char	*input = "$codam_";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("bro");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$hilmi_8\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("");
 
-// TEST(ExpandInputString, SingleVariableExisting8)
-// {
-// 	char	*input = "$codam_";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$codam_\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting9)
+{
+	char	*input = "$codam_-";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$codam_\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("-");
 
-// TEST(ExpandInputString, SingleVariableExisting9)
-// {
-// 	char	*input = "$codam_-";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$codam_-\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting10)
+{
+	char	*input = "\"$hilmi_8-\"";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("-");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$codam_-\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("\"bro-\"");
 
-// TEST(ExpandInputString, SingleVariableExisting10)
-// {
-// 	char	*input = "\"$hilmi_8-\"";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\"$hilmi_8-\"\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableExisting11)
+{
+	// TEST_IGNORE();
+	char	*input = "\'$hilmi_8-\'";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("\"bro-\"");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\"$hilmi_8-\"\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("\'$hilmi_8-\'");
 
-// TEST(ExpandInputString, SingleVariableExisting11)
-// {
-// 	// TEST_IGNORE();
-// 	char	*input = "\'$hilmi_8-\'";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\'$hilmi_8-\'\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting0)
+{
+	char	*input = "$DISPLAYY";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("\'$hilmi_8-\'");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\'$hilmi_8-\'\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("");
 
-// TEST(ExpandInputString, SingleVariableNonExisting0)
-// {
-// 	char	*input = "$DISPLAYY";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$DISPLAYY\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting1)
+{
+	char	*input = "$hahahahah";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$DISPLAYY\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("");
 
-// TEST(ExpandInputString, SingleVariableNonExisting1)
-// {
-// 	char	*input = "$hahahahah";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$hahahahah\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting2)
+{
+	char	*input = "$hahahahah&";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$hahahahah\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("&");
 
-// TEST(ExpandInputString, SingleVariableNonExisting2)
-// {
-// 	char	*input = "$hahahahah&";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$hahahahah&\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting3)
+{
+	char	*input = "$+LOGNAME";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("&");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$hahahahah&\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("$+LOGNAME");
 
-// TEST(ExpandInputString, SingleVariableNonExisting3)
-// {
-// 	char	*input = "$+LOGNAME";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$+LOGNAME\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting4)
+{
+	char	*input = "$ LOGNAME";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("$+LOGNAME");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$+LOGNAME\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("$ LOGNAME");
 
-// TEST(ExpandInputString, SingleVariableNonExisting4)
-// {
-// 	char	*input = "$ LOGNAME";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$ LOGNAME\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting5)
+{
+	char	*input = "$";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("$ LOGNAME");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$ LOGNAME\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("$");
 
-// TEST(ExpandInputString, SingleVariableNonExisting5)
-// {
-// 	char	*input = "$";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting6)
+{
+	char	*input = "$$";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("$");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("$$");
 
-// TEST(ExpandInputString, SingleVariableNonExisting6)
-// {
-// 	char	*input = "$$";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$$\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting7)
+{
+	char	*input = "$\"LOGNAME\"";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("$$");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$$\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("$\"LOGNAME\"");
 
-// TEST(ExpandInputString, SingleVariableNonExisting7)
-// {
-// 	char	*input = "$\"LOGNAME\"";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\"LOGNAME\"\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting8)
+{
+	// TEST_IGNORE();
+	char	*input = "$\'LOGNAME\'";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("$\"LOGNAME\"");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\"LOGNAME\"\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("$\'LOGNAME\'");
 
-// TEST(ExpandInputString, SingleVariableNonExisting8)
-// {
-// 	// TEST_IGNORE();
-// 	char	*input = "$\'LOGNAME\'";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\'LOGNAME\'\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, SingleVariableNonExisting9)
+{
+	char	*input = "\"\"$HO\"ME\"";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("$\'LOGNAME\'");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$\'LOGNAME\'\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("\"\"\"ME\"");
 
-// TEST(ExpandInputString, SingleVariableNonExisting9)
-// {
-// 	char	*input = "\"\"$HO\"ME\"";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\"\"$HO\"ME\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, MultipleVariables0)
+{
+	char	*input = "cat -c $hilmi_8";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("\"\"\"ME\"");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"\"\"$HO\"ME\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("cat -c bro");
 
-// TEST(ExpandInputString, MultipleVariables0)
-// {
-// 	char	*input = "cat -c $hilmi_8";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"cat -c $hilmi_8\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, MultipleVariables1)
+{
+	char	*input = "echo $test";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("cat -c bro");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"cat -c $hilmi_8\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("echo hilmi yilmaz");
 
-// TEST(ExpandInputString, MultipleVariables1)
-// {
-// 	char	*input = "echo $test";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"echo $test\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, MultipleVariables2)
+{
+	char	*input = "ec$hilmi $test";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("echo hilmi yilmaz");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"echo $test\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("echo -n hilmi yilmaz");
 
-// TEST(ExpandInputString, MultipleVariables2)
-// {
-// 	char	*input = "ec$hilmi $test";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi $test\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, MultipleVariables3)
+{
+	char	*input = "ec\"$hilmi\" $test";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("echo -n hilmi yilmaz");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi $test\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("ec\"ho -n\" hilmi yilmaz");
 
-// TEST(ExpandInputString, MultipleVariables3)
-// {
-// 	char	*input = "ec\"$hilmi\" $test";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi $test\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, MultipleVariables4)
+{
+	// TEST_IGNORE();
+	char	*input = "ec\'$hilmi\' $test";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("ec\"ho -n\" hilmi yilmaz");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi $test\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("ec\'$hilmi\' hilmi yilmaz");
 
-// TEST(ExpandInputString, MultipleVariables4)
-// {
-// 	// TEST_IGNORE();
-// 	char	*input = "ec\'$hilmi\' $test";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec\'$hilmi\' $test\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, MultipleVariables5)
+{
+	char	*input = "ec$hilmi$test $LOGNAME\"$HOME\"";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("ec\'$hilmi\' hilmi yilmaz");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec\'$hilmi\' $test\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("echo -nhilmi yilmaz hyilmaz\"/home/hilmi\"");
 
-// TEST(ExpandInputString, MultipleVariables5)
-// {
-// 	char	*input = "ec$hilmi$test $LOGNAME\"$HOME\"";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi$test $LOGNAME\"$HOME\"\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, MultipleVariables6)
+{
+	char	*input = "\"\"$HO\"ME\"";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("echo -nhilmi yilmaz hyilmaz\"/home/hilmi\"");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi$test $LOGNAME\"$HOME\"\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("echo -nhilmi yilmaz hyilmaz\"/home/hilmi\"");
 
-// TEST(ExpandInputString, MultipleVariables6)
-// {
-// 	char	*input = "\"\"$HO\"ME\"";
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi$test $LOGNAME\"$HOME\"\"");
+}
 
-// 	/* Actual expansion */
-// 	actual_expansion = expand_input_string(input, env_list);
+TEST(ExpandInputString, EmptyString)
+{
+	char	*input = "$empty";
 
-// 	/* Expected expansion */
-// 	expected_expansion = ft_strdup("echo -nhilmi yilmaz hyilmaz\"/home/hilmi\"");
+	/* Actual expansion */
+	actual_expansion = expand_input_string(input, env_list, 0);
 
-// 	/* Compare outputs */
-// 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"ec$hilmi$test $LOGNAME\"$HOME\"\"");
-// }
+	/* Expected expansion */
+	expected_expansion = ft_strdup("\"\"");
+
+	/* Compare outputs */
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$empty\"");
+}
