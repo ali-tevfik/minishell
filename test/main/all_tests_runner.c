@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/12 23:00:07 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 12:06:26 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 13:46:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ TEST_GROUP_RUNNER(RemoveQuotesFromTokens)
 	RUN_TEST_CASE(RemoveQuotesFromTokens, WordAppendWithSingleQuotes);
 	RUN_TEST_CASE(RemoveQuotesFromTokens, PipesAndRedirectionOperatorsPresent);
 	RUN_TEST_CASE(RemoveQuotesFromTokens, EmptyQuote);
+	RUN_TEST_CASE(RemoveQuotesFromTokens, NestedQuotes);
 }
 
 TEST_GROUP_RUNNER(CheckGrammer)
