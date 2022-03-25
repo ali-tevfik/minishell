@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/25 12:03:54 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/03/25 12:33:26 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,8 +117,7 @@ TEST_FILES = 	unity/src/unity.c \
 				protect_malloc/protect.c \
 				protect_malloc/protect_2.c \
 				test/test_find_command.c \
-				src/executor/find_command.c \
-				test/test_expand_input_string.c
+				src/executor/find_command.c
 				
 # test/test_find_command.c
 # src/executor/find_command.c
