@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/25 12:33:23 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/25 14:47:58 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*expand_input_string(char *line, t_list *env, int exit_code)
 		return (protect_itoa(exit_code));
 	while (check_dolar_waar(line, '$') != -1)
 	{
-		if (check_quotes(line, '\'') == 0)
+		if (check_quotes_close(line) == -1)
 		{
 			line = convert_expander(line, env);
 			if (check_emtpy_dolar(line))
@@ -107,7 +107,7 @@ char	*expand_input_string(char *line, t_list *env, int exit_code)
 		}
 		else
 		{
-			simple_quotes = check_dolar_waar(line, '\'');
+			simple_quotes = check_quotes_close(line);
 			next_dolar = expand_input_string(line + simple_quotes + 1,
 					env, exit_code);
 			return (join_protect(substr_protect(line, 0, simple_quotes + 1),
