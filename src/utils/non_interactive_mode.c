@@ -6,15 +6,15 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 18:53:46 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/24 11:05:29 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/25 12:22:07 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incl/minishell.h"
-#include "incl/protect.h"
-#include "src/parser/create_parse_list.h"
-#include "src/tokenizer/tokenizer.h"
-#include "src/libft/libft.h"
+#include "../../incl/minishell.h"
+#include "../../incl/protect.h"
+#include "../parser/create_parse_list.h"
+#include "../tokenizer/tokenizer.h"
+#include "../libft/libft.h"
 #include <stdlib.h>
 
 /*

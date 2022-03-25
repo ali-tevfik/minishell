@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/23 17:37:22 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/25 12:33:23 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ char	*create_expander_deel(char *line, t_list *env)
 		return (strdup_protect("$"));
 	txt = substr_protect(line, start_expander_index + 1, end_expander_index);
 	return_expander = expander(txt, env);
-	if (!return_expander)
+	if (strings_are_equal((line + 1), txt) && strings_are_equal(return_expander, "\"\""))
+		return_expander = strdup("");
+	else if (!return_expander)
 		return_expander = strdup_protect("");
 	if (txt)
 		free(txt);
