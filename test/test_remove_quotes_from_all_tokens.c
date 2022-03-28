@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:23:19 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 13:47:38 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 12:46:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ TEST(RemoveQuotesFromTokens, PipesAndRedirectionOperatorsPresent)
 /*
 ** The empty quote should not be removed.
 */
-TEST(RemoveQuotesFromTokens, EmptyQuote)
+TEST(RemoveQuotesFromTokens, EmptyDoubleQuote)
 {
 	char	*input = "ls \"\"";
 
@@ -221,6 +221,88 @@ TEST(RemoveQuotesFromTokens, EmptyQuote)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	token = create_token(ft_strdup("\"\""), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(RemoveQuotesFromTokens, EmptySingleQuote)
+{
+	char	*input = "ls \'\'";
+
+	/* Actual token list */
+	actual_list = tokenize_input(input, NULL, 0);
+	remove_quotes_from_all_tokens(actual_list);
+
+	/* Expected token list */
+	token = create_token(ft_strdup("ls"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("\'\'"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(RemoveQuotesFromTokens, EmptySingleAndDoubleQuote)
+{
+	char	*input = "ls \'\' hilmi \"\"";
+
+	/* Actual token list */
+	actual_list = tokenize_input(input, NULL, 0);
+	remove_quotes_from_all_tokens(actual_list);
+
+	/* Expected token list */
+	token = create_token(ft_strdup("ls"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("\'\'"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("hilmi"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("\"\""), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(RemoveQuotesFromTokens, EmptySingleQuoteInsideDouble)
+{
+	char	*input = "echo \"\'\"";
+
+	/* Actual token list */
+	actual_list = tokenize_input(input, NULL, 0);
+	remove_quotes_from_all_tokens(actual_list);
+
+	/* Expected token list */
+	token = create_token(ft_strdup("echo"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("\'"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(RemoveQuotesFromTokens, EmptyDoubleQuoteInsideSingle)
+{
+	char	*input = "echo \'\"\'";
+
+	/* Actual token list */
+	actual_list = tokenize_input(input, NULL, 0);
+	remove_quotes_from_all_tokens(actual_list);
+
+	/* Expected token list */
+	token = create_token(ft_strdup("echo"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("\""), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */
@@ -243,6 +325,41 @@ TEST(RemoveQuotesFromTokens, NestedQuotes)
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	token = create_token(ft_strdup("\'hilmi\'"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(RemoveQuotesFromTokens, NestedQuotes1)
+{
+	char	*input = "ls \'\"hilmi\"\'";
+
+	/* Actual token list */
+	actual_list = tokenize_input(input, NULL, 0);
+	remove_quotes_from_all_tokens(actual_list);
+
+	/* Expected token list */
+	token = create_token(ft_strdup("ls"), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	token = create_token(ft_strdup("\"hilmi\""), WORD);
+	ft_lstadd_back(&expected_list, ft_lstnew(token));
+
+	/* Compare token lists */
+	compare_token_lists(expected_list, actual_list);
+}
+
+TEST(RemoveQuotesFromTokens, EmptyDoubleQuotesAttachedToWord)
+{
+	char	*input = "ls\"\"";
+
+	/* Actual token list */
+	actual_list = tokenize_input(input, NULL, 0);
+	remove_quotes_from_all_tokens(actual_list);
+
+	/* Expected token list */
+	token = create_token(ft_strdup("ls"), WORD);
 	ft_lstadd_back(&expected_list, ft_lstnew(token));
 
 	/* Compare token lists */

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:21:40 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 11:31:57 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 13:00:02 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,64 @@ static char	*add_char_to_string(char *string, char c)
 	return (new_string);
 }
 
+/*
+** Handles nested quotes.
+*/
+
+int	forward_quote_pair(char *line)
+{
+	int		i;
+	bool	open_quotes;
+	bool	open_double_quotes;
+
+	i = 0;
+	open_quotes = false;
+	open_double_quotes = false;
+	while (line[i])
+	{
+		if (line[i] == '\"' && !open_quotes)
+		{
+			open_double_quotes = !open_double_quotes;
+			if (!open_double_quotes)
+				return (i);
+		}
+		if (line[i] == '\'' && !open_double_quotes)
+		{
+			open_quotes = !open_quotes;
+			if (!open_quotes)
+				return (i);
+		}
+		i++;
+	}
+	return (-1);
+}
+
+/*
+** Removes the quotes inside a single token.
+** It takes nested quotes into account.
+*/
+
 static void	remove_quotes_single_token(t_token *token)
 {
 	size_t	i;
+	size_t	idx;
 	char	*removed_quotes_content;
-	bool	is_part_of_empty_quote;
+	char	*inside_quotes;
 
 	i = 0;
-	removed_quotes_content = NULL;
-	is_part_of_empty_quote = false;
+	idx = 0;
+	removed_quotes_content = strdup_protect("");
 	while (token->content[i])
 	{
-		if (token->content[i] && (token->content[i] == '\"' || \
-			token->content[i] == '\''))
+		if (token->content[i] == '\"' || token->content[i] == '\'')
 		{
-			if (is_part_of_empty_quote == false && token->content[i + 1] != token->content[i]) // if non-empty quotes found --> remove quote from input
-			{
-				i++;
-				continue ;
-			}
-			else if (is_part_of_empty_quote == true)
-				is_part_of_empty_quote = false;
-			else
-				is_part_of_empty_quote = true;
+			idx = forward_quote_pair(token->content + i);
+			inside_quotes = substr_protect(token->content + i + 1, 0, idx - 1);
+			removed_quotes_content = join_protect(removed_quotes_content,
+					inside_quotes);
+			i += idx + 1;
+			continue ;
 		}
-		// printf("adding %c to string\n", token->content[i]);
 		removed_quotes_content = add_char_to_string(removed_quotes_content,
 				token->content[i]);
 		i++;
@@ -70,12 +103,25 @@ static void	remove_quotes_single_token(t_token *token)
 	token->content = removed_quotes_content;
 }
 
+/*
+** Remove quotes from the input.
+** A token which contains empty quotes is not removed.
+** Something like ls"" becomes ls.
+*/
+
 void	remove_quotes_from_all_tokens(t_list *token_list)
 {
+	t_token	*token;
+
 	while (token_list)
 	{
-		if (((t_token *)(token_list->content))->type == WORD)
-			remove_quotes_single_token(token_list->content);
+		token = token_list->content;
+		if (token->type == WORD)
+		{
+			if (!strings_are_equal(token->content, "\"\"") && \
+				!strings_are_equal(token->content, "\'\'"))
+				remove_quotes_single_token(token_list->content);
+		}
 		token_list = token_list->next;
 	}
 }
