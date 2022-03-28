@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/28 13:29:48 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 14:37:00 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,10 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	lst = tokenize_input(line, *env, exit_code);
 	if (lst == NULL)
 		return (0);
-	// print_token_list(lst);
 	if (!validate_grammer(lst))
 		return (-1);
 	remove_quotes_from_all_tokens(lst);
 	pipe_lst = create_parse_list(lst);
-	// print_commands(pipe_lst);
 	if (!read_here_doc(pipe_lst))
 		return (-1);
 	pipeline = pipe_lst->content;
@@ -117,6 +115,5 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 		exit_status = work_execve(pipe_lst, env);
 	ft_lstclear(&pipe_lst, free_parse_list_element);
 	ft_lstclear(&lst, free_token);
-	// free(line);3
 	return (exit_status);
 }

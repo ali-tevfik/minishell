@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/28 13:10:53 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 14:39:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	main(int argc, char *argv[], char *envp[])
 			last_exit_status = tokenize_parse_execute(line, &env_list,
 					last_exit_status);
 		}
-		// free(line);
+		free(line);
 		line = NULL;
 		// system("leaks minishell");
 	}
-	// free(line);
+	free(line);
 	system("leaks minishell");
 	return (0);
 }
