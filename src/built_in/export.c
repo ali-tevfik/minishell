@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/28 13:11:09 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 15:28:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void	add_new_export(t_list **envp, char *s1, char *s2, bool *exit_code)
 {
 	t_env	*env;
 
-	env = calloc_protect(2, sizeof(*env));
-	if (!env)
-		exit(-1);
+	env = calloc_protect(1, sizeof(*env));
 	env->key = s1;
 	if (s2)
 		env->value = s2;
@@ -64,6 +62,10 @@ void	error_txt(char **argument, char *pipe_line_command, bool *exit_code)
 	*exit_code = true;
 }
 
+/*
+**argument free??
+*/
+
 int	export_command(t_list **env, t_pipeline *pipe_line)
 {
 	char	**argument;
@@ -74,7 +76,6 @@ int	export_command(t_list **env, t_pipeline *pipe_line)
 	i = 0;
 	if (!pipe_line->command[1])
 		write_export_env(*env);
-	// printf("[%s]\n", pipe_line->command[i + 1]);
 	while (pipe_line->command[i + 1])
 	{
 		i++;

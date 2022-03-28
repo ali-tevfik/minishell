@@ -6,7 +6,11 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/03/28 14:37:00 by hyilmaz       ########   odam.nl         */
+=======
+/*   Updated: 2022/03/28 15:07:13 by adoner        ########   odam.nl         */
+>>>>>>> fix_expander
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +82,9 @@ int	execute_builtin(t_pipeline *pipeline, t_list **env)
 	else if (strings_are_equal(pipeline->command[0], "exit"))
 		exit_command(pipeline, &exit_code);
 	else if (strings_are_equal(pipeline->command[0], "echo"))
-		echo_command(pipeline);
+		exit_code = echo_command(pipeline);
 	else if (strings_are_equal(pipeline->command[0], "env"))
-		env_command(*env);
+		exit_code = env_command(*env);
 	else if (strings_are_equal(pipeline->command[0], "export"))
 		exit_code = export_command(env, pipeline);
 	else if (strings_are_equal(pipeline->command[0], "unset"))
@@ -115,5 +119,9 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 		exit_status = work_execve(pipe_lst, env);
 	ft_lstclear(&pipe_lst, free_parse_list_element);
 	ft_lstclear(&lst, free_token);
+<<<<<<< HEAD
+=======
+	// free(line);
+>>>>>>> fix_expander
 	return (exit_status);
 }

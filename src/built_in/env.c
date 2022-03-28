@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/04 12:43:31 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 15:08:01 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../incl/minishell.h"
 #include <stdio.h>
 
-void	env_command(t_list *envp)
+int	env_command(t_list *envp)
 {
 	t_env	*env;
 
@@ -24,4 +24,5 @@ void	env_command(t_list *envp)
 		printf("%s=%s\n", env->key, env->value);
 		envp = envp->next;
 	}
+	return (0);
 }
