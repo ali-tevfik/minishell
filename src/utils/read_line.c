@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/25 17:15:18 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 13:12:43 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	lst = tokenize_input(line, *env, exit_code);
 	if (lst == NULL)
 		return (0);
-	// print_token_list(lst);
+	print_token_list(lst);
 	if (!validate_grammer(lst))
 		return (-1);
 	remove_quotes_from_all_tokens(lst);

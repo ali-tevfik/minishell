@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/25 17:15:32 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 13:10:53 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		// free(line);
 		line = NULL;
-		printf("line %s\n\n\n\n", line);
 		// system("leaks minishell");
 	}
 	// free(line);

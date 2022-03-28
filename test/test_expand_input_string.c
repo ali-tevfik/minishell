@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 11:20:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 12:07:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 13:10:14 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char		*env[] = {	"SHELL=/bin/zsh",
 							"codam_=",
 							"test=hilmi yilmaz",
 							"hilmi=ho -n",
-							"empty=\"\"",
+							"empty=",
 							NULL,
 						};
 
@@ -473,7 +473,7 @@ TEST(ExpandInputString, EmptyString)
 	actual_expansion = expand_input_string(input, env_list, 0);
 
 	/* Expected expansion */
-	expected_expansion = ft_strdup("\"\"");
+	expected_expansion = ft_strdup("");
 
 	/* Compare outputs */
 	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected_expansion, actual_expansion, "input = \"$empty\"");

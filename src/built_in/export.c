@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 17:41:49 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 13:11:09 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	export_command(t_list **env, t_pipeline *pipe_line)
 	i = 0;
 	if (!pipe_line->command[1])
 		write_export_env(*env);
+	// printf("[%s]\n", pipe_line->command[i + 1]);
 	while (pipe_line->command[i + 1])
 	{
 		i++;
