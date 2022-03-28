@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 17:17:22 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 13:21:45 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static char	*create_content(char *start_token, int len,
 	expanded_content = expand_input_string(content, env, exitcode);
 	if (strings_are_equal(content, expanded_content))
 		free(content);
+	if (expanded_content[0] == '\0')
+		return (NULL);
 	return (expanded_content);
 }
 
@@ -64,6 +66,8 @@ static t_token	*create_word_token(char *content, int error)
 {
 	t_token	*token;
 
+	if (content == NULL)
+		return (NULL);
 	if (error == 0)
 		token = create_token(content, WORD);
 	else

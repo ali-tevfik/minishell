@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:50:28 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 16:14:57 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 13:25:33 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_token_list(t_list *token_list)
 	head = token_list;
 	while (1)
 	{
-		printf("content     = %s\n", ((t_token *)(head->content))->content);
+		printf("content     = |%s|\n", ((t_token *)(head->content))->content);
 		printf("type        = %d\n", ((t_token *)(head->content))->type);
 		printf("\n");
 		if (head->next == NULL)

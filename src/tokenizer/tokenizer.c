@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/21 13:19:41 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 13:29:20 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ t_list	*tokenize_input(char *input_string, t_list *env, int exitcode)
 		ret = take_correct_token(&single_token, &itr, env, exitcode);
 		if (ret == BLANK_SPACE)
 			continue ;
-		element = lstnew_protect(single_token);
-		ft_lstadd_back(&token_list, element);
+		if (single_token != NULL)
+		{
+			element = lstnew_protect(single_token);
+			ft_lstadd_back(&token_list, element);
+		}
 	}
 	return (token_list);
 }
