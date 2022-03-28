@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:21:40 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/28 13:26:06 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 14:18:22 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static char	*add_char_to_string(char *string, char c)
 	len = ft_strlen(string);
 	new_string = calloc_protect(len + 2, sizeof(*new_string));
 	ft_memmove(new_string, string, len);
+	free(string);
 	new_string[len] = c;
 	new_string[len + 1] = '\0';
 	return (new_string);

@@ -6,11 +6,15 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/17 13:40:37 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/28 13:29:20 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 14:17:59 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+
+/*
+** The & and ; token are used for grammer validation later on.
+*/
 
 static t_token	*take_other_tokens(t_char_iter *itr)
 {
@@ -24,8 +28,8 @@ static t_token	*take_other_tokens(t_char_iter *itr)
 }
 
 /*
-** Returns FAILURE when space is found, so we can continue in loop.
-** Otherwise return SUCCES, or MALLOC_ERROR when an allocation failed.
+** Returns BLANK_SPACE when space is found, so we can continue in loop.
+** Otherwise SUCCESS is returned.
 */
 
 static size_t	take_correct_token(t_token **single_token, t_char_iter *itr,
