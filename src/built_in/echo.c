@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/21 13:21:48 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 15:20:58 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ void	write_echo(t_pipeline *pipe_line, int i)
 		x = 0;
 		while (pipe_line->command[i][x])
 		{
-			if (pipe_line->command[i][x] != '"')
-				ft_putchar_fd(pipe_line->command[i][x], 1);
-			else if (pipe_line->command[i][x] == '\"'
-					&& pipe_line->command[i][x + 1] == '\"')
-				ft_putchar_fd(' ', 1);
+			ft_putchar_fd(pipe_line->command[i][x], 1);
 			x++;
 		}
 		if (pipe_line->command[i + 1])
@@ -36,7 +32,7 @@ void	write_echo(t_pipeline *pipe_line, int i)
 	}
 }
 
-void	echo_command(t_pipeline *pipe_line)
+int	echo_command(t_pipeline *pipe_line)
 {
 	int	new_line;
 	int	i;
@@ -51,4 +47,5 @@ void	echo_command(t_pipeline *pipe_line)
 	write_echo(pipe_line, i);
 	if (new_line == 0)
 		ft_putchar_fd('\n', 1);
+	return (0);
 }

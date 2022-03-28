@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:22:00 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 10:52:44 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/28 18:48:23 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@
 
 /* Function prototypes */
 void	remove_quotes_from_all_tokens(t_list *token_list);
+int 	forward_quote_pair(char *line);
 
 #endif

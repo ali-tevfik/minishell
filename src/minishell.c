@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/28 13:10:53 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/28 18:51:34 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "parser/create_parse_list.h"
 #include "tokenizer/tokenizer.h"
 #include "signals/set_signals.h"
+#include "tokenizer/remove_quotes_from_all_tokens.h"
+#include "../incl/expander.h"
 
 /*
 ** Makes sure that signal is handled by either child or parent process,
@@ -57,10 +59,12 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!strings_are_equal(line, ""))
 		{
 			add_history(line);
+			if (forward_quote_pair(line) == -1 && check_dolar_waar(line, '$') != -1)
+				line = expand_input_string(line, env_list, last_exit_status);
 			last_exit_status = tokenize_parse_execute(line, &env_list,
 					last_exit_status);
 		}
-		// free(line);
+		free(line);
 		line = NULL;
 		// system("leaks minishell");
 	}
