@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 11:51:19 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/29 12:57:00 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	child_here_doc(t_list *pipe_list)
 	size_t			i;
 	t_list			*redirection_list;
 	t_redirection	*redirection;
-	char			*eof;
 
 	signal(SIGINT, SIG_DFL);
 	i = 0;
@@ -85,9 +84,9 @@ static void	child_here_doc(t_list *pipe_list)
 			redirection = redirection_list->content;
 			if (redirection->redir_type == HERE_DOC)
 			{
-				eof = strdup_protect(redirection->file);
-				redirection->file = join_protect("/tmp/here_doc_", ft_itoa(i)); // protect itoa
-				handle_here_doc(redirection, eof);
+				redirection->file = join_protect("/tmp/here_doc_",
+						ft_itoa(i));
+				handle_here_doc(redirection, strdup_protect(redirection->file));
 				i++;
 			}
 			redirection_list = redirection_list->next;
@@ -118,7 +117,8 @@ static void	set_here_doc_files(t_list *pipe_list)
 			if (redirection->redir_type == HERE_DOC)
 			{
 				free(redirection->file);
-				redirection->file = join_protect("/tmp/here_doc_", protect_itoa(i)); // protect itoa
+				redirection->file = join_protect("/tmp/here_doc_",
+						protect_itoa(i));
 				i++;
 			}
 			redirection_list = redirection_list->next;

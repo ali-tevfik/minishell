@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/28 18:46:24 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/29 12:53:48 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,43 +51,48 @@ void	kies_builtin_of_execve(t_pipeline *pip_line, t_list *env)
 		execve_func(pip_line, env);
 }
 
-void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
+int	fork_start(int i, t_list *pipe_lst, t_list *env, t_dup2 *dup_item)
 {
-	int			fd[2];
-	int			end_file;
-	int			i;
 	t_pipeline	*pip_line;
 
+	pip_line = pipe_lst->content;
+	if (i == 0 && !pipe_lst->next)
+		one_argument(pip_line, env, dup_item->last_id);
+	else if (i == 0)
+		first_child(pip_line, env, dup_item->fd);
+	else if (!pipe_lst->next)
+		last_child(pip_line, env, dup_item->fd, dup_item->last_id);
+	else
+		middle_child(pip_line, env, dup_item->fd, dup_item->end_file);
+	i++;
+	return (i);
+}
+
+void	fork_func(t_list *pipe_lst, t_list *env, int *last_id)
+{
+	t_dup2		dup_item;
+	int			i;
+
 	i = 0;
-	end_file = -1;
+	dup_item.end_file = -1;
+	dup_item.last_id = last_id;
 	while (pipe_lst)
 	{
-		pip_line = pipe_lst->content;
 		if (pipe_lst->next)
-		{
-			if (pipe(fd) == -1)
+			if (pipe(dup_item.fd) == -1)
 				exit(0);
-		}
 		g_interactive = 0;
-		if (i == 0 && !pipe_lst->next)
-			one_argument(pip_line, env, last_id);
-		else if (i == 0)
-			first_child(pip_line, env, fd);
-		else if (!pipe_lst->next)
-			last_child(pip_line, env, fd, last_id);
-		else
-			middle_child(pip_line, env, fd, end_file);
-		if (end_file != -1)
+		i = fork_start(i, pipe_lst, env, &dup_item);
+		if (dup_item.end_file != -1)
 		{
-			protect_close(end_file);
+			protect_close(dup_item.end_file);
 			if (pipe_lst->next)
-				end_file = fd[0];
+				dup_item.end_file = dup_item.fd[0];
 		}
 		else
-			end_file = fd[0];
+			dup_item.end_file = dup_item.fd[0];
 		pipe_lst = pipe_lst->next;
 		if (pipe_lst)
-			protect_close(fd[1]);
-		i++;
+			protect_close(dup_item.fd[1]);
 	}
 }

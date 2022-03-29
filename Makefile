@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/25 12:33:26 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/03/29 12:35:07 by adoner        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ SRC_FILES = minishell.c \
 			built_in/export.c \
 			built_in/exit.c \
 			utils/read_line.c \
+			utils/built_in_utils.c \
+			utils/non_interactive_mode.c \
 			utils/match_str.c \
 			expander/convert_expander.c \
 			expander/expander_utils.c \
@@ -65,7 +67,6 @@ SRC_FILES = minishell.c \
 			envp/find_envp.c \
 			envp/create_lst_envp.c \
 			envp/delete_envp.c \
-			utils/non_interactive_mode.c \
 			tokenizer/remove_quotes_from_all_tokens.c \
 			protect_malloc/protect.c \
 			protect_malloc/protect_2.c \

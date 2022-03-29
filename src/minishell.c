@@ -6,11 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/03/28 14:39:46 by hyilmaz       ########   odam.nl         */
-=======
-/*   Updated: 2022/03/28 18:51:34 by adoner        ########   odam.nl         */
->>>>>>> fix_expander
+/*   Updated: 2022/03/29 12:39:32 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +59,14 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!strings_are_equal(line, ""))
 		{
 			add_history(line);
-			if (forward_quote_pair(line) == -1 && check_dolar_waar(line, '$') != -1)
+			if (forward_quote_pair(line) == -1
+				&& check_dolar_waar(line, '$') != -1)
 				line = expand_input_string(line, env_list, last_exit_status);
 			last_exit_status = tokenize_parse_execute(line, &env_list,
 					last_exit_status);
 		}
 		free(line);
 		line = NULL;
-		// system("leaks minishell");
 	}
-	free(line);
-	system("leaks minishell");
 	return (0);
 }

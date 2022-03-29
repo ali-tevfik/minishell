@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:03:22 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/28 15:10:18 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/29 12:33:53 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ int		ft_isname(char *txt);
 void	one_argument(t_pipeline *pip_line, t_list *env, int *lastid);
 int		execute_builtin(t_pipeline *pipeline, t_list **env);
 bool	is_builtin(t_pipeline *pipeline);
+int 	built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst);
 #endif

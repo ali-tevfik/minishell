@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/25 16:40:58 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/29 12:36:28 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	free_parse_list_element(void *pipeline)
 		i++;
 	}
 	free(((t_pipeline *)(pipeline))->command);
-	ft_lstclear(&((t_pipeline *)(pipeline))->redirection, free_redirection_element);
+	ft_lstclear(&((t_pipeline *)(pipeline))->redirection,
+		free_redirection_element);
 }
 /*
 ** Returns the amount of command tokens in a command.

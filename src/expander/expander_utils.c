@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/28 12:23:26 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/29 12:37:23 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../incl/minishell.h"
 #include "../parser/parser_data_structs.h"
 #include <stdio.h>
+
 int	check_dolar_waar(char *str, int chr)
 {
 	int	i;
@@ -42,8 +43,7 @@ int	finished_expander(char *txt)
 	return (i);
 }
 
-
-int check_quotes_close(char *line)
+int	check_quotes_close(char *line)
 {
 	bool	open_quotes;
 	int		i;
@@ -52,7 +52,7 @@ int check_quotes_close(char *line)
 	i = 0;
 	open_quotes = false;
 	open_double_quotes = false;
-	while(line[i])
+	while (line[i])
 	{
 		if (!open_quotes && !open_double_quotes && line[i] == '$')
 			return (-1);
@@ -73,7 +73,7 @@ int	check_quotes(char *line, char ch)
 {
 	int	i;
 	int	total;
-	
+
 	total = 0;
 	i = 0;
 	while (line[i])
