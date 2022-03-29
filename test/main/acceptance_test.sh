@@ -495,7 +495,7 @@ run_bash "$command" > $TEST_DIR/bash_output 2>&1
 run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
 compare_exit_status
 compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
-echo ""
+echo "klasfalfjklajafs"
 unset hilmi
 
 command="echo \$LOGNAME"
