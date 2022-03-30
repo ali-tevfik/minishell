@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/29 13:56:54 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/30 14:42:38 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	main(int argc, char *argv[], char *envp[])
 	unsigned char	last_exit_status;
 	t_list			*env_list;
 
-	last_exit_status = 0;
 	env_list = init_shell(argc, argv, envp, &last_exit_status);
 	read_commands_from_string(argc, argv, &env_list, last_exit_status);
 	while (1)

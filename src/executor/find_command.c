@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 17:43:43 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/30 16:23:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,12 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 **		true otherwise
 */
 
-bool	find_command(char **command_array, t_list *lst)
+bool	find_command(char **command_array, t_list *envp)
 {
 	char	*path;
 	char	**path_array;
 
-	path = expander("PATH", lst);
+	path = expander("PATH", envp);
 	if (path == NULL)
 		return (true);
 	path_array = split_protect(path, ':');
