@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/29 12:57:00 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/30 14:39:45 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,40 +60,8 @@ static void	handle_here_doc(t_redirection *redirection, char *eof)
 			break ;
 		ft_lstadd_back(&here_doc_input_list, ft_lstnew(read_txt));
 	}
+	free(eof);
 	write_inputs_to_here_doc(here_doc_input_list, redirection);
-}
-
-/*
-** If there are here documents present
-** create the temporary files inside of /tmp directory.
-*/
-
-static void	child_here_doc(t_list *pipe_list)
-{
-	size_t			i;
-	t_list			*redirection_list;
-	t_redirection	*redirection;
-
-	signal(SIGINT, SIG_DFL);
-	i = 0;
-	while (pipe_list)
-	{
-		redirection_list = ((t_pipeline *)(pipe_list->content))->redirection;
-		while (redirection_list)
-		{
-			redirection = redirection_list->content;
-			if (redirection->redir_type == HERE_DOC)
-			{
-				redirection->file = join_protect("/tmp/here_doc_",
-						ft_itoa(i));
-				handle_here_doc(redirection, strdup_protect(redirection->file));
-				i++;
-			}
-			redirection_list = redirection_list->next;
-		}
-		pipe_list = pipe_list->next;
-	}
-	exit (0);
 }
 
 /*
@@ -128,6 +96,40 @@ static void	set_here_doc_files(t_list *pipe_list)
 }
 
 /*
+** If there are here documents present
+** create the temporary files inside of /tmp directory.
+*/
+
+static void	child_here_doc(t_list *pipe_list)
+{
+	t_here_doc_params	params;
+	t_list				*redirection_list;
+	t_redirection		*redirection;
+
+	signal(SIGINT, SIG_DFL);
+	params.i = 0;
+	while (pipe_list)
+	{
+		redirection_list = ((t_pipeline *)(pipe_list->content))->redirection;
+		while (redirection_list)
+		{
+			redirection = redirection_list->content;
+			if (redirection->redir_type == HERE_DOC)
+			{
+				params.eof = strdup_protect(redirection->file);
+				redirection->file = join_protect("/tmp/here_doc_",
+						protect_itoa(params.i));
+				handle_here_doc(redirection, params.eof);
+				params.i += 1;
+			}
+			redirection_list = redirection_list->next;
+		}
+		pipe_list = pipe_list->next;
+	}
+	exit (0);
+}
+
+/*
 ** Creates a process and loopes over all commands in the pipeline.
 ** For each here document found,
 ** it creates a file in the format /tmp/here_doc_{0,1,...,n}.
@@ -143,6 +145,8 @@ bool	read_here_doc(t_list *pipe_list)
 
 	g_interactive = 2;
 	pid = fork();
+	if (pid == -1)
+		exit (-1);
 	if (pid == 0)
 		child_here_doc(pipe_list);
 	exit_status = wait_and_get_last_exit_status(pid);

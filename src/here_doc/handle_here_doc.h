@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:40:15 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/29 12:54:53 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/30 14:34:37 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,17 @@
 # include "../../incl/built_in.h"
 # include "../../incl/fork.h"
 
+/* Global variable */
 extern int	g_interactive;
 
-/* Data struct for redirection */
+/* Data structures */
+typedef struct s_here_doc_params
+{
+	size_t	i;
+	char	*eof;
+}	t_here_doc_params;
+
+/* Function prototypes */
 bool	read_here_doc(t_list *pipe_list);
 
 #endif

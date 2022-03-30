@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 16:47:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/23 18:55:49 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/30 13:07:06 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ t_list	*lstnew_protect(void *content);
 void	protect_dup2(int fd, int i);
 void	protect_close(int id);
 char	*protect_itoa(int i);
+
 #endif

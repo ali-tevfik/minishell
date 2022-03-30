@@ -6,3 +6,4 @@ a.out*
 test_minishell
 test_obj/
 .vscode/
+.DS_Store
