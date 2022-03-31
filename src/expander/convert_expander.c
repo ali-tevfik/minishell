@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/29 12:37:33 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 13:38:56 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,15 @@ char	*expand_input_string(char *line, t_list *env, int exit_code)
 {
 	char	*next_dolar;
 	int		simple_quotes;
+	char	*test;
 
-	if (strings_are_equal(skip_space(line), "$?"))
+	test = skip_space(line);
+	if (strings_are_equal(test, "$?"))
+	{
+		free(test);
 		return (protect_itoa(exit_code));
+	}
+	free(test);
 	while (check_dolar_waar(line, '$') != -1)
 	{
 		if (check_quotes_close(line) == -1)

@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/03/29 12:35:07 by adoner        ########   odam.nl          #
+#    Updated: 2022/03/31 13:39:40 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ YELLOW = \033[1;33m
 # Compiler settings
 GCC = gcc
 FLAGS = -Wall -Wextra -Werror
-DBG_FLAGS = -g -fsanitize=address
+DBG_FLAGS = -g
 
 # Unity tester requirements
 UNITY_HEADERS = -Iunity/extras/fixture/src/ \
