@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/30 16:21:46 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/31 12:58:03 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	fork_start(int i, t_list *pipe_lst, t_list *env, t_dup2 *dup_item)
 	t_pipeline	*pip_line;
 
 	pip_line = pipe_lst->content;
+	if (!pip_line->command[0])
+		return (i++);
 	if (i == 0 && !pipe_lst->next)
 		one_argument(pip_line, env, dup_item->last_id);
 	else if (i == 0)

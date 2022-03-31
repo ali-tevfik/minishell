@@ -1,0 +1,15 @@
+total 1280
+-rw-r--r--   1 adoner  piscine    6241 Mar 29 14:26 Makefile
+-rw-r--r--   1 adoner  piscine    6241 Mar 31 11:51 Makefile_copy
+-rw-r--r--   1 adoner  piscine     133 Mar 28 18:58 README.md
+drwxr-xr-x   3 adoner  piscine     102 Mar 28 18:58 hooks
+drwxr-xr-x   8 adoner  piscine     272 Mar 29 12:58 incl
+-rwxr-xr-x   1 adoner  piscine   41276 Mar 31 11:28 minishell
+drwxr-xr-x  13 adoner  piscine     442 Mar 31 11:28 obj
+-rw-r--r--   1 adoner  piscine       0 Mar 31 11:52 outfile
+drwxr-xr-x  15 adoner  piscine     510 Mar 29 14:06 src
+drwxr-xr-x  19 adoner  piscine     646 Mar 28 19:01 test
+-rwxr-xr-x   1 adoner  piscine  585756 Mar 31 11:29 test_minishell
+drwxr-xr-x   6 adoner  piscine     204 Mar 31 11:29 test_obj
+drwxr-xr-x   5 adoner  piscine     170 Mar 28 18:58 testing
+drwxr-xr-x  18 adoner  piscine     612 Mar 29 13:58 unity
