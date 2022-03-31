@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:35:56 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/28 13:21:45 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/31 15:33:44 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static char	*create_content(char *start_token, int len,
 
 	content = substr_protect(start_token, 0, len);
 	expanded_content = expand_input_string(content, env, exitcode);
-	if (strings_are_equal(content, expanded_content))
-		free(content);
+	// if (strings_are_equal(content, expanded_content))
+	free(content);
 	if (expanded_content[0] == '\0')
 		return (NULL);
 	return (expanded_content);

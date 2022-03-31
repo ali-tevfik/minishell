@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:40:15 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/30 14:34:37 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/31 15:19:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -28,6 +29,7 @@
 # include "../libft/libft.h"
 # include "../tokenizer/tokenizer_data_structs.h"
 # include "../parser/parser_data_structs.h"
+# include "../parser/parser_utils.h"
 # include "../../incl/protect.h"
 # include "../../incl/built_in.h"
 # include "../../incl/fork.h"

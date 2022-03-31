@@ -6,29 +6,17 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 10:21:40 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/28 14:36:24 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/31 15:33:13 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "remove_quotes_from_all_tokens.h"
-
-static char	*string_is_null_handler(char c)
-{
-	char	*new_string;
-
-	new_string = calloc_protect(2, sizeof(*new_string));
-	new_string[0] = c;
-	new_string[1] = '\0';
-	return (new_string);
-}
 
 static char	*add_char_to_string(char *string, char c)
 {
 	size_t	len;
 	char	*new_string;
 
-	if (string == NULL)
-		return (string_is_null_handler(c));
 	len = ft_strlen(string);
 	new_string = calloc_protect(len + 2, sizeof(*new_string));
 	ft_memmove(new_string, string, len);

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 17:53:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/29 12:36:28 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 15:29:20 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	print_commands(t_list *parse_list)
 static void	free_redirection_element(void *redirection)
 {
 	free(((t_redirection *)redirection)->file);
+	free((t_redirection *)redirection);
 }
 
 /*
@@ -63,6 +64,7 @@ void	free_parse_list_element(void *pipeline)
 	free(((t_pipeline *)(pipeline))->command);
 	ft_lstclear(&((t_pipeline *)(pipeline))->redirection,
 		free_redirection_element);
+	free((t_pipeline *)(pipeline));
 }
 /*
 ** Returns the amount of command tokens in a command.
@@ -102,7 +104,7 @@ t_pipeline	*init_pipeline(t_list *token_list)
 	number_of_command_tokens = number_command_tokens(token_list);
 	pipeline = calloc_protect(1, sizeof(*pipeline));
 	pipeline->command = calloc_protect(number_of_command_tokens + 1, \
-									sizeof(*pipeline->command));
+									sizeof(*(pipeline->command)));
 	pipeline->redirection = NULL;
 	return (pipeline);
 }
