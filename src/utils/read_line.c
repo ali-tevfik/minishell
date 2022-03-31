@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/29 12:32:53 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 12:51:42 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	t_pipeline	*pipeline;
 	int			exit_status;
 
+	exit_status = 0;
 	lst = tokenize_input(line, *env, exit_code);
 	if (lst == NULL)
 		return (0);
@@ -63,7 +64,7 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 		exit_status = work_execve(pipe_lst, env);
 	else if (is_builtin(pipeline))
 		exit_status = execute_builtin(pipeline, env);
-	else
+	else if (pipeline->command[0])
 		exit_status = work_execve(pipe_lst, env);
 	clear_data(&pipe_lst, &lst);
 	return (exit_status);
