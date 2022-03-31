@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 15:02:00 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 15:36:48 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/31 15:54:56 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,14 @@ int	tokenize_parse_execute(char *line, t_list **env, int exit_code)
 	if (!read_here_doc(pipe_lst))
 		return (-1);
 	pipeline = pipe_lst->content;
-	if (!pipeline->command[0])
-		return (0);
+
+	// if (!pipeline->command[0])
+	// 	return (0);
 	if (built_in_and_infile_check(pipeline, pipe_lst))
 		exit_status = work_execve(pipe_lst, env);
 	else if (is_builtin(pipeline))
 		exit_status = execute_builtin(pipeline, env);
-	else if (pipeline->command[0])
+	else
 		exit_status = work_execve(pipe_lst, env);
 	clear_data(&pipe_lst, &lst);
 	return (exit_status);

@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 12:58:03 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 15:46:23 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ void	execve_func(t_pipeline *pip_line, t_list *env)
 	char	**envp;
 
 	envp = create_envp(env);
-	find_command(pip_line->command, env);
-	execve(pip_line->command[0], pip_line->command, envp);
+	if (pip_line->command[0])
+	{
+		find_command(pip_line->command, env);
+		execve(pip_line->command[0], pip_line->command, envp);
+	}
 	if (errno == ENOENT)
 	{
 		printf("minishell: %s: %s\n", pip_line->command[0], strerror(errno));
@@ -56,8 +59,6 @@ int	fork_start(int i, t_list *pipe_lst, t_list *env, t_dup2 *dup_item)
 	t_pipeline	*pip_line;
 
 	pip_line = pipe_lst->content;
-	if (!pip_line->command[0])
-		return (i++);
 	if (i == 0 && !pipe_lst->next)
 		one_argument(pip_line, env, dup_item->last_id);
 	else if (i == 0)
