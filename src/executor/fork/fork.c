@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 16:38:54 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 12:14:15 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	execve_func(t_pipeline *pip_line, t_list *env)
 	}
 	if (errno == ENOENT)
 	{
-		printf("minishell: %s: %s\n", pip_line->command[0], strerror(errno));
+		perror("minishell:");
 		exit (127);
 	}
 	else if (errno == EACCES)

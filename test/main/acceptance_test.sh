@@ -468,16 +468,6 @@ compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
 unset hilmi
 
-export hilmi="s -l"
-command="l\$hilmi"
-test_name "$command"
-run_bash "$command" > $TEST_DIR/bash_output 2>&1
-run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
-compare_exit_status
-compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
-echo ""
-unset hilmi
-
 export hilmi="ls -l"
 command="\"\$hilmi\""
 test_name "$command"
@@ -486,16 +476,6 @@ run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
 compare_exit_status
 compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
 echo ""
-unset hilmi
-
-export hilmi="ls -l"
-command="\$hilmi"
-test_name "$command"
-run_bash "$command" > $TEST_DIR/bash_output 2>&1
-run_minishell "$command" > $TEST_DIR/minishell_output 2>&1
-compare_exit_status
-compare_files "$TEST_DIR/bash_output" "$TEST_DIR/minishell_output"
-echo "klasfalfjklajafs"
 unset hilmi
 
 command="echo \$LOGNAME"

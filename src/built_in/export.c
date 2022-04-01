@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 16:54:06 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 12:02:07 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	write_export_env(t_list *env_lst)
 	while (env_lst)
 	{
 		env = env_lst->content;
-		printf("declare -x %s=\"%s\"\n", env->key, env->value);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(env->key, 1);
+		ft_putstr_fd("=", 1);
+		ft_putendl_fd(env->value, 1);
 		env_lst = env_lst->next;
 	}
 }
@@ -54,11 +57,10 @@ void	free_double_chr(char **s1)
 	free(s1);
 }
 
-void	error_txt(char **argument, char *pipe_line_command)
+void	error_txt(char **argument)
 {
 	free_double_chr(argument);
-	printf("export: `%s': not a valid identifier\n",
-		pipe_line_command);
+	perror("export:not a valid identifier");
 }
 
 /*
@@ -81,7 +83,7 @@ int	export_command(t_list **env, t_pipeline *pipe_line)
 		argument = split_protect(pipe_line->command[i], '=');
 		if (!(ft_isname(argument[0])) || pipe_line->command[i][0] == '=')
 		{
-			error_txt(argument, pipe_line->command[i]);
+			error_txt(argument);
 			continue ;
 		}
 		else if (!ft_strrchr(pipe_line->command[i], '='))
