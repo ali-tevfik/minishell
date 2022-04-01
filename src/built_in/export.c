@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 12:26:05 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/03/31 16:54:06 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../parser/parser_data_structs.h"
 #include "../../incl/protect.h"
 
-void	add_new_export(t_list **envp, char *s1, char *s2, bool *exit_code)
+int	add_new_export(t_list **envp, char *s1, char *s2)
 {
 	t_env	*env;
 
@@ -26,7 +26,7 @@ void	add_new_export(t_list **envp, char *s1, char *s2, bool *exit_code)
 	else
 		env->value = strdup_protect("");
 	ft_lstadd_back(envp, lstnew_protect(env));
-	*exit_code = false;
+	return (0);
 }
 
 void	write_export_env(t_list *env_lst)
@@ -54,12 +54,11 @@ void	free_double_chr(char **s1)
 	free(s1);
 }
 
-void	error_txt(char **argument, char *pipe_line_command, bool *exit_code)
+void	error_txt(char **argument, char *pipe_line_command)
 {
 	free_double_chr(argument);
 	printf("export: `%s': not a valid identifier\n",
 		pipe_line_command);
-	*exit_code = true;
 }
 
 /*
@@ -70,9 +69,9 @@ int	export_command(t_list **env, t_pipeline *pipe_line)
 {
 	char	**argument;
 	int		i;
-	bool	exit_code;
+	int		exit_code;
 
-	exit_code = false;
+	exit_code = 1;
 	i = 0;
 	if (!pipe_line->command[1])
 		write_export_env(*env);
@@ -82,13 +81,13 @@ int	export_command(t_list **env, t_pipeline *pipe_line)
 		argument = split_protect(pipe_line->command[i], '=');
 		if (!(ft_isname(argument[0])) || pipe_line->command[i][0] == '=')
 		{
-			error_txt(argument, pipe_line->command[i], &exit_code);
+			error_txt(argument, pipe_line->command[i]);
 			continue ;
 		}
 		else if (!ft_strrchr(pipe_line->command[i], '='))
 			continue ;
 		else if (match_key_env(env, argument[0]) == 0)
-			add_new_export(env, argument[0], argument[1], &exit_code);
+			exit_code = add_new_export(env, argument[0], argument[1]);
 	}
 	return (exit_code);
 }

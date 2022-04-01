@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 19:19:32 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/28 15:14:06 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:52:40 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		export_command(t_list **envp, t_pipeline *pipe_line);
 int		unset_command(t_list **envp, t_pipeline *pipe_line);
 t_list	*delete_env(t_list *old_lst, t_list **envp);
 int		cd_command(char *where, t_list *env);
-void	add_new_export(t_list **envp, char *s1, char *s2, bool *exit_code);
+int		add_new_export(t_list **envp, char *s1, char *s2);
 void	exit_command(t_pipeline *pipeline, int *exit_code);
 
 typedef struct s_env

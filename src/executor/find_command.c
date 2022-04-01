@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 12:13:12 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/31 15:39:03 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:07:24 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static bool	get_executable_with_full_path(char **path_array, char **command)
 		path_array[i] = join_protect(path_array[i], *command);
 		if (path_array[i] == NULL)
 		{
-			perror("Error with malloc1");
+			perror("Error with malloc");
 			return (false);
 		}
 		if (access(path_array[i], X_OK) == 0)

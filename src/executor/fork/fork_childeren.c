@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:01:43 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 15:46:34 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:35:20 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ void	one_argument(t_pipeline *pip_line, t_list *env, int *lastid)
 		if (strings_are_equal(pip_line->command[0], "cd")
 			|| strings_are_equal(pip_line->command[0], "export")
 			|| strings_are_equal(pip_line->command[0], "unset"))
-			execute_builtin(pip_line, &env);
+			execute_builtin(pip_line, &env, 0);
 }

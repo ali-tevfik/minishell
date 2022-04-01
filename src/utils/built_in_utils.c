@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/29 12:33:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/29 12:35:35 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:23:51 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,8 @@ int	built_in_and_infile_check(t_pipeline *pipeline, t_list *pipe_lst)
 	return (0);
 }
 
-int	execute_builtin(t_pipeline *pipeline, t_list **env)
+int	execute_builtin(t_pipeline *pipeline, t_list **env, int exit_code)
 {
-	int	exit_code;
-
-	exit_code = 0;
 	if (strings_are_equal(pipeline->command[0], "cd"))
 		exit_code = cd_command(pipeline->command[1], *env);
 	else if (strings_are_equal(pipeline->command[0], "pwd"))

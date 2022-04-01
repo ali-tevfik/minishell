@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 01:31:14 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/23 14:21:06 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:34:23 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,18 @@ int	find_how_many_chr(char *line)
 	}
 	x++;
 	return (x);
+}
+
+bool	check_exit_code(char *line)
+{
+	char	*test;
+
+	test = skip_space(line);
+	if (strings_are_equal(test, "$?"))
+	{
+		free(test);
+		return (true);
+	}
+	free(test);
+	return (false);
 }

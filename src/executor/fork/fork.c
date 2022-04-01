@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 15:46:23 by adoner        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:38:54 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	kies_builtin_of_execve(t_pipeline *pip_line, t_list *env)
 	if (pip_line->redirection)
 		handle_redirections(pip_line);
 	if (is_builtin(pip_line))
-		execute_builtin(pip_line, &env);
+		execute_builtin(pip_line, &env, 0);
 	else
 		execve_func(pip_line, env);
 }
