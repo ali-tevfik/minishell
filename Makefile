@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/04/01 12:38:33 by hyilmaz       ########   odam.nl          #
+#    Updated: 2022/04/01 12:57:37 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,7 +119,8 @@ TEST_FILES = 	unity/src/unity.c \
 				protect_malloc/protect.c \
 				protect_malloc/protect_2.c \
 				test/test_find_command.c \
-				src/executor/find_command.c
+				src/executor/find_command.c \
+				src/utils/print_error.c
 
 HEADER_FILES = 	incl/minishell.h
 

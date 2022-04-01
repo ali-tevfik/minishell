@@ -6,7 +6,7 @@
 /*   By: tevfik <tevfik@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/11 13:09:29 by tevfik        #+#    #+#                 */
-/*   Updated: 2022/03/31 16:24:26 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 13:12:48 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		line = readline("Minishell> ");
 		if (line == NULL)
+		{
+			printf("exit\n");
 			return (0);
+		}
 		if (!strings_are_equal(line, ""))
 		{
 			add_history(line);
