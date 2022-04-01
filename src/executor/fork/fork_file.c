@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/04/01 12:01:03 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 12:16:17 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,10 @@ static	void	write_outfile(t_redirection *redirection)
 {
 	int	fd;
 
-	printf("\n\nwrite_outfile\n\n");
 	if (redirection->redir_type == WRITE)
 		fd = open(redirection->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	
-	printf("\n\ntype = %d\n\n", redirection->redir_type);
 	if (fd < 0)
 	{
 		perror("minishell error:");
@@ -71,7 +68,6 @@ void	handle_redirections(t_pipeline *pipe_line)
 
 	while (pipe_line->redirection)
 	{
-	printf("\n\nhandle_redirections\n\n");
 		redirection = pipe_line->redirection->content;
 		if (redirection->redir_type == READ
 			|| redirection->redir_type == HERE_DOC)
