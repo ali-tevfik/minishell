@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 14:23:42 by adoner        #+#    #+#                 */
-/*   Updated: 2022/04/01 12:14:40 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 14:02:25 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ void	write_echo(t_pipeline *pipe_line, int i)
 	while (pipe_line->command[i])
 	{
 		x = 0;
-		while (pipe_line->command[i][x])
+		if (!strings_are_equal("\"\"", pipe_line->command[i]))
 		{
-			ft_putchar_fd(pipe_line->command[i][x], 1);
-			x++;
+			while (pipe_line->command[i][x])
+			{
+				ft_putchar_fd(pipe_line->command[i][x], 1);
+				x++;
+			}
 		}
 		if (pipe_line->command[i + 1])
 			ft_putchar_fd(' ', 1);

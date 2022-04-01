@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:15:14 by adoner        #+#    #+#                 */
-/*   Updated: 2022/04/01 12:02:07 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 13:50:23 by adoner        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_double_chr(char **s1)
 void	error_txt(char **argument)
 {
 	free_double_chr(argument);
-	perror("export:not a valid identifier");
+	print_error("export", "not a valid identifier");
 }
 
 /*
