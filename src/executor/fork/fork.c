@@ -6,13 +6,14 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 13:00:21 by adoner        #+#    #+#                 */
-/*   Updated: 2022/04/01 12:14:15 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 12:47:07 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../parser/create_parse_list.h"
 #include "../../../incl/minishell.h"
 #include "../../../incl/built_in.h"
+#include "../../../incl/built_in_utils.h"
 #include "../../executor/find_command.h"
 #include "../../../incl/fork.h"
 #include "../../parser/parser_data_structs.h"
@@ -34,12 +35,12 @@ void	execve_func(t_pipeline *pip_line, t_list *env)
 	}
 	if (errno == ENOENT)
 	{
-		perror("minishell:");
+		print_error(pip_line->command[0], NULL);
 		exit (127);
 	}
 	else if (errno == EACCES)
 	{
-		printf("minishell: %s: %s\n", pip_line->command[0], strerror(errno));
+		print_error(pip_line->command[0], NULL);
 		exit(126);
 	}
 }

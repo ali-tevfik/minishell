@@ -6,11 +6,12 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:09:36 by adoner        #+#    #+#                 */
-/*   Updated: 2022/03/31 16:55:27 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 12:49:13 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/built_in.h"
+#include "../../incl/built_in_utils.h"
 #include "../../incl/minishell.h"
 #include "../parser/create_parse_list.h"
 
@@ -37,13 +38,12 @@ void	exit_command(t_pipeline *pipeline, int *exit_code)
 	}
 	else if (pipeline->command[2]
 		&& return_value_check_int(pipeline->command[1]))
-		printf("Minishell: exit: too many arguments\n");
+		print_error("exit", "too many arguments");
 	else
 	{
 		if (!return_value_check_int(pipeline->command[1]))
 		{
-			printf("Minishell: exit: %s: numeric argument required\n",
-				pipeline->command[0]);
+			print_error("exit", "numeric argument required");
 			*exit_code = 255;
 			exit((unsigned char)255);
 		}

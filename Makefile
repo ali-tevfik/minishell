@@ -6,7 +6,7 @@
 #    By: adoner <adoner@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 13:16:02 by adoner        #+#    #+#                  #
-#    Updated: 2022/04/01 11:41:42 by adoner        ########   odam.nl          #
+#    Updated: 2022/04/01 12:38:33 by hyilmaz       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,8 @@ SRC_FILES = minishell.c \
 			protect_malloc/progress_product.c \
 			signals/set_signals.c \
 			signals/signal_handler.c \
-			here_doc/handle_here_doc.c
+			here_doc/handle_here_doc.c \
+			utils/print_error.c
 
 
 TEST_FILES = 	unity/src/unity.c \

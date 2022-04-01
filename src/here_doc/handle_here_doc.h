@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:40:15 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/31 15:19:19 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/04/01 12:42:46 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include "../parser/parser_utils.h"
 # include "../../incl/protect.h"
 # include "../../incl/built_in.h"
+# include "../../incl/built_in_utils.h"
 # include "../../incl/fork.h"
 
 /* Global variable */

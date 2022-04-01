@@ -6,7 +6,7 @@
 /*   By: adoner <adoner@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 11:43:01 by adoner        #+#    #+#                 */
-/*   Updated: 2022/04/01 12:16:17 by adoner        ########   odam.nl         */
+/*   Updated: 2022/04/01 12:46:58 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	void	read_infile(t_redirection *redirection)
 	id = open(redirection->file, O_RDONLY);
 	if (id < 0)
 	{
-		printf("minishell error:");
+		print_error(redirection->file, NULL);
 		exit(1);
 	}
 	protect_dup2(id, STDIN_FILENO);
@@ -50,7 +50,7 @@ static	void	write_outfile(t_redirection *redirection)
 		fd = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 	{
-		perror("minishell error:");
+		print_error(redirection->file, NULL);
 		exit(1);
 	}
 	protect_dup2(fd, STDOUT_FILENO);

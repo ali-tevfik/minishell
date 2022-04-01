@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 16:39:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/31 15:29:44 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/04/01 12:47:11 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	write_inputs_to_here_doc(t_list *lst, t_redirection *redirection)
 	id = open(redirection->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (id < 0)
 	{
-		printf("minishell: %s: %s\n", "/tmp/here_doc", strerror(errno));
+		print_error(redirection->file, NULL);
 		exit(1);
 	}
 	while (lst)

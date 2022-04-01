@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/22 18:17:55 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2022/03/23 14:22:52 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2022/04/01 12:53:27 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ static bool	print_unexpected_token_message(t_token *token)
 			ft_strlcpy(content, "&", 2);
 		else if (token->type == SEMICOLON)
 			ft_strlcpy(content, ";", 2);
-		printf("minishell: syntax error near unexpected token '%s'\n", content);
+		print_error("syntax error near unexpected token", content);
 	}
 	else
-		printf("minishell: syntax error near unexpected token '%s'\n", \
-				token->content);
+		print_error("syntax error near unexpected token", token->content);
 	return (false);
 }
 
